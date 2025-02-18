@@ -1,0 +1,18 @@
+[
+    ["cut", "dimuon", "(nGoodMuon>=2)"],
+    ["define", "leadingMuonPt", "GoodMuon_pt[0]"],
+    ["define", "leadingMuonEta", "GoodMuon_eta[0]"],
+    ["define", "leadingMuonPhi", "GoodMuon_phi[0]"],
+    ["define", "leadingMuonMass", "GoodMuon_mass[0]"],
+    ["define", "subleadingMuonPt", "GoodMuon_pt[1]"],
+    ["define", "subleadingMuonEta", "GoodMuon_eta[1]"],
+    ["define", "subleadingMuonPhi", "GoodMuon_phi[1]"],
+    ["define", "subleadingMuonMass", "GoodMuon_mass[1]"],
+    ["TLVPtEtaPhiM", "leadingMuonP4", "leadingMuonPt,leadingMuonEta,leadingMuonPhi,leadingMuonMass"],
+    ["TLVPtEtaPhiM", "subleadingMuonP4", "subleadingMuonPt,subleadingMuonEta,subleadingMuonPhi,subleadingMuonMass"],
+    ["define", "diMuonP4", "leadingMuonP4+subleadingMuonP4"],
+    ["define", "diMuonM", "diMuonP4.M()"],
+    ["define", "diMuonPt", "diMuonP4.Pt()"],
+    ["define", "diMuonEta", "diMuonP4.Eta()"],
+    ["define", "diMuonPhi", "diMuonP4.Phi()"]
+]

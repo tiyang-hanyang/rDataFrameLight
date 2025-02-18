@@ -1,0 +1,22 @@
+{
+    "dir": {
+        "TTHH_DL_incl": "/home/tiyang/sample/mc/TTHH_DL_incl/",
+        "TTHH_DL_2B2V": "/home/tiyang/sample/mc/TTHH_DL_2B2V/",
+        "TTHH_DL_2B2Tau": "/home/tiyang/sample/mc/TTHH_DL_2B2Tau/",
+        "TTHH_SL_2B2V": "/home/tiyang/sample/mc/TTHH_SL_2B2V/"
+    },
+    "file": {
+        "TTHH_DL_incl": [
+            "TTHH_DL_LO.root"
+        ],
+        "TTHH_DL_2B2V": [
+            "TTHH_DL_2B2V_dipole_recoil.root"
+        ],
+        "TTHH_DL_2B2Tau": [
+            "TTHH_DL_2B2Tau_dipole_recoil.root"
+        ],
+        "TTHH_SL_2B2V": [
+            "TTHH_SL_2B2V_dipole_recoil.root"
+        ]
+    }
+}

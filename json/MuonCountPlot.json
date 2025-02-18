@@ -1,0 +1,84 @@
+{
+    "jobType": "plot",
+    "comments": "For plotting histograms from files, using HistControl class to extract histograms of different channels and out put TFiles with hist stored. Need to give the sample json, as the plotting may use skimmed ones, which are not the original ones. Variable information can be found from the vairables json. Cuts will apply one by one, allowing multiple cuts. ",
+    "name": "Run2023D_SSDiMuon_Plot",
+
+    "year": "2023",
+    "run": "Run3",
+    "era": "Run2023D",
+    "inDir": "muonCount/",
+    "outDir": "diMuon_SS_plot_withSignal/",
+
+    "yLabel": "Events",
+    "yRatioLabel": "Data/MC",
+    "histXSize": 600,
+    "histYSize": 600,
+    "logPlot": 0,
+
+    "varNames": [
+        "nGoodMuon"
+    ],
+    "varConfig": "json/variables/MuonVariables.json",
+    "needCrop": {
+        "leadingMuonPt": 0,
+        "leadingMuonEta": 0,
+        "leadingMuonPhi": 0,
+        "subleadingMuonPt": 0,
+        "subleadingMuonEta": 0,
+        "subleadingMuonPhi": 0,
+        "diMuonM": 0,
+        "diMuonPt": 0,
+        "diMuonEta": 0,
+        "diMuonPhi": 0
+    },
+    "cropedRange": {
+        "diMuonM": [80, 110]
+    },
+
+    "datasets": [
+        "DY2L",
+        "ttbarDL",
+        "ttbarSL",
+        "WJets",
+        "TTHH_2B2V",
+        "TTHH_2B2Tau",
+        "Muon0"
+    ],
+    "datasetLabel": {
+        "Muon0": "data",
+        "DY2L": "Drell-Yan",
+        "ttbarDL": "t#bar{t} DL",
+        "ttbarSL": "t#bar{t} SL",
+        "WJets": "W+Jets",
+        "TTHH_2B2V": "t#bar{t}HH b#bar{b}VV",
+        "TTHH_2B2Tau": "t#bar{t}HH b#bar{b}#tau#tau"
+    },
+    "needMerge": {
+    },
+    "isData": {
+        "Muon0": 1,
+        "DY2L": 0,
+        "ttbarDL": 0,
+        "ttbarSL": 0,
+        "WJets": 0,
+        "TTHH_2B2V" :0,
+        "TTHH_2B2Tau":0
+    },
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+
+    "numerator": [
+    ],
+    "stackOrder": [
+    ],
+
+     "texts":  [
+        "CMS Preliminary", 
+        "#sqrt{s} = 13.6 TeV, L= %1.0f pb^{-1}",
+        "t#bar{t}HH signal"
+    ],
+    "lumiConfig": "json/Lumi/Run3.json",
+
+    "doRatio": 0,
+    "normalization": 1
+}

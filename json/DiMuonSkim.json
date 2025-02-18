@@ -1,0 +1,52 @@
+{
+    "jobType": "skim",
+    "commments": "For skimming the dimuon samples",
+
+    "name": "2023AtLeastDimuonSkim",
+    "year": "2023",
+    "run": "Run3",
+    "era": "Run2023D",
+    "sampleConfig": "",
+    "XSConfig": "",
+    "outDir": "AtLeastDimuon_skim/",
+    "datasets": [
+        "Muon0",
+        "Muon1",
+
+        "DY2L",
+        "ttbarDL",
+        "ttbarSL",
+        "WJets",
+        "WW2L2Nu",
+        "WZ2L2Q",
+        "ZZ2L2Q",
+        "ZZ2L2Nu",
+        "WW",
+        "WZ",
+        "ZZ"
+    ],
+    "isData": {
+        "Muon0": 1,
+        "Muon1": 1,
+
+        "DY2L": 0,
+        "ttbarDL": 0,
+        "ttbarSL": 0,
+        "WJets": 0,
+        "WW2L2Nu": 0,
+        "WZ2L2Q": 0,
+        "ZZ2L2Q": 0,
+        "ZZ2L2Nu": 0,
+        "WW": 0,
+        "WZ": 0,
+        "ZZ": 0
+    },
+    "mcWeight": "genWeight",
+    "cut": [
+        "json/cuts/DiMuonTrigger2023.json",
+        "json/cuts/GoodMuon.json",
+        "json/cuts/AtLeastDiMuon.json"
+    ],
+
+    "branchConfig": "json/branches/DiMuonSkim.json"
+}

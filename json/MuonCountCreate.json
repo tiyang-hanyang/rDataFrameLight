@@ -1,0 +1,58 @@
+{
+    "jobType": "draw",
+    "comments": "For plotting histograms from files, using HistControl class to extract histograms of different channels and out put TFiles with hist stored. Need to give the sample json, as the plotting may use skimmed ones, which are not the original ones. Variable information can be found from the vairables json. Cuts will apply one by one, allowing multiple cuts. ",
+    "name": "2023muonKine",
+
+    "year": "2023",
+    "run": "Run3",
+    "era": "Run2023D",
+    "outDir": "muonCount",
+
+    "sampleConfig": "json/samples/skimmed_Run2023D.json",
+
+    "varNames": [
+        "nGoodMuon"
+    ],
+    "varConfig": "json/variables/MuonVariables.json",
+
+    "cuts": [
+    ],
+
+    "datasets": [
+        "Muon0",
+
+        "DY2L",
+        "ttbarDL",
+        "ttbarSL",
+        "WJets",
+
+        "TTHH_incl",
+        "TTHH_2B2V",
+        "TTHH_2B2Tau"
+    ],
+
+    "isData": {
+        "Muon0": 1,
+
+        "DY2L": 0,
+        "ttbarDL": 0,
+        "ttbarSL": 0,
+        "WJets": 0,
+        "WW": 0,
+        "WZ": 0,
+        "ZZ": 0,
+
+        "TTHH_incl": 0,
+        "TTHH_2B2V": 0,
+        "TTHH_2B2Tau": 0
+    },
+
+    "needMerge" : {
+    },
+
+    "MCweight": [
+        "weight_XS"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

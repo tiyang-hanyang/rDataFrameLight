@@ -1,0 +1,64 @@
+{
+    "dir": {
+        "Muon0": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/data/Run2023D/Muon0/",
+        "Muon1": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/data/Run2023D/Muon1/",
+        "DY2L": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/mc/Run3Summer23BPixNanoAODv12/DYto2L-4Jets_MLL-50_TuneCP5_13p6TeV_madgraphMLM-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "ttbarDL": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/mc/Run3Summer23BPixNanoAODv12/TTto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "ttbarSL": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/mc/Run3Summer23BPixNanoAODv12/TTtoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "WJets": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/mc/Run3Summer23BPixNanoAODv12/WtoLNu-4Jets_TuneCP5_13p6TeV_madgraphMLM-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "WW2L2Nu": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/mc/Run3Summer23BPixNanoAODv12/WWto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "ZZ2L2Nu": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/mc/Run3Summer23BPixNanoAODv12/ZZto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "ZZ2L2Q": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/mc/Run3Summer23BPixNanoAODv12/ZZto2L2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "WZ2L2Q": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/mc/Run3Summer23BPixNanoAODv12/WZto2L2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "WW": "ls /home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/mc/Run3Summer23BPixNanoAODv12/WW_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "WZ": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/mc/Run3Summer23BPixNanoAODv12/WZ_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "ZZ": "/home/tiyang/public/rDataFrameLight_update/run/AtLeastDimuon_skim/mc/Run3Summer23BPixNanoAODv12/ZZ_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "TTHH_incl": "/home/tiyang/public/rDataFrameLight_update/run/Signal_AtLeastDimuon_skim/mc/TTHH_incl/",
+        "TTHH_2B2V": "/home/tiyang/public/rDataFrameLight_update/run/Signal_AtLeastDimuon_skim/mc/TTHH_2B2V/",
+        "TTHH_2B2Tau": "/home/tiyang/public/rDataFrameLight_update/run/Signal_AtLeastDimuon_skim/mc/TTHH_2B2Tau/"
+    },
+    "file": {
+        "Muon0": [
+            "merge.root"
+        ],
+        "Muon1": [
+            "merge.root"
+        ],
+        "DY2L": [
+            "50000/e76965ae-f1e9-4c20-a96a-88579324c1f4_2023AtLeastDimuonSkim.root"
+        ],
+        "ttbarDL": [
+            "2560000/653c587a-2be6-4ff4-8e5d-3bd98a3460ee_2023AtLeastDimuonSkim.root"
+        ],
+        "ttbarSL": [
+            "50000/bc7d84ab-e319-48d1-94c6-f4e0189541d2_2023AtLeastDimuonSkim.root"
+        ],
+        "WJets": [
+            "2820000/bd065865-9985-43e3-85db-b0bbebafcd7d_2023AtLeastDimuonSkim.root"
+        ],
+        "WW2L2Nu": [
+            "2810000/7d0b16af-e7b9-4094-aee4-62d3362fa904_2023AtLeastDimuonSkim.root"
+        ],
+        "ZZ2L2Nu": [
+            "2820000/f9d80b36-aa18-4a6e-bcfc-49e2469d073a_2023AtLeastDimuonSkim.root"
+        ],
+        "ZZ2L2Q": [
+            "40000/5b7ed9f5-526a-4e00-b714-c020dae0a53b_2023AtLeastDimuonSkim.root"
+        ],
+        "WZ2L2Q": [
+            "2560000/1241259c-fdfb-457d-9513-63e95b587d8a_2023AtLeastDimuonSkim.root"
+        ],
+        "WW": [
+            "50000/b6219f16-a695-42de-bf12-83290e7a25a8_2023AtLeastDimuonSkim.root"
+        ],
+        "WZ": [
+            "2540000/72847ae7-562c-4cee-ac6e-4699a5a17e6b_2023AtLeastDimuonSkim.root"
+        ],
+        "ZZ": [
+            "50000/10bd80dc-09db-43db-9df0-c0725220868d_2023AtLeastDimuonSkim.root"
+        ],
+        "TTHH_incl": ["TTHH_DL_LO_2023AtLeastDimuonSkim.root"],
+        "TTHH_2B2V": ["TTHH_DL_2B2V_dipole_recoil_2023AtLeastDimuonSkim.root"],
+        "TTHH_2B2Tau": ["TTHH_DL_2B2Tau_dipole_recoil_2023AtLeastDimuonSkim.root"]
+    }
+}

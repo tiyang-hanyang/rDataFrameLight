@@ -1,0 +1,106 @@
+{
+    "jobType": "plot",
+    "comments": "For plotting histograms from files, using HistControl class to extract histograms of different channels and out put TFiles with hist stored. Need to give the sample json, as the plotting may use skimmed ones, which are not the original ones. Variable information can be found from the vairables json. Cuts will apply one by one, allowing multiple cuts. Note currently I had some sigfault with stack hist to clear, that varNames cannot put more than 1 observable, to fix in Feb week 3",
+    "name": "Run2023D_SSDiMuon_Plot",
+
+    "year": "2023",
+    "run": "Run3",
+    "era": "Run2023D",
+    "inDir": "diMuon_SS/",
+    "outDir": "diMuon_SS_plot_withSignal/",
+
+    "yLabel": "Events",
+    "yRatioLabel": "Data/MC",
+    "histXSize": 600,
+    "histYSize": 600,
+    "logPlot": 0,
+
+    "varNames": [
+        "diMuonM"
+    ],
+    "varConfig": "json/variables/MuonVariables.json",
+    "needCrop": {
+        "leadingMuonPt": 0,
+        "leadingMuonEta": 0,
+        "leadingMuonPhi": 0,
+        "subleadingMuonPt": 0,
+        "subleadingMuonEta": 0,
+        "subleadingMuonPhi": 0,
+        "diMuonM": 0,
+        "diMuonPt": 0,
+        "diMuonEta": 0,
+        "diMuonPhi": 0
+    },
+    "cropedRange": {
+        "diMuonM": [80, 110]
+    },
+
+    "datasets": [
+        "Muon",
+        "DY2L",
+        "ttbarDL",
+        "ttbarSL",
+        "WJets",
+        "diBoson",
+        "TTHH_2B2V",
+        "TTHH_2B2Tau"
+    ],
+    "datasetLabel": {
+        "Muon": "data",
+        "DY2L": "Drell-Yan",
+        "ttbarDL": "t#bar{t} DL",
+        "ttbarSL": "t#bar{t} SL",
+        "WJets": "W+Jets",
+        "diBoson": "diBoson ll",
+        "TTHH_2B2V": "t#bar{t}HH b#bar{b}VV",
+        "TTHH_2B2Tau": "t#bar{t}HH b#bar{b}#tau#tau"
+    },
+
+    "needMerge": {
+        "diBoson": [
+            "WW2L2Nu",
+            "WZ2L2Q",
+            "ZZ2L2Q",
+            "ZZ2L2Nu"
+        ]
+    },
+    "isData": {
+        "Muon": 1,
+        "DY2L": 0,
+        "ttbarDL": 0,
+        "ttbarSL": 0,
+        "WJets": 0,
+        "diBoson": 0,
+        "WW2L2Nu": 0,
+        "WZ2L2Q": 0,
+        "ZZ2L2Q": 0,
+        "ZZ2L2Nu": 0,
+        "TTHH_2B2V" :0,
+        "TTHH_2B2Tau":0
+    },
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+
+    "numerator": [
+        "Muon"
+    ],
+    "stackOrder": [
+        "WJets",
+        "diBoson",
+        "ttbarSL",
+        "ttbarDL",
+        "DY2L",
+        "TTHH_2B2V",
+        "TTHH_2B2Tau"
+    ],
+
+     "texts":  [
+        "CMS Preliminary", 
+        "#sqrt{s} = 13.6 TeV, L= %1.0f pb^{-1}",
+        "t#bar{t}HH signal"
+    ],
+    "lumiConfig": "json/Lumi/Run3.json",
+
+    "doRatio": 1,
+    "normalization": 0
+}
