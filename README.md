@@ -13,9 +13,9 @@ cd source/
 git clone \<your forked code\> .
 mkdir external
 cd external/
-wget https://raw.githubusercontent.com/nlohmann/json/develop/include/nlohmann/json.hpp
+wget https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohmann/json.hpp
 cd ../../build/
-source ../source
+cmake ../source
 make
 ```
 
