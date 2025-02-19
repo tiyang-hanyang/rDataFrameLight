@@ -19,20 +19,16 @@ HistControl::HistControl(const std::string &varName, TH1D *templateHist)
 // using TH1D* pointer, thus need to release memory when destruct
 HistControl::~HistControl()
 {
+    if (_templateHist)
+    {
+        delete _templateHist;
+    }
     for (auto &[name, hist] : this->_histograms)
     {
-        if (!hist) continue;
-        hist->SetDirectory(0); 
-        delete hist;
-        hist = nullptr;
+        if (hist)
+            delete hist;
     }
-    this->_histograms.clear();
-
-    if (_templateHist) {
-        _templateHist->SetDirectory(0);
-        delete _templateHist;
-        _templateHist = nullptr;
-    }
+    _histograms.clear();
 }
 
 /// @brief The function for giving the minimum and maximum from the DataFrame itself
@@ -154,7 +150,7 @@ void HistControl::generateTemplateFromBinning(int nBins, double min, double max)
     }
 
     this->_templateHist = new TH1D("templateHist", "Template Histogram", nBins, min, max);
-    rdfWS_utility::messageINFO("HistControl", "Template histogram dynamically created from binning: bins = " + std::to_string(nBins) + ", range = [" + std::to_string(min) + ", " + std::to_string(max) + "]." );
+    rdfWS_utility::messageINFO("HistControl", "Template histogram dynamically created from binning: bins = " + std::to_string(nBins) + ", range = [" + std::to_string(min) + ", " + std::to_string(max) + "].");
 }
 
 /// @brief Internal function to compute the ratio of two histograms. In principle, all histograms should be processed through the hist controller and the TH1D* easily causing leakage, so that this function is not public. May change upon to the need
@@ -168,8 +164,9 @@ TH1D *HistControl::calculateRatio(TH1D *numerator, TH1D *denominator, const std:
         rdfWS_utility::messageERROR("HistControl", "Invalid numerator or denominator for ratio calculation.");
 
     TH1D *ratioHist = (TH1D *)numerator->Clone(ratioName.c_str());
-    ratioHist->SetTitle((numerator->GetName() + std::string(" / ") + denominator->GetName()).c_str());
     ratioHist->SetDirectory(0);
+    std::string ratioHistTitle = numerator->GetName() + std::string(" / ") + denominator->GetName();
+    ratioHist->SetTitle(ratioHistTitle.c_str());
 
     // settting bin contents
     double maxBinContent(-1e9);
@@ -389,8 +386,8 @@ std::map<std::string, TH1D *> HistControl::getHists(std::vector<std::string> his
     std::map<std::string, TH1D *> extractedHist;
     for (auto key : histKeys)
     {
-        extractedHist.emplace(key, (TH1D*)this->_histograms[key]->Clone((key+"_copy").c_str()));
-        extractedHist[key]->SetDirectory(0); 
+        extractedHist.emplace(key, (TH1D *)this->_histograms[key]->Clone((key + "_copy").c_str()));
+        extractedHist[key]->SetDirectory(0);
     }
     return extractedHist;
 }
@@ -459,9 +456,9 @@ TH1D *HistControl::mergeHistograms(const std::vector<std::string> &histKeys, con
 {
     if (histKeys.empty())
     {
-        rdfWS_utility::messageERROR("HistControl", "No histograms specified for merging." );
+        rdfWS_utility::messageERROR("HistControl", "No histograms specified for merging.");
     }
-    rdfWS_utility::messageINFO("HistControl", "Merging histograms." );
+    rdfWS_utility::messageINFO("HistControl", "Merging histograms.");
 
     TH1D *mergedHist = nullptr;
     std::string mergedHistName = mergedKey + "_mergedFrom";
@@ -478,12 +475,13 @@ TH1D *HistControl::mergeHistograms(const std::vector<std::string> &histKeys, con
         {
             throw std::runtime_error("Histogram " + name + " not found for merging.");
         }
-        rdfWS_utility::messageINFO("HistControl", std::string("Hist name: ") + it->second->GetName() );
+        rdfWS_utility::messageINFO("HistControl", std::string("Hist name: ") + it->second->GetName());
 
         // at the first loop
         if (!mergedHist)
         {
             mergedHist = (TH1D *)it->second->Clone(mergedHistName.c_str());
+            mergedHist->SetDirectory(0);
             mergedHist->Reset();
         }
 
@@ -492,7 +490,8 @@ TH1D *HistControl::mergeHistograms(const std::vector<std::string> &histKeys, con
 
     // consider add it the map as well
     // as I would need some manually merged things like Diboson
-    this->_histograms.emplace(mergedKey, mergedHist);
+    if (mergedHist)
+        this->_histograms.emplace(mergedKey, mergedHist);
 
     return mergedHist;
 }
@@ -534,7 +533,6 @@ std::map<std::string, TH1D *> HistControl::getRatios(const std::vector<std::stri
         ratioHists[ratioName] = ratioHist;
     }
 
-    delete mergedRef;
     return ratioHists;
 }
 

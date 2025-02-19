@@ -1,4 +1,5 @@
 #include "PlotControl.h"
+#include "Utility.h"
 
 #include <exception>
 #include <iostream>
@@ -19,32 +20,16 @@ PlotControl::~PlotControl()
     // clear legends
     for (auto len : this->_legends)
     {
-        delete len;
+        if (len)
+        {
+            len->Clear();
+            delete len;
+        }
     }
     this->_legends.clear();
 
-    // clear canvas
-    if (this->_canvas)
-    {
-        std::cout << "Removing all histograms from canvas before delete" << std::endl;
-        this->_canvas->GetListOfPrimitives()->Clear();
-        this->_canvas->Modified();
-        this->_canvas->Update();
-        delete this->_canvas;
-        this->_canvas = nullptr;
-    }
-
-    // clear pads
-    if (this->_abovePad)
-    {
-        // delete this->_abovePad;
-        this->_abovePad = nullptr;
-    }
-    if (this->_belowPad)
-    {
-        // delete this->_belowPad;
-        this->_belowPad = nullptr;
-    }
+    // delete canvas would be enough, do not delete tpad manually, it crahsed
+    delete this->_canvas;
 }
 
 // setup canvas and pad style, record the scale if do ratio plot
@@ -170,11 +155,6 @@ TLegend *PlotControl::setHanyangLegend(int entries, double textSize, double scal
 
 void PlotControl::setMax(std::map<std::string, TH1D *> hists, int doLog, int isRatio)
 {
-    if (hists.empty())
-    {
-        throw std::runtime_error("No histograms provided for setup.");
-    }
-
     double maxVal(0.0), minVal(1e9);
     if (isRatio)
     {
@@ -226,26 +206,19 @@ void PlotControl::setMax(std::map<std::string, TH1D *> hists, int doLog, int isR
 
 std::map<std::string, TH1D *> PlotControl::setupHists(std::map<std::string, TH1D *> hists, PlotContext setup, int isRatio)
 {
-    if (hists.empty())
-    {
-        throw std::runtime_error("No histograms provided for setup.");
-    }
-    std::vector<int> colorScheme = {
-        2, 3, 4, 5, 6, 7};
+    std::vector<int> colorScheme = {2, 3, 4, 5, 6, 8, 9, 11, 28, 42};
     int colorIndex(0);
 
     std::map<std::string, TH1D *> styledHists;
-    // Clone and style each hist
+    // Clone and style each hist, not affect the original ones
     for (const auto &[histName, hist] : hists)
     {
         if (!hist)
-        {
-            throw std::runtime_error("Histogram " + histName + " is null.");
-        }
-        // Clone histogram
+            rdfWS_utility::messageERROR("PlotControl", "Histogram " + histName + " is null.");
         std::string newHistName = std::string("plot_") + hist->GetName();
         TH1D *clonedHist = dynamic_cast<TH1D *>(hist->Clone(newHistName.c_str()));
         clonedHist->SetDirectory(0);
+
         // Apply styles (e.g., isData, labels)
         // add check for if isData set
         int isData = setup.isData[isRatio].find(histName) != setup.isData[isRatio].end() && setup.isData[isRatio].at(histName);
@@ -261,6 +234,7 @@ std::map<std::string, TH1D *> PlotControl::setupHists(std::map<std::string, TH1D
 
         styledHists.emplace(histName, clonedHist);
     }
+
     // setup maximum value according to all hists
     setMax(styledHists, setup.doLog, isRatio);
 
@@ -276,29 +250,16 @@ void PlotControl::drawNonStackedHists(
     int same)
 {
     // reserve a place for the dataHist, so that I would always plot this last
-    std::vector<TH1D *> dataHists;
+    // std::vector<TH1D *> dataHists;
+    std::vector<std::string> dataHists;
     for (auto &[histName, hist] : hists)
     {
-        if (!hist)
-        {
-            throw std::runtime_error("Histogram " + histName + " is null.");
-        }
-        //     std::string drawOption = isData[histName] ? "ep" : "HIST";
-        //     if (same)
-        //     {
-        //         drawOption += " SAME";
-        //     }
-
-        //     auto histCloned = (TH1D*)hist->Clone((std::string(hist->GetName())+"_copyDraw").c_str());
-        //     histCloned->SetDirectory(0);
-        //     histCloned->Draw(drawOption.c_str());
-        //     same = true; // Ensure subsequent histograms use "SAME"
-        // }
         if (isData[histName])
         {
-            auto histCloned = (TH1D *)hist->Clone((std::string(hist->GetName()) + "_copyDraw").c_str());
-            histCloned->SetDirectory(0);
-            dataHists.push_back(histCloned);
+            // auto histCloned = (TH1D *)hist->Clone((std::string(hist->GetName()) + "_copyDraw").c_str());
+            // histCloned->SetDirectory(0);
+            // dataHists.push_back(histClones);
+            dataHists.push_back(histName);
         }
         else
         {
@@ -308,13 +269,14 @@ void PlotControl::drawNonStackedHists(
                 drawOption += " SAME";
             }
 
-            auto histCloned = (TH1D *)hist->Clone((std::string(hist->GetName()) + "_copyDraw").c_str());
-            histCloned->SetDirectory(0);
-            histCloned->Draw(drawOption.c_str());
+            // auto histCloned = (TH1D *)hist->Clone((std::string(hist->GetName()) + "_copyDraw").c_str());
+            // histCloned->SetDirectory(0);
+            // histCloned->Draw(drawOption.c_str());
+            hist->Draw(drawOption.c_str());
             same = true; // Ensure subsequent histograms use "SAME"
         }
     }
-    for (auto hist : dataHists)
+    for (auto histName : dataHists)
     {
         std::string drawOption = "ep";
         if (same)
@@ -322,9 +284,10 @@ void PlotControl::drawNonStackedHists(
             drawOption += " SAME";
         }
 
-        auto histCloned = (TH1D *)hist->Clone((std::string(hist->GetName()) + "_copyDraw").c_str());
-        histCloned->SetDirectory(0);
-        histCloned->Draw(drawOption.c_str());
+        // auto histCloned = (TH1D *)hist->Clone((std::string(hist->GetName()) + "_copyDraw").c_str());
+        // histCloned->SetDirectory(0);
+        // histCloned->Draw(drawOption.c_str());
+        hists[histName]->Draw(drawOption.c_str());
         same = true;
     }
 }
@@ -476,8 +439,10 @@ void PlotControl::drawRatioHist(std::map<std::string, TH1D *> hists, std::map<st
 THStack *PlotControl::prepareStackHists(std::map<std::string, TH1D *> &hists, const std::vector<std::string> &stackOrder, std::map<std::string, int> isData)
 {
     THStack *stack = new THStack(("stack_" + _controllerName).c_str(), "Stacked Histograms");
-    std::vector<int> colorScheme = {2, 3, 4, 5, 6, 7, 9, 12};
+    std::vector<int> colorScheme = {2, 3, 4, 5, 6, 8, 9, 12, 28, 42};
     int colorIndex = 0;
+
+    // TODO add a function to auto-ordering
 
     std::vector<int> reverseColorScheme;
     auto nStack = stackOrder.size();
@@ -514,23 +479,17 @@ void PlotControl::drawStackHist(
 {
     // checking input compatibility
     if (hists.empty() || stackOrder.empty())
-    {
-        throw std::runtime_error("No histograms or stack order provided for plotting.");
-    }
+        rdfWS_utility::messageERROR("PlotControl", "No histograms or stack order provided for plotting.");
     for (const auto &name : stackOrder)
     {
         if (hists.find(name) == hists.end())
-        {
-            throw std::runtime_error("Histogram '" + name + "' specified in stackOrder does not exist in the provided histograms.");
-        }
+            rdfWS_utility::messageERROR("PlotControl", "Histogram '" + name + "' specified in stackOrder does not exist in the provided histograms.");
     }
 
     // need to setup canvas in advance for scales needed by hist
     setHanyangCanvas(setup.xSize, setup.ySize, setup.doLog, 1);
     if (!this->_canvas)
-    {
-        throw std::runtime_error("Internal canvas not properly setup: " + this->_controllerName);
-    }
+        rdfWS_utility::messageERROR("PlotControl", "Internal canvas not properly setup: " + this->_controllerName);
 
     // prepare hists
     std::map<std::string, TH1D *> plotHists = setupHists(hists, setup, 0);
@@ -550,9 +509,7 @@ void PlotControl::drawStackHist(
     TH1D *axisHist = dynamic_cast<TH1D *>(plotHists.begin()->second->Clone((this->_controllerName + "_axisHist").c_str()));
     axisHist->SetDirectory(0);
     if (!axisHist)
-    {
-        throw std::runtime_error("Failed to clone reference histogram.");
-    }
+        rdfWS_utility::messageERROR("PlotControl", "Failed to clone axis reference plot histogram.");
     axisHist->Reset();
     if (setup.doLog)
     {
@@ -621,7 +578,7 @@ void PlotControl::drawStackHistWithRatio(
     // need to setup canvas in advance for scales needed by hist
     setHanyangCanvas(setup.xSize, setup.ySize, setup.doLog, 1);
 
-    // prepare hists
+    // prepare new hists with proper style setup from cloned hists
     std::map<std::string, TH1D *> plotHists = setupHists(hists, setup, 0);
     std::map<std::string, TH1D *> plotRatioHists = setupHists(ratioHists, setup, 1);
     std::map<std::string, int> isData = setup.isData[0];
@@ -704,7 +661,9 @@ void PlotControl::drawStackHistWithRatio(
 
     saveCanvas(this->_controllerName);
 
+    delete refLine;
     delete axisHist;
+    delete stack;
     for (const auto &[name, hist] : plotHists)
     {
         if (hist)
@@ -713,5 +672,12 @@ void PlotControl::drawStackHistWithRatio(
             delete hist;
         }
     }
-    delete stack;
+    for (const auto &[name, hist] : plotRatioHists)
+    {
+        if (hist)
+        {
+            hist->SetDirectory(0);
+            delete hist;
+        }
+    }
 }

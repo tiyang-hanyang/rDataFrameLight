@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
         std::string varConfigPath = jsonConfig["varConfig"];
         auto varConfig = rdfWS_utility::readJson("plotHists", varConfigPath)[varName];
         options.xLabel = varConfig["label"];
-        options.yLabel = {jsonConfig["yLabel"], jsonConfig["RatioLabel"]};
+        options.yLabel = {jsonConfig["yLabel"], jsonConfig["yRatioLabel"]};
         options.doLog = jsonConfig["logPlot"];
         options.xSize = jsonConfig["histXSize"];
         options.ySize = jsonConfig["histYSize"];
@@ -118,6 +118,11 @@ int main(int argc, char *argv[])
             }
             auto ratioHists = histLoader.getRatios(numerator, stackOrder);
             pHelper.drawStackHistWithRatio(histsNeeded, stackOrder, ratioHists, options, drawText);
+            for (auto &[histName, hist] : ratioHists)
+            {
+                delete hist;
+            }
+            ratioHists.clear();
         }
         else
         {
@@ -136,6 +141,13 @@ int main(int argc, char *argv[])
                 pHelper.drawHist(histsNeeded, options, drawText);
             }
         }
+
+        // delocate memory of copied hists
+        for (auto &[histName, hist] : histsNeeded)
+        {
+            delete hist;
+        }
+        histsNeeded.clear();
     }
 
     return 0;

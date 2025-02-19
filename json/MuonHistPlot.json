@@ -16,7 +16,10 @@
     "logPlot": 0,
 
     "varNames": [
-        "diMuonM"
+        "diMuonM",
+        "diMuonPt",
+        "diMuonPhi",
+        "diMuonEta"
     ],
     "varConfig": "json/variables/MuonVariables.json",
     "needCrop": {
