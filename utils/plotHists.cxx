@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
     }
     // for possible stack plots
     std::vector<std::string> stackOrder = jsonConfig["stackOrder"];
+    int reOrder = jsonConfig["reOrder"];
     std::vector<std::string> numerator = jsonConfig["numerator"];
 
     std::map<std::string, int> isData = jsonConfig["isData"];
@@ -117,7 +118,7 @@ int main(int argc, char *argv[])
                 options.isData[1].emplace(key, isData[key]);
             }
             auto ratioHists = histLoader.getRatios(numerator, stackOrder);
-            pHelper.drawStackHistWithRatio(histsNeeded, stackOrder, ratioHists, options, drawText);
+            pHelper.drawStackHistWithRatio(histsNeeded, stackOrder, reOrder, ratioHists, options, drawText);
             for (auto &[histName, hist] : ratioHists)
             {
                 delete hist;
@@ -127,7 +128,7 @@ int main(int argc, char *argv[])
         else
         {
             if (stackOrder.size() > 0)
-                pHelper.drawStackHist(histsNeeded, stackOrder, options, drawText);
+                pHelper.drawStackHist(histsNeeded, stackOrder, reOrder, options, drawText);
             else
             {
                 if (jsonConfig["normalization"] == 1)

@@ -436,13 +436,32 @@ void PlotControl::drawRatioHist(std::map<std::string, TH1D *> hists, std::map<st
 }
 
 // prepare THStack
-THStack *PlotControl::prepareStackHists(std::map<std::string, TH1D *> &hists, const std::vector<std::string> &stackOrder, std::map<std::string, int> isData)
+THStack *PlotControl::prepareStackHists(std::map<std::string, TH1D *> &hists, std::vector<std::string> &stackOrder, std::map<std::string, int> isData, int reOrder)
 {
     THStack *stack = new THStack(("stack_" + _controllerName).c_str(), "Stacked Histograms");
     std::vector<int> colorScheme = {2, 3, 4, 5, 6, 8, 9, 12, 28, 42};
     int colorIndex = 0;
 
     // TODO add a function to auto-ordering
+    std::vector<std::string> sortedOrder = {};
+    std::map<std::string, float> histIntegrals = {};
+    for (const auto &name : stackOrder)
+    {
+        if (hists.find(name) == hists.end())
+            continue;
+        float histInt = hists[name]->Integral();
+        if (histInt > 1e-6)
+        {
+            sortedOrder.push_back(name);
+            histIntegrals.emplace(name, histInt);
+        }
+    }
+    if (reOrder)
+    {
+        std::sort(sortedOrder.begin(), sortedOrder.end(), [&histIntegrals](const std::string &a, const std::string &b)
+                  { return histIntegrals.at(a) < histIntegrals.at(b); });
+    }
+    stackOrder = sortedOrder;
 
     std::vector<int> reverseColorScheme;
     auto nStack = stackOrder.size();
@@ -451,7 +470,7 @@ THStack *PlotControl::prepareStackHists(std::map<std::string, TH1D *> &hists, co
         reverseColorScheme.push_back(colorScheme[nStack - i - 1]);
     }
 
-    for (const auto &name : stackOrder)
+    for (const auto &name : sortedOrder)
     {
         if (hists.find(name) == hists.end())
         {
@@ -474,6 +493,7 @@ THStack *PlotControl::prepareStackHists(std::map<std::string, TH1D *> &hists, co
 void PlotControl::drawStackHist(
     const std::map<std::string, TH1D *> &hists,
     const std::vector<std::string> &stackOrder,
+    int reOrder,
     const PlotContext &setup,
     const std::vector<std::string> &plotTexts)
 {
@@ -495,7 +515,9 @@ void PlotControl::drawStackHist(
     std::map<std::string, TH1D *> plotHists = setupHists(hists, setup, 0);
     std::map<std::string, int> isData = setup.isData[0];
 
-    THStack *stack = prepareStackHists(plotHists, stackOrder, isData);
+    // pass by reference to update
+    std::vector<std::string> reStackOrder = stackOrder;
+    THStack *stack = prepareStackHists(plotHists, reStackOrder, isData, reOrder);
     std::map<std::string, TH1D *> nonStackedHists;
     for (const auto &[name, hist] : plotHists)
     {
@@ -532,6 +554,10 @@ void PlotControl::drawStackHist(
     // legend and text
     auto len = setHanyangLegend(hists.size(), 0.04, this->_scale[0]);
     // make sure stack is in order
+    for (const auto &name : reStackOrder)
+    {
+        len->AddEntry(plotHists.at(name), name.c_str(), "f");
+    }
     for (const auto &[name, hist] : nonStackedHists)
     {
         if (isData[name])
@@ -543,10 +569,6 @@ void PlotControl::drawStackHist(
             len->AddEntry(hist, name.c_str(), "l");
         }
     }
-    for (const auto &name : stackOrder)
-    {
-        len->AddEntry(plotHists.at(name), name.c_str(), "f");
-    }
     len->Draw("SAME");
     this->_legends.push_back(len);
     drawTexts(plotTexts, 1);
@@ -557,6 +579,7 @@ void PlotControl::drawStackHist(
 void PlotControl::drawStackHistWithRatio(
     const std::map<std::string, TH1D *> &hists,
     const std::vector<std::string> &stackOrder,
+    int reOrder,
     const std::map<std::string, TH1D *> &ratioHists,
     PlotContext setup,
     const std::vector<std::string> &aboveTexts,
@@ -583,7 +606,8 @@ void PlotControl::drawStackHistWithRatio(
     std::map<std::string, TH1D *> plotRatioHists = setupHists(ratioHists, setup, 1);
     std::map<std::string, int> isData = setup.isData[0];
 
-    THStack *stack = prepareStackHists(plotHists, stackOrder, isData);
+    std::vector<std::string> reStackOrder = stackOrder;
+    THStack *stack = prepareStackHists(plotHists, reStackOrder, isData, reOrder);
     std::map<std::string, TH1D *> nonStackedHists;
     for (const auto &[name, hist] : plotHists)
     {
@@ -623,7 +647,7 @@ void PlotControl::drawStackHistWithRatio(
 
     // legend and latex
     auto len = setHanyangLegend(hists.size(), 0.04, this->_scale[0]);
-    for (const auto &name : stackOrder)
+    for (const auto &name : reStackOrder)
     {
         len->AddEntry(plotHists.at(name), name.c_str(), "f");
     }

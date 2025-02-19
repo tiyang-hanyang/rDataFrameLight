@@ -66,7 +66,7 @@ public:
     void setMax(std::map<std::string, TH1D *> hists, int doLog, int isRatio);
     std::map<std::string, TH1D *> setupHists(std::map<std::string, TH1D *> hists, PlotContext setup, int isRatio=0);
     // get stack hist
-    THStack *prepareStackHists(std::map<std::string, TH1D *> &hists, const std::vector<std::string> &stackOrder, std::map<std::string, int> isData);
+    THStack *prepareStackHists(std::map<std::string, TH1D *> &hists, std::vector<std::string> &stackOrder, std::map<std::string, int> isData, int reOrder);
 
     // hanyang style legend
     TLegend *setHanyangLegend(int entries, double textSize = 0.04, double scale = 1.0);
@@ -86,8 +86,8 @@ public:
     // utilize function
     void drawHist(std::map<std::string, TH1D *> hist, PlotContext setup, std::vector<std::string> text={});
     void drawRatioHist(std::map<std::string, TH1D *> hists, std::map<std::string, TH1D *> ratioHists, PlotContext setup, std::vector<std::string> aboveText={}, std::vector<std::string> belowText={});
-    void drawStackHist(const std::map<std::string, TH1D *> &hists, const std::vector<std::string> &stackOrder, const PlotContext &setup, const std::vector<std::string> &plotTexts);
-    void drawStackHistWithRatio(const std::map<std::string, TH1D *> &hists, const std::vector<std::string> &stackOrder, const std::map<std::string, TH1D *> &ratioHists, PlotContext setup, const std::vector<std::string> &aboveTexts, const std::vector<std::string> &belowTexts={});
+    void drawStackHist(const std::map<std::string, TH1D *> &hists, const std::vector<std::string> &stackOrder, int reOrder, const PlotContext &setup, const std::vector<std::string> &plotTexts);
+    void drawStackHistWithRatio(const std::map<std::string, TH1D *> &hists, const std::vector<std::string> &stackOrder, int reOrder, const std::map<std::string, TH1D *> &ratioHists, PlotContext setup, const std::vector<std::string> &aboveTexts, const std::vector<std::string> &belowTexts={});
 };
 
 #endif
