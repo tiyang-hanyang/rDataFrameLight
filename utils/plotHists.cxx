@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 
         // configure output
         std::string outputDir = jsonConfig["outDir"];
-        creatingFolder("plotHists", outputDir);
+        rdfWS_utility::creatingFolder("plotHists", outputDir);
         std::string plotName = outputDir + "/data_MC_" + runEra + "_" + varName + "_" + jobName;
         if (needCrop[varName] == 1)
             plotName += "_crop";
