@@ -40,3 +40,10 @@ add_executable(plotHists utils/plotHists.cxx)
 target_link_libraries(skimSamples projectlib ${ROOT_LIBRARIES})
 target_link_libraries(collectHists projectlib ${ROOT_LIBRARIES})
 target_link_libraries(plotHists projectlib ${ROOT_LIBRARIES})
+
+# for simple install
+file(WRITE ${CMAKE_BINARY_DIR}/setup.sh
+"#!/bin/bash\n"
+"export PATH=\"${CMAKE_BINARY_DIR}/bin:\$PATH\"\n"
+"echo \"Environment setup: ${CMAKE_BINARY_DIR}/bin added to PATH\"\n"
+)
