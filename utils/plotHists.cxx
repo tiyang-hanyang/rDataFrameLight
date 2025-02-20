@@ -101,6 +101,11 @@ int main(int argc, char *argv[])
         }
 
         // take crops TODO
+        if (needCrop[varName] == 1)
+        {   
+            std::vector<int> cropRange = jsonConfig["cropedRange"][varName];
+            histLoader = histLoader.cropHistograms(cropRange[0], cropRange[1]);
+        }
 
         // merge the plots according to the config
         for (const auto &[mergedCh, components] : needMerge)
