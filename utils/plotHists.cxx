@@ -20,15 +20,18 @@ int main(int argc, char *argv[])
         rdfWS_utility::messageERROR("plotHists", "No hist plot job json provided!");
     }
     std::string jsonPath = argv[1];
-    auto jsonConfig = rdfWS_utility::readJson("plotHists", jsonPath);
+    // auto jsonConfig = rdfWS_utility::readJson("plotHists", jsonPath);
+    rdfWS_utility::JsonObject jsonConfig(rdfWS_utility::readJson("plotHists", jsonPath), "Job Config");
 
     // parse basic info from json
-    std::string jobName = jsonConfig["name"];
-    std::string runEra = jsonConfig["era"];
+    std::string jobName = jsonConfig.at("name");
+    std::string runEra = jsonConfig.at("era");
 
     // formulate draw texts
-    std::vector<std::string> drawText = jsonConfig["texts"];
-    float lumiValue = rdfWS_utility::readJson("plotHists", jsonConfig["lumiConfig"])[runEra];
+    std::vector<std::string> drawText = jsonConfig.at("texts");
+    std::string lumiPath = jsonConfig.at("lumiConfig");
+    rdfWS_utility::JsonObject lumiConfig(rdfWS_utility::readJson("plotHists", lumiPath), "Lumi Config");
+    float lumiValue = lumiConfig.at(runEra);
     for (int i = 0; i < drawText.size(); i++)
     {
         std::string text = drawText[i];
@@ -37,8 +40,8 @@ int main(int argc, char *argv[])
     }
 
     // load channels
-    std::vector<std::string> channels = jsonConfig["datasets"];
-    std::map<std::string, std::vector<std::string>> needMerge = jsonConfig["needMerge"];
+    std::vector<std::string> channels = jsonConfig.at("datasets");
+    std::map<std::string, std::vector<std::string>> needMerge = jsonConfig.at("needMerge");
     std::vector<std::string> loadChannels;
     for (const auto &ch : channels)
     {
@@ -54,34 +57,35 @@ int main(int argc, char *argv[])
         }
     }
     // for possible stack plots
-    std::vector<std::string> stackOrder = jsonConfig["stackOrder"];
-    int reOrder = jsonConfig["reOrder"];
-    std::vector<std::string> numerator = jsonConfig["numerator"];
+    std::vector<std::string> stackOrder = jsonConfig.at("stackOrder");
+    int reOrder = jsonConfig.at("reOrder");
+    std::vector<std::string> numerator = jsonConfig.at("numerator");
 
-    std::map<std::string, int> isData = jsonConfig["isData"];
-    std::string dataWeight = jsonConfig["dataWeight"];
-    std::string MCWeight = jsonConfig["MCWeight"];
+    std::map<std::string, int> isData = jsonConfig.at("isData");
+    std::string dataWeight = jsonConfig.at("dataWeight");
+    std::string MCWeight = jsonConfig.at("MCWeight");
 
-    std::string inDir = jsonConfig["inDir"];
+    std::string inDir = jsonConfig.at("inDir");
 
     // for each variable, load the histograms and plot
-    std::vector<std::string> variables = jsonConfig["varNames"];
-    std::map<std::string, int> needCrop = jsonConfig["needCrop"];
+    std::vector<std::string> variables = jsonConfig.at("varNames");
+    std::map<std::string, int> needCrop = jsonConfig.at("needCrop");
     for (const auto &varName : variables)
     {
         // setup drawing options
         PlotContext options;
         options.isData.push_back(isData);
-        std::string varConfigPath = jsonConfig["varConfig"];
-        auto varConfig = rdfWS_utility::readJson("plotHists", varConfigPath)[varName];
-        options.xLabel = varConfig["label"];
-        options.yLabel = {jsonConfig["yLabel"], jsonConfig["yRatioLabel"]};
-        options.doLog = jsonConfig["logPlot"];
-        options.xSize = jsonConfig["histXSize"];
-        options.ySize = jsonConfig["histYSize"];
+        std::string varConfigPath = jsonConfig.at("varConfig");
+        rdfWS_utility::JsonObject varJson(rdfWS_utility::readJson("plotHists", varConfigPath), "Var Config");
+        auto varConfig = varJson.at(varName);
+        options.xLabel = varConfig.at("label").get<std::string>();
+        options.yLabel = {jsonConfig.at("yLabel"), jsonConfig.at("yRatioLabel")};
+        options.doLog = jsonConfig.at("logPlot");
+        options.xSize = jsonConfig.at("histXSize");
+        options.ySize = jsonConfig.at("histYSize");
 
         // configure output
-        std::string outputDir = jsonConfig["outDir"];
+        std::string outputDir = jsonConfig.at("outDir");
         rdfWS_utility::creatingFolder("plotHists", outputDir);
         std::string plotName = outputDir + "/data_MC_" + runEra + "_" + varName + "_" + jobName;
         if (needCrop[varName] == 1)
@@ -102,8 +106,19 @@ int main(int argc, char *argv[])
 
         // take crops TODO
         if (needCrop[varName] == 1)
-        {   
-            std::vector<int> cropRange = jsonConfig["cropedRange"][varName];
+        {
+            // TEST
+            // std::vector<int> cropRange = jsonConfig["cropedRange"][varName];
+            // std::cout << "flag 1" << std::endl;
+            // auto cropRange = rdfWS_utility::parseJson<std::vector<int>>(jsonConfig["cropedRange"], "job option", varName, "plotHists");
+            // std::cout << "flag 2" << std::endl;
+            // auto cropRange2 = jsonConfig.at("cropedRange").at(varName).get<std::vector<int>>();
+            // std::cout << "flag 3" << std::endl;
+            // auto cropRange3 = jsonConfig.at("cropedRange").at("aaaa").get<std::vector<int>>();
+            // std::cout << "flag 4" << std::endl;
+            // auto cropRangeWrong = rdfWS_utility::parseJson<std::vector<int>>(jsonConfig["cropedRange"], "job option", "aaaa", "plotHists");
+            // std::cout << "flag 5" << std::endl;
+            std::vector<int> cropRange = jsonConfig.at("cropedRange").at(varName);;
             histLoader = histLoader.cropHistograms(cropRange[0], cropRange[1]);
         }
 
@@ -115,7 +130,7 @@ int main(int argc, char *argv[])
 
         // output for working plot
         auto histsNeeded = histLoader.getHists(channels);
-        int doRatio = jsonConfig["doRatio"];
+        int doRatio = jsonConfig.at("doRatio");
         if (doRatio)
         {
             options.isData.push_back(std::map<std::string, int>{});
@@ -137,7 +152,7 @@ int main(int argc, char *argv[])
                 pHelper.drawStackHist(histsNeeded, stackOrder, reOrder, options, drawText);
             else
             {
-                if (jsonConfig["normalization"] == 1)
+                if (jsonConfig.at("normalization").get<int>() == 1)
                 {
                     for (auto hist : histsNeeded)
                     {

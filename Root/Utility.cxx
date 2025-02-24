@@ -95,3 +95,17 @@ void rdfWS_utility::creatingFolder(const std::string &prog, const std::string &f
         messageINFO(prog, "Dir " + folderDir + " already exists.");
     }
 }
+
+rdfWS_utility::JsonObject::JsonObject(nlohmann::json jsonConfig, const std::string &jsonName) : _json(jsonConfig), _name(jsonName) {}
+
+rdfWS_utility::JsonObject rdfWS_utility::JsonObject::at(const std::string &item)
+{
+    try
+    {
+        return JsonObject(this->_json.at(item), this->_name);
+    }
+    catch (const nlohmann::json::exception &e)
+    {
+        messageERROR(this->_name, "JSON " + this->_name + " entry " + item + " error: " + e.what());
+    }
+}

@@ -25,41 +25,43 @@ SkimControl::SkimControl(const std::string &configPath)
     this->readConfig(configPath);
 }
 
-void SkimControl::readConfig(nlohmann::json configFile)
+void SkimControl::readConfig(nlohmann::json origConfigFile)
 {
-    // doing the skim need: skimName, channelList, isData, XS_values
+    rdfWS_utility::JsonObject configFile(origConfigFile, "Skim JO config");
     // creating fileList would need era
-    this->_skimName = configFile["name"];
-    this->_run = configFile["run"];
-    this->_year = configFile["year"];
-    this->_era = configFile["era"];
+    this->_skimName = configFile.at("name").get<std::string>();
+    this->_run = configFile.at("run").get<std::string>();
+    this->_year = configFile.at("year").get<std::string>();
+    this->_era = configFile.at("era").get<std::string>();
 
     // mkdir for output
-    this->_outDir = configFile["outDir"];
+    this->_outDir = configFile.at("outDir").get<std::string>();
     rdfWS_utility::creatingFolder("[SkimControl]", this->_outDir);
 
     // channel info
-    this->_channels = configFile["datasets"];
+    this->_channels = configFile.at("datasets").get<std::vector<std::string>>();
     // by default, turn on all the channel skim
     for (const auto &channel : this->_channels)
     {
         this->_isOn.emplace(channel, 1);
     }
-    this->_isData = configFile["isData"];
-    this->_mcWeight = configFile["mcWeight"];
+    this->_isData = configFile.at("isData").get<std::map<std::string, int>>();
+    this->_mcWeight = configFile.at("mcWeight").get<std::string>();
 
     // XS value should be in the json folder
-    if (configFile["XSConfig"] == "")
+    std::string XSConfigPath = configFile.at("XSConfig") ;
+    if (XSConfigPath == "")
         this->_XSvalues = rdfWS_utility::readJson("SkimControl", "json/XS/" + this->_run + ".json");
     else
-        this->_XSvalues = rdfWS_utility::readJson("SkimControl", configFile["XSConfig"]);
+        this->_XSvalues = rdfWS_utility::readJson("SkimControl", XSConfigPath);
     // files
-    if (configFile["sampleConfig"] == "")
+    std::string sampleConfigPath = configFile.at("sampleConfig");
+    if (sampleConfigPath == "")
         this->_samples.emplace("json/samples/" + this->_era + ".json");
     else
-        this->_samples.emplace(configFile["sampleConfig"]);
+        this->_samples.emplace(sampleConfigPath);
     // cuts
-    std::vector<std::string> cutConfigList = configFile["cut"];
+    std::vector<std::string> cutConfigList = configFile.at("cut");
     if (cutConfigList.size() > 0)
     {
         this->_skimCut = CutControl(cutConfigList[0]);
@@ -70,7 +72,7 @@ void SkimControl::readConfig(nlohmann::json configFile)
     }
 
     // branch list
-    std::string branchConfig = configFile["branchConfig"];
+    std::string branchConfig = configFile.at("branchConfig");
     this->_branchList = nlohmann::json(branchConfig);
     // this->_branchList = configFile["branch"];
 }

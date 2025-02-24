@@ -13,25 +13,25 @@
 #include "ROOT/RDataFrame.hxx"
 #include "TChain.h"
 
-void prepareHist(nlohmann::json jsonConfig, std::string variable, SampleControl samples)
+void prepareHist(rdfWS_utility::JsonObject jsonConfig, std::string variable, SampleControl samples)
 {
     // extract dataset info
-    std::vector<std::string> allChannels = jsonConfig["datasets"];
-    std::map<std::string, std::vector<std::string>> needMerge = jsonConfig["needMerge"];
-    std::map<std::string, int> isData = jsonConfig["isData"];
+    std::vector<std::string> allChannels = jsonConfig.at("datasets");
+    std::map<std::string, std::vector<std::string>> needMerge = jsonConfig.at("needMerge");
+    std::map<std::string, int> isData = jsonConfig.at("isData");
 
     // extract var binning info
-    std::string varConfigPath = jsonConfig["varConfig"];
-    auto varConfig = rdfWS_utility::readJson("collectHists", varConfigPath);
+    std::string varConfigPath = jsonConfig.at("varConfig");
+    rdfWS_utility::JsonObject varConfig(rdfWS_utility::readJson("collectHists", varConfigPath), "Var Config");
     // create binning object
     HistBinning *histBins = new HistBinning;
-    histBins->nBins = std::stoi(std::string(varConfig[variable]["nBins"]));
-    histBins->min = std::stof(std::string(varConfig[variable]["min"]));
-    histBins->max = std::stof(std::string(varConfig[variable]["max"]));
+    histBins->nBins = std::stoi(varConfig.at(variable).at("nBins").get<std::string>());
+    histBins->min = std::stof(varConfig.at(variable).at("min").get<std::string>());
+    histBins->max = std::stof(varConfig.at(variable).at("max").get<std::string>());
 
     // extract cutflow
     CutControl histCut;
-    std::vector<std::string> cutConfigList = jsonConfig["cuts"];
+    std::vector<std::string> cutConfigList = jsonConfig.at("cuts");
     if (cutConfigList.size() > 0)
     {
         histCut = CutControl(cutConfigList[0]);
@@ -42,13 +42,13 @@ void prepareHist(nlohmann::json jsonConfig, std::string variable, SampleControl 
     }
 
     // readin lumi by era
-    std::string lumiConfigPath = jsonConfig["lumiConfig"];
-    auto lumiConfig = rdfWS_utility::readJson("collectHists", lumiConfigPath);
-    std::string era = jsonConfig["era"];
-    float lumiVal = lumiConfig[era];
+    std::string lumiConfigPath = jsonConfig.at("lumiConfig");
+    rdfWS_utility::JsonObject lumiConfig(rdfWS_utility::readJson("collectHists", lumiConfigPath), "Lumi Config");
+    std::string era = jsonConfig.at("era");
+    float lumiVal = lumiConfig.at(era);
 
     // out dir for storing histograms
-    std::string outputDir = jsonConfig["outDir"];
+    std::string outputDir = jsonConfig.at("outDir");
 
     // creating HistControl contrainer for all the channels
     HistControl varHistController;
@@ -91,7 +91,7 @@ void prepareHist(nlohmann::json jsonConfig, std::string variable, SampleControl 
             rndDS = rndDS.Define("one", "1");
         if (!isData[channel])
         {
-            std::vector<std::string> mcWeights = jsonConfig["MCweight"];
+            std::vector<std::string> mcWeights = jsonConfig.at("MCweight");
             if (mcWeights.size() > 0)
             {
                 weightName = "MCTotalWeight";
@@ -113,6 +113,8 @@ void prepareHist(nlohmann::json jsonConfig, std::string variable, SampleControl 
 
         // saving name would be datasetName+"_"+varName+"_"+weightName;
         varHistController.createHistogram(rndDS, channel, histBins, variable, weightName, outputDir);
+
+        delete chDS;
     }
 
     delete histBins;
@@ -129,10 +131,11 @@ int main(int argc, char *argv[])
     }
     std::string jsonPath = argv[1];
 
-    auto jsonConfig = rdfWS_utility::readJson("collectHists", jsonPath);
+    rdfWS_utility::JsonObject jsonConfig(rdfWS_utility::readJson("collectHists", jsonPath), "JO Config");
     // variables & samples
-    std::vector<std::string> variables = jsonConfig["varNames"];
-    SampleControl samples(jsonConfig["sampleConfig"]);
+    std::vector<std::string> variables = jsonConfig.at("varNames");
+    std::string sampleConfigPath = jsonConfig.at("sampleConfig");
+    SampleControl samples(sampleConfigPath);
     for (const auto &varName : variables)
     {
         prepareHist(jsonConfig, varName, samples);
