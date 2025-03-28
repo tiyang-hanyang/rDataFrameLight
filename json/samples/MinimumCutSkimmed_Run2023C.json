@@ -1,0 +1,196 @@
+{
+    "dir": {
+        "Muon0": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/data/Run2023C/Muon0/NANOAOD/22Sep2023_v1-v1/",
+        "Muon1": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/data/Run2023C/Muon1/NANOAOD/22Sep2023_v1-v1/",
+        "DY2L": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/DYto2L-4Jets_MLL-50_TuneCP5_13p6TeV_madgraphMLM-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v1/",
+        "ttbarDL": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "ttbarSL": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTtoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "WJets": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/WtoLNu-4Jets_TuneCP5_13p6TeV_madgraphMLM-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v3/",
+        "WW": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/WW_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "WZ": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/WZ_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "ZZ": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/ZZ_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "TTTT": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTTT_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TTHBB": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v3/",
+        "TTHZZ": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTH_Hto2Z_4LFilter_M-125_TuneCP5_13p6TeV_powheg-jhugenv752-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v3/",
+        "TTWH": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTWH_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v3/",
+        "TTZH": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTZH_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v3/",
+        "TTWW": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTWW_TuneCP5_13p6TeV_madgraph-madspin-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TTWZ": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTWZ_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TTZZ": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTZZ_TuneCP5_13p6TeV_madgraph-madspin-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v4/",
+        "QCD_15_20_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-15to20_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v3/",
+        "QCD_20_30_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-20to30_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_30_50_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-30to50_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_50_80_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-50to80_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_80_120_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-80to120_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_120_170_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-120to170_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_170_300_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-170to300_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_300_470_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-300to470_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_470_600_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-470to600_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_600_800_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-600to800_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_800_1000_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-800to1000_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_1000_mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/QCD_PT-1000_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "TbarB": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TBbar": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TWm2L": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TWminusto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "TbarWp2L": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TbarWplusto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v4/",
+        "TWm1L": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TWminustoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "TbarWp1L": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TbarWplustoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v6/",
+
+        "TTHH_DL_2B2V": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Signal_Muon_minimum_skim/mc/Run2023C/TTHH_DL_2B2V/",
+        "TTHH_DL_2B2Tau": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Signal_Muon_minimum_skim/mc/Run2023C/TTHH_DL_2B2Tau/",
+        "TTHH_SL_2B2V": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Signal_Muon_minimum_skim/mc/Run2023C/TTHH_SL_2B2V/",
+        "TTHH_SL_2B2Tau": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Signal_Muon_minimum_skim/mc/Run2023C/TTHH_SL_2B2Tau/",
+
+
+        "TTZ_low": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTLL_MLL-4to50_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TTZ_high": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTLL_MLL-50_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/70000/",
+        "TTW": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTLNu-1Jets_TuneCP5_13p6TeV_amcatnloFXFX-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TTHnonBB": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TTHtoNon2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "THQ": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/THQ_ctcvcp_HIncl_M-125_4FS_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v4/",
+        "THW": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/THW_ctcvcp_HIncl_M-125_5FS_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v4/",
+        "GGZZ_2mu2e": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/GluGluToContinto2Zto2E2Mu_TuneCP5_13p6TeV_mcfm701-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "GGZZ_4mu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/GluGlutoContinto2Zto4Mu_TuneCP5_13p6TeV_mcfm-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "GGZZ_4e": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/GluGlutoContinto2Zto4E_TuneCP5_13p6TeV_mcfm-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "GGZZ_2mu2tau": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/GluGluToContinto2Zto2Mu2Tau_TuneCP5_13p6TeV_mcfm701-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "GGZZ_2e2tau": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/GluGluToContinto2Zto2E2Tau_TuneCP5_13p6TeV_mcfm701-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "GGZZ_2mu2nu": "",
+        "GGZZ_2e2nu": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/GluGluToContinto2Zto2E2Nu_TuneCP5_13p6TeV_mcfm701-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "DYG": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/DYGto2LG-1Jets_MLL-50_PTG-10to100_TuneCP5_13p6TeV_amcatnloFXFX-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v4/",
+        "WG": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/WGtoLNuG-1Jets_PTG-10to100_TuneCP5_13p6TeV_amcatnloFXFX-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "ZZ4l": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/ZZto4L_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v3/",
+        "WZ3l": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/WZto3LNu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "TZQB": "/home/tiyang/public/rDataFrameLight_git/SampleSkim_noPtCut/Muon_minimum_skim/mc/Run3Summer23NanoAODv12/TZQB-Zto2L-4FS_MLL-30_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/"
+
+    },
+    "file": {
+        "Muon0": [
+            "Muon0_2023MuonMinimumSkim.root"
+        ],
+        "Muon1": [
+            "Muon1_2023MuonMinimumSkim.root"
+        ],
+        "DY2L": [
+            "DY2L_2023MuonMinimumSkim.root"
+        ],
+        "ttbarDL": [
+            "ttbarDL_2023MuonMinimumSkim.root"
+        ],
+        "ttbarSL": [
+            "ttbarSL_2023MuonMinimumSkim.root"
+        ],
+        "WJets": [
+            "WJets_2023MuonMinimumSkim.root"
+        ],
+        "WW": [
+            "WW_2023MuonMinimumSkim.root"
+        ],
+        "WZ": [
+            "WZ_2023MuonMinimumSkim.root"
+        ],
+        "ZZ": [
+            "ZZ_2023MuonMinimumSkim.root"
+        ],
+        "TTTT": [
+            "TTTT_2023MuonMinimumSkim.root"
+        ],
+        "TTHBB": [
+            "TTHBB_2023MuonMinimumSkim.root"
+        ],
+        "TTHZZ": [
+            "TTHZZ_2023MuonMinimumSkim.root"
+        ],
+        "TTWH": [
+            "TTWH_2023MuonMinimumSkim.root"
+        ],
+        "TTZH": [
+            "TTZH_2023MuonMinimumSkim.root"
+        ],
+        "TTWW": [
+            "TTWW_2023MuonMinimumSkim.root"
+        ],
+        "TTWZ": [
+            "TTWZ_2023MuonMinimumSkim.root"
+        ],
+        "TTZZ": [
+            "TTZZ_2023MuonMinimumSkim.root"
+        ],
+        "QCD_15_20_mu": [
+            "QCD_15_20_mu_2023MuonMinimumSkim.root"
+        ],
+        "QCD_20_30_mu": [
+            "QCD_20_30_mu_2023MuonMinimumSkim.root"
+        ],
+        "QCD_30_50_mu": [
+            "QCD_30_50_mu_2023MuonMinimumSkim.root"
+        ],
+        "QCD_50_80_mu": [
+            "QCD_50_80_mu_2023MuonMinimumSkim.root"
+        ],
+        "QCD_80_120_mu": [
+            "QCD_80_120_mu_2023MuonMinimumSkim.root"
+        ],
+        "QCD_120_170_mu": [
+            "QCD_120_170_mu_2023MuonMinimumSkim.root"
+        ],
+        "QCD_170_300_mu": [
+            "QCD_170_300_mu_2023MuonMinimumSkim.root"
+        ],
+        "QCD_300_470_mu": [
+            "QCD_300_470_mu_2023MuonMinimumSkim.root"
+        ],
+        "QCD_470_600_mu": [
+            "QCD_470_600_mu_2023MuonMinimumSkim.root"
+        ],
+        "QCD_600_800_mu": [
+            "QCD_600_800_mu_2023MuonMinimumSkim.root"
+        ],
+        "QCD_800_1000_mu": [
+            "QCD_800_1000_mu_2023MuonMinimumSkim.root"
+        ],
+        "QCD_1000_mu": [
+            "QCD_1000_mu_2023MuonMinimumSkim.root"
+        ],
+        "TbarB": [
+            "TbarB_2023MuonMinimumSkim.root"
+        ],
+        "TBbar": [
+            "TBbar_2023MuonMinimumSkim.root"
+        ],
+        "TWm2L": [
+            "TWm2L_2023MuonMinimumSkim.root"
+        ],
+        "TbarWp2L": [
+            "TbarWp2L_2023MuonMinimumSkim.root"
+        ],
+        "TWm1L": [
+            "TWm1L_2023MuonMinimumSkim.root"
+        ],
+        "TbarWp1L": [
+            "TbarWp1L_2023MuonMinimumSkim.root"
+        ],
+
+        "TTHH_DL_2B2V": ["TTHH_DL_2B2V_2023MuonMinimumSkim.root"],
+        "TTHH_DL_2B2Tau": ["TTHH_DL_2B2Tau_2023MuonMinimumSkim.root"],
+        "TTHH_SL_2B2V": ["TTHH_SL_2B2V_2023MuonMinimumSkim.root"],
+        "TTHH_SL_2B2Tau": ["TTHH_SL_2B2Tau_2023MuonMinimumSkim.root"],
+
+        "TTZ_low": ["TTZ_low_2023MuonMinimumSkim.root"],
+        "TTZ_high": ["TTZ_high_2023MuonMinimumSkim.root"],
+        "TTW": ["TTW_2023MuonMinimumSkim.root"],
+        "TTHnonBB": ["TTHnonBB_2023MuonMinimumSkim.root"],
+        "THQ": ["THQ_2023MuonMinimumSkim.root"],
+        "THW": ["THW_2023MuonMinimumSkim.root"],
+        "GGZZ_2mu2e": ["GGZZ_2mu2e_2023MuonMinimumSkim.root"],
+        "GGZZ_4mu": ["GGZZ_4mu_2023MuonMinimumSkim.root"],
+        "GGZZ_4e": ["GGZZ_4e_2023MuonMinimumSkim.root"],
+        "GGZZ_2mu2tau": ["GGZZ_2mu2tau_2023MuonMinimumSkim.root"],
+        "GGZZ_2e2tau": ["GGZZ_2e2tau_2023MuonMinimumSkim.root"],
+        "GGZZ_2mu2nu": ["GGZZ_2mu2nu_2023MuonMinimumSkim.root"],
+        "GGZZ_2e2nu": ["GGZZ_2e2nu_2023MuonMinimumSkim.root"],
+        "DYG": ["DYG_2023MuonMinimumSkim.root"],
+        "WG": ["WG_2023MuonMinimumSkim.root"],
+        "ZZ4l": ["ZZ4l_2023MuonMinimumSkim.root"],
+        "WZ3l": ["WZ3l_2023MuonMinimumSkim.root"],
+        "TZQB": ["TZQB_2023MuonMinimumSkim.root"]
+    }
+}

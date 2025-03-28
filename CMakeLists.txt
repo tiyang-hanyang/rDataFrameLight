@@ -20,7 +20,7 @@ find_package(ROOT REQUIRED COMPONENTS RIO Hist Tree Gpad ROOTDataFrame)
 
 include(${ROOT_USE_FILE})
 
-add_compile_options(-std=c++17)
+add_compile_options(-std=c++20)
 
 include_directories(${ROOT_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})

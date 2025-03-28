@@ -1,0 +1,41 @@
+[
+    "run",
+    "luminosityBlock",
+    "event",
+
+    "LHEPdfWeight",
+    "LHEScaleWeight",
+    "PSWeight",
+    "genWeight",
+
+    "nJet",
+    "Jet_jetId",
+    "Jet_pt",
+    "Jet_pt_uncorr",
+    "Jet_pt_unc",
+    "Jet_jer",
+    "Jet_eta",
+    "Jet_phi",
+    "Jet_mass",
+    "Jet_btagPNetB",
+
+    "nMuon",
+    "Muon_charge",
+    "Muon_eta",
+    "Muon_mass",
+    "Muon_pfRelIso04_all",
+    "Muon_phi",
+    "Muon_pt",
+    "Muon_ptErr",
+    "Muon_tightId",
+    "Muon_dxy",
+    "Muon_dxyErr",
+    "Muon_dz",
+    "Muon_dzErr",
+
+    "nTightMuon",
+    "nIsoMuon",
+    "nGoodJet",
+    "nBJet",
+    "nType2BJet"
+]

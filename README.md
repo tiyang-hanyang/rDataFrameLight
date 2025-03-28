@@ -20,6 +20,21 @@ make
 source setup.sh
 ```
 
+In case of dealing with 2024 data, the CMSSW would be needed to avoid large memory leakage due to the NANOAOD structure.
+The release setup can be done as follows on a machine with the cvmfs installed. Note that if the compile has been done previously, the cache need to be cleaned first.
+```
+source /cvmfs/cms.cern.ch/cmsset_default.sh
+cmsrel CMSSW_14_2_2
+cd CMSSW_14_2_2
+cmsenv
+scram b
+cd \<Your build directory\>
+rm CMakeCache.txt
+cmake ../source/
+make
+source setup.sh
+```
+
 ## Running Analysis
 
 ### skimSamples

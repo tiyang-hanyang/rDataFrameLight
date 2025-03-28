@@ -5,8 +5,8 @@
 
     "year": "2023",
     "run": "Run3",
-    "era": "Run2023D",
-    "inDir": "diMuon_SS/",
+    "era": ["Run2023C", "Run2023D"],
+    "inDir": "diMuon_SS",
     "outDir": "diMuon_SS_plot_withSignal/",
 
     "yLabel": "Events",
@@ -16,10 +16,18 @@
     "logPlot": 0,
 
     "varNames": [
+        "leadingMuonPt",
+        "leadingMuonEta",
+        "leadingMuonPhi",
+        "subleadingMuonPt",
+        "subleadingMuonEta",
+        "subleadingMuonPhi",
         "diMuonM",
         "diMuonPt",
+        "diMuonEta",
         "diMuonPhi",
-        "diMuonEta"
+        "MET_pt",
+        "MET_phi"
     ],
     "varConfig": "json/variables/MuonVariables.json",
     "needCrop": {
@@ -29,72 +37,160 @@
         "subleadingMuonPt": 0,
         "subleadingMuonEta": 0,
         "subleadingMuonPhi": 0,
-        "diMuonM": 0,
+        "diMuonM": 1,
         "diMuonPt": 0,
         "diMuonEta": 0,
-        "diMuonPhi": 0
+        "diMuonPhi": 0,
+        "MET_pt": 0,
+        "MET_phi": 0
     },
     "cropedRange": {
-        "diMuonM": [80, 110]
+        "diMuonM": [70, 160]
     },
 
     "datasets": [
         "Muon",
-        "DY2L",
-        "ttbarDL",
-        "ttbarSL",
-        "WJets",
+        "DYW",
+        "ttbar",
         "diBoson",
-        "TTHH_2B2V",
-        "TTHH_2B2Tau"
+        "SingleTop",
+        "SingleH",
+        "TTHH",
+        "TTVV",
+        "TTTT",
+        "QCD"
     ],
+    "colorMapping": {
+        "Muon": 1,
+        "TTHH": 1,
+        "DYW": 2,
+        "ttbar": 3,
+        "SingleTop": 4,
+        "diBoson": 6,
+        "SingleH": 38,
+        "TTVV": 15,
+        "TTTT": 42,
+        "QCD": 28
+    },
     "datasetLabel": {
         "Muon": "data",
-        "DY2L": "Drell-Yan",
-        "ttbarDL": "t#bar{t} DL",
-        "ttbarSL": "t#bar{t} SL",
-        "WJets": "W+Jets",
-        "diBoson": "diBoson ll",
-        "TTHH_2B2V": "t#bar{t}HH b#bar{b}VV",
-        "TTHH_2B2Tau": "t#bar{t}HH b#bar{b}#tau#tau"
+        "DYW": "DY & W",
+        "ttbar": "t#bar{t}",
+        "diBoson": "VV",
+        "TTTT": "t#bar{t}t#bar{t}",
+        "SingleTop": "t",
+        "SingleH": "H",
+        "TTVV": "t#bar{t}VV",
+        "TTHH": "t#bar{t}HH",
+        "QCD": "QCD",
+
+        "ttbarDL": "t#bar{t}DL",
+        "ttbarSL": "t#bar{t}SL",
+        "DY2L": "DY",
+        "WJets": "W",
+        "TTHBB": "t#bar{t}Hbb",
+        "TTHZZ": "t#bar{t}HZZ",
+        "TTWH": "t#bar{t}WH",
+        "TTZH": "t#bar{t}ZH",
+        "TbarB": "#bar{t}b",
+        "TBbar": "t#bar{b}",
+        "TWm2L": "tW^{-}2l",
+        "TbarWp2L": "#bar{t}W^{+}2l",
+        "TWm1L": "tW^{-}1l",
+        "TbarWp1L": "#bar{t}W^{+}1l",
+        "WW2L2Nu": "WW2l2#nu",
+        "WZ2L2Q": "WZ2l2jet",
+        "ZZ2L2Q": "ZZ2l2jet",
+        "ZZ2L2Nu": "ZZ2l2#nu",
+        "TTHH_DL_2B2V": "t#bar{t}HH DLbbVV",
+        "TTHH_DL_2B2Tau": "t#bar{t}HH DLbb#tau#tau",
+        "TTHH_SL_2B2V": "t#bar{t}HH SLbbVV",
+        "TTHH_SL_2B2Tau": "t#bar{t}HH SLbb#tau#tau",
+        "QCD_80_120_mu": "QCD 80-120",
+        "QCD_120_170_mu": "QCD 120-170",
+        "QCD_170_300_mu": "QCD 170-300",
+        "TTWW": "t#bar{t}WW",
+        "TTWZ": "t#bar{t}WZ",
+        "TTZZ": "t#bar{t}ZZ"
     },
 
     "needMerge": {
+        "ttbar": [
+            "ttbarDL",
+            "ttbarSL"
+        ],
+        "DYW": [
+            "DY2L",
+            "WJets"
+        ],
+        "SingleH": [
+            "TTHBB",
+            "TTHZZ",
+            "TTWH",
+            "TTZH"
+        ],
+        "SingleTop": [
+            "TbarB",
+            "TBbar",
+            "TWm2L",
+            "TbarWp2L",
+            "TWm1L",
+            "TbarWp1L"
+        ],
         "diBoson": [
             "WW2L2Nu",
             "WZ2L2Q",
             "ZZ2L2Q",
             "ZZ2L2Nu"
+        ],
+        "TTHH": [
+            "TTHH_DL_2B2V",
+            "TTHH_DL_2B2Tau",
+            "TTHH_SL_2B2V",
+            "TTHH_SL_2B2Tau"
+        ],
+        "QCD": [
+            "QCD_80_120_mu",
+            "QCD_120_170_mu",
+            "QCD_170_300_mu"
+        ],
+        "TTVV": [
+            "TTWW",
+            "TTWZ",
+            "TTZZ"
         ]
     },
     "isData": {
-        "Muon": 1,
-        "DY2L": 0,
-        "ttbarDL": 0,
-        "ttbarSL": 0,
-        "WJets": 0,
-        "diBoson": 0,
-        "WW2L2Nu": 0,
-        "WZ2L2Q": 0,
-        "ZZ2L2Q": 0,
-        "ZZ2L2Nu": 0,
-        "TTHH_2B2V" :0,
-        "TTHH_2B2Tau":0
+        "Muon":1,
+        "DYW":0,
+        "ttbar":0,
+        "diBoson":0,
+        "SingleTop":0,
+        "SingleH":0,
+        "TTHH":0,
+        "TTVV":0,
+        "TTTT":0,
+        "QCD":0
     },
     "dataWeight": "one",
     "MCWeight": "MCTotalWeight",
+
+    "isSignal": [
+        "TTHH"
+    ],
 
     "numerator": [
         "Muon"
     ],
     "stackOrder": [
-        "WJets",
+        "DYW",
+        "ttbar",
         "diBoson",
-        "ttbarSL",
-        "ttbarDL",
-        "DY2L",
-        "TTHH_2B2V",
-        "TTHH_2B2Tau"
+        "TTTT",
+        "TTVV",
+        "SingleTop",
+        "SingleH",
+        "QCD"
     ],
     "reOrder": 1,
 

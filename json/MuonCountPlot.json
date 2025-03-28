@@ -5,81 +5,152 @@
 
     "year": "2023",
     "run": "Run3",
-    "era": "Run2023D",
-    "inDir": "muonCount/",
-    "outDir": "diMuon_SS_plot_withSignal/",
+    "era": ["Run2023D"],
+    "inDir": "MinimumCutCount",
+    "outDir": "MinimumCutCount_plot/",
 
     "yLabel": "Events",
     "yRatioLabel": "Data/MC",
     "histXSize": 600,
     "histYSize": 600,
-    "logPlot": 0,
+    "logPlot": 1,
 
     "varNames": [
-        "nGoodMuon"
+        "nTightMuon",
+        "nIsoMuon",
+        "nBJet"
     ],
     "varConfig": "json/variables/MuonVariables.json",
     "needCrop": {
-        "leadingMuonPt": 0,
-        "leadingMuonEta": 0,
-        "leadingMuonPhi": 0,
-        "subleadingMuonPt": 0,
-        "subleadingMuonEta": 0,
-        "subleadingMuonPhi": 0,
-        "diMuonM": 0,
-        "diMuonPt": 0,
-        "diMuonEta": 0,
-        "diMuonPhi": 0
     },
     "cropedRange": {
-        "diMuonM": [80, 110]
     },
 
     "datasets": [
-        "DY2L",
-        "ttbarDL",
-        "ttbarSL",
-        "WJets",
-        "TTHH_2B2V",
-        "TTHH_2B2Tau",
-        "Muon0"
+        "Muon",
+        "DYW",
+        "ttbar",
+        "diBoson",
+        "SingleTop",
+        "SingleH",
+        "TTHH",
+        "TTVV",
+        "TTTT",
+        "QCD"
     ],
+    "colorMapping": {
+        "Muon": 1,
+        "TTHH": 2,
+        "DYW": 416,
+        "ttbar": 4,
+        "SingleTop": 400,
+        "diBoson": 880,
+        "SingleH": 432,
+        "TTVV": 920,
+        "TTTT": 800,
+        "QCD": 616
+    },
     "datasetLabel": {
-        "Muon0": "data",
-        "DY2L": "Drell-Yan",
-        "ttbarDL": "t#bar{t} DL",
-        "ttbarSL": "t#bar{t} SL",
-        "WJets": "W+Jets",
-        "TTHH_2B2V": "t#bar{t}HH b#bar{b}VV",
-        "TTHH_2B2Tau": "t#bar{t}HH b#bar{b}#tau#tau"
+        "Muon": "data",
+        "DYW": "DY & W",
+        "ttbar": "t#bar{t}",
+        "diBoson": "VV",
+        "TTTT": "t#bar{t}t#bar{t}",
+        "SingleTop": "t",
+        "SingleH": "H",
+        "TTVV": "t#bar{t}V(V)",
+        "TTHH": "t#bar{t}HH",
+        "QCD": "QCD"
     },
     "needMerge": {
+        "ttbar": [
+            "ttbarDL",
+            "ttbarSL"
+        ],
+        "DYW": [
+            "DY2L",
+            "WJets",
+            "WG",
+            "DYG"
+        ],
+        "SingleH": [
+            "TTHBB",
+            "TTHnonBB",
+            "TTWH",
+            "TTZH",
+            "THQ",
+            "THW"
+        ],
+        "SingleTop": [
+            "TbarB",
+            "TBbar",
+            "TWm2L",
+            "TbarWp2L",
+            "TWm1L",
+            "TbarWp1L",
+            "TZQB"
+        ],
+        "diBoson": [
+            "WW",
+            "WZ",
+            "ZZ"
+        ],
+        "TTHH": [
+            "TTHH_DL_2B2V",
+            "TTHH_DL_2B2Tau",
+            "TTHH_SL_2B2V",
+            "TTHH_SL_2B2Tau"
+        ],
+        "TTVV": [
+            "TTWW",
+            "TTWZ",
+            "TTZZ",
+            "TTZ_low",
+            "TTZ_high",
+            "TTW"
+        ]
     },
     "isData": {
-        "Muon0": 1,
-        "DY2L": 0,
-        "ttbarDL": 0,
-        "ttbarSL": 0,
-        "WJets": 0,
-        "TTHH_2B2V" :0,
-        "TTHH_2B2Tau":0
+        "Muon":1,
+        "DYW":0,
+        "ttbar":0,
+        "diBoson":0,
+        "SingleTop":0,
+        "SingleH":0,
+        "TTHH":0,
+        "TTVV":0,
+        "TTTT":0,
+        "QCD":0
     },
     "dataWeight": "one",
     "MCWeight": "MCTotalWeight",
 
+    "isSignal": [
+        "TTHH"
+    ],
+
     "numerator": [
+        "Muon"
     ],
     "stackOrder": [
+        "DYW",
+        "ttbar",
+        "diBoson",
+        "TTTT",
+        "TTVV",
+        "SingleTop",
+        "SingleH",
+        "QCD"
     ],
-    "reOrder": 0,
+    "reOrder": 1,
 
      "texts":  [
         "CMS Preliminary", 
         "#sqrt{s} = 13.6 TeV, L= %1.0f pb^{-1}",
-        "t#bar{t}HH signal"
+        "t#bar{t}HH Global CR"
     ],
     "lumiConfig": "json/Lumi/Run3.json",
 
-    "doRatio": 0,
-    "normalization": 1
+    "doRatio": 1,
+    "normalization": 0
 }

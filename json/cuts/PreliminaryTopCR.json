@@ -1,0 +1,13 @@
+[
+    ["cut", "muon number cut", "(nGoodMuon==1)"],
+    ["cut", "exact 1 bjet", "(nBJet==1)"],
+    ["define", "BJet_pt", "Jet_pt[SelBJetRun3]"],
+    ["define", "BJet_eta", "Jet_eta[SelBJetRun3]"],
+    ["define", "BJet_phi", "Jet_phi[SelBJetRun3]"],
+    ["define", "BJet_mass", "Jet_mass[SelBJetRun3]"],
+    ["define", "leadingBJet_pt", "BJet_pt[0]"],
+    ["define", "leadingBJet_eta", "BJet_eta[0]"],
+    ["define", "leadingBJet_phi", "BJet_phi[0]"],
+    ["define", "leadingBJet_mass", "BJet_mass[0]"],
+    ["cut", "b pt > 50 GeV", "(leadingBJet_pt>50)"]
+]

@@ -12,6 +12,22 @@
 
 #include "TH1D.h"
 
+std::vector<std::map<std::string, double>> getStackUncert(std::vector<std::string> stackOrder, rdfWS_utility::JsonObject jsonConfig)
+{
+    if (stackOrder.size() == 0) return {};
+    std::string systFile = jsonConfig.at("stackUncert");
+    std::map<std::string, std::vector<double>> systJson = rdfWS_utility::readJson("plotHists", systFile);
+
+    std::map<std::string, double> systUp, systDown;
+    for (auto& [key, variation]: systJson)
+    {
+        systUp.emplace(key, variation[1]);
+        systDown.emplace(key, variation[0]);
+    }
+    return {systUp, systDown};
+}
+
+
 int main(int argc, char *argv[])
 {
     // read in the config
@@ -25,13 +41,18 @@ int main(int argc, char *argv[])
 
     // parse basic info from json
     std::string jobName = jsonConfig.at("name");
-    std::string runEra = jsonConfig.at("era");
+    std::vector<std::string> runEra = jsonConfig.at("era");
 
     // formulate draw texts
     std::vector<std::string> drawText = jsonConfig.at("texts");
     std::string lumiPath = jsonConfig.at("lumiConfig");
     rdfWS_utility::JsonObject lumiConfig(rdfWS_utility::readJson("plotHists", lumiPath), "Lumi Config");
-    float lumiValue = lumiConfig.at(runEra);
+    float lumiValue = lumiConfig.at(runEra[0]);
+    for (int i = 1; i < runEra.size(); i++)
+    {
+        float tempLumiValue = lumiConfig.at(runEra[i]);
+        lumiValue += tempLumiValue;
+    }
     for (int i = 0; i < drawText.size(); i++)
     {
         std::string text = drawText[i];
@@ -41,6 +62,7 @@ int main(int argc, char *argv[])
 
     // load channels
     std::vector<std::string> channels = jsonConfig.at("datasets");
+    std::map<std::string, std::string> channelLabels = jsonConfig.at("datasetLabel");
     std::map<std::string, std::vector<std::string>> needMerge = jsonConfig.at("needMerge");
     std::vector<std::string> loadChannels;
     for (const auto &ch : channels)
@@ -61,9 +83,12 @@ int main(int argc, char *argv[])
     int reOrder = jsonConfig.at("reOrder");
     std::vector<std::string> numerator = jsonConfig.at("numerator");
 
-    std::map<std::string, int> isData = jsonConfig.at("isData");
+    // treat styles
+    const std::vector<std::string> isSignal = jsonConfig.at("isSignal");
+    const std::map<std::string, int> isData = jsonConfig.at("isData");
     std::string dataWeight = jsonConfig.at("dataWeight");
     std::string MCWeight = jsonConfig.at("MCWeight");
+    const std::map<std::string, int> colorScheme = jsonConfig.at("colorMapping");
 
     std::string inDir = jsonConfig.at("inDir");
 
@@ -74,7 +99,10 @@ int main(int argc, char *argv[])
     {
         // setup drawing options
         PlotContext options;
-        options.isData.push_back(isData);
+        std::vector<std::string> isSignalCopy = isSignal;
+        options.isSignal = isSignalCopy;
+        std::map<std::string, int> isDataCopy = isData;
+        options.isData.push_back(isDataCopy);
         std::string varConfigPath = jsonConfig.at("varConfig");
         rdfWS_utility::JsonObject varJson(rdfWS_utility::readJson("plotHists", varConfigPath), "Var Config");
         auto varConfig = varJson.at(varName);
@@ -87,7 +115,13 @@ int main(int argc, char *argv[])
         // configure output
         std::string outputDir = jsonConfig.at("outDir");
         rdfWS_utility::creatingFolder("plotHists", outputDir);
-        std::string plotName = outputDir + "/data_MC_" + runEra + "_" + varName + "_" + jobName;
+        std::string plotName = outputDir + "/data_MC";
+        for (auto era : runEra)
+        {
+            plotName += "_";
+            plotName += era;
+        }
+        plotName += "_" + varName + "_" + jobName;
         if (needCrop[varName] == 1)
             plotName += "_crop";
         PlotControl pHelper(plotName);
@@ -97,28 +131,33 @@ int main(int argc, char *argv[])
         for (const auto &ch : loadChannels)
         {
             std::string histName = ch + "_" + varName + "_";
-            if (isData[ch] == 1)
+            if (isDataCopy[ch] == 1)
                 histName += dataWeight;
             else
                 histName += MCWeight;
-            histLoader.loadHistogram(inDir + "/" + histName + ".root", histName, ch, varName);
+            histLoader.loadHistogram(inDir + "_" + runEra[0] + "/" + histName + ".root", histName, ch, varName);
+        }
+        // add together when more than 1 eras
+        for (int i = 1; i < runEra.size(); i++)
+        {
+            HistControl tempHistLoader;
+            for (const auto &ch : loadChannels)
+            {
+                std::string histName = ch + "_" + varName + "_";
+                if (isDataCopy[ch] == 1)
+                    histName += dataWeight;
+                else
+                    histName += MCWeight;
+                tempHistLoader.loadHistogram(inDir + "_" + runEra[i] + "/" + histName + ".root", histName, ch, varName);
+            }
+            histLoader = histLoader.addHistograms(tempHistLoader);
         }
 
         // take crops TODO
         if (needCrop[varName] == 1)
         {
-            // TEST
-            // std::vector<int> cropRange = jsonConfig["cropedRange"][varName];
-            // std::cout << "flag 1" << std::endl;
-            // auto cropRange = rdfWS_utility::parseJson<std::vector<int>>(jsonConfig["cropedRange"], "job option", varName, "plotHists");
-            // std::cout << "flag 2" << std::endl;
-            // auto cropRange2 = jsonConfig.at("cropedRange").at(varName).get<std::vector<int>>();
-            // std::cout << "flag 3" << std::endl;
-            // auto cropRange3 = jsonConfig.at("cropedRange").at("aaaa").get<std::vector<int>>();
-            // std::cout << "flag 4" << std::endl;
-            // auto cropRangeWrong = rdfWS_utility::parseJson<std::vector<int>>(jsonConfig["cropedRange"], "job option", "aaaa", "plotHists");
-            // std::cout << "flag 5" << std::endl;
-            std::vector<int> cropRange = jsonConfig.at("cropedRange").at(varName);;
+            std::vector<int> cropRange = jsonConfig.at("cropedRange").at(varName);
+            ;
             histLoader = histLoader.cropHistograms(cropRange[0], cropRange[1]);
         }
 
@@ -131,38 +170,41 @@ int main(int argc, char *argv[])
         // output for working plot
         auto histsNeeded = histLoader.getHists(channels);
         int doRatio = jsonConfig.at("doRatio");
-        if (doRatio)
+        options.isData.push_back(std::map<std::string, int>{});
+        for (auto key : numerator)
         {
-            options.isData.push_back(std::map<std::string, int>{});
-            for (auto key : numerator)
-            {
-                options.isData[1].emplace(key, isData[key]);
-            }
-            auto ratioHists = histLoader.getRatios(numerator, stackOrder);
-            pHelper.drawStackHistWithRatio(histsNeeded, stackOrder, reOrder, ratioHists, options, drawText);
-            for (auto &[histName, hist] : ratioHists)
-            {
-                delete hist;
-            }
-            ratioHists.clear();
+            options.isData[1].emplace(key, isDataCopy[key]);
         }
-        else
-        {
-            if (stackOrder.size() > 0)
-                pHelper.drawStackHist(histsNeeded, stackOrder, reOrder, options, drawText);
-            else
-            {
-                if (jsonConfig.at("normalization").get<int>() == 1)
-                {
-                    for (auto hist : histsNeeded)
-                    {
-                        hist.second->Scale(1.0 / hist.second->Integral());
-                    }
-                }
 
-                pHelper.drawHist(histsNeeded, options, drawText);
+        // allowing normalization, if no stack
+        if (stackOrder.size() == 0)
+        {
+            if (jsonConfig.at("normalization").get<int>() == 1)
+            {
+                for (auto hist : histsNeeded)
+                {
+                    hist.second->Scale(1.0 / hist.second->Integral());
+                }
             }
         }
+
+        std::map<std::string, TH1D *> ratioHists = {};
+        // currently only allowing ratio plot with respect to stack
+        if (doRatio && stackOrder.size() > 0)
+        {
+            ratioHists = histLoader.getRatios(numerator, stackOrder);
+        }
+
+        // to add possible uncertainties
+        auto stackUncert = getStackUncert(stackOrder, jsonConfig);
+        std::map<std::string, double> stackUp = stackUncert[0];
+        std::map<std::string, double> stackDown = stackUncert[1];
+        pHelper.drawStackHistWithRatio(histsNeeded, stackOrder, stackUp, stackDown, reOrder, ratioHists, options, colorScheme, channelLabels, drawText);
+        for (auto &[histName, hist] : ratioHists)
+        {
+            delete hist;
+        }
+        ratioHists.clear();
 
         // delocate memory of copied hists
         for (auto &[histName, hist] : histsNeeded)

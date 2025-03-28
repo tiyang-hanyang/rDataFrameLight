@@ -49,6 +49,10 @@ void prepareHist(rdfWS_utility::JsonObject jsonConfig, std::string variable, Sam
 
     // out dir for storing histograms
     std::string outputDir = jsonConfig.at("outDir");
+    // add the runEra infor together
+    outputDir += "_";
+    outputDir += era;
+    outputDir += "/";
 
     // creating HistControl contrainer for all the channels
     HistControl varHistController;

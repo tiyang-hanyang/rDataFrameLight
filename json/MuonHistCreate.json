@@ -5,8 +5,8 @@
 
     "year": "2023",
     "run": "Run3",
-    "era": "Run2023D",
-    "outDir": "diMuon_SS/",
+    "era": "Run2023C",
+    "outDir": "diMuon_SS",
 
     "sampleConfig": "json/samples/skimmed_Run2023D.json",
 
@@ -42,9 +42,30 @@
         "ZZ2L2Q",
         "ZZ2L2Nu",
 
-        "TTHH_incl",
-        "TTHH_2B2V",
-        "TTHH_2B2Tau"
+        "TTTT",
+        "TTHBB",
+        "TTHZZ",
+        "TTWH",
+        "TTZH",
+        "TTWW",
+        "TTWZ",
+        "TTZZ",
+
+        "TTHH_DL_2B2V",
+        "TTHH_DL_2B2Tau",
+        "TTHH_SL_2B2V",
+        "TTHH_SL_2B2Tau",
+
+        "QCD_80_120_mu",
+        "QCD_120_170_mu",
+        "QCD_170_300_mu",
+
+        "TbarB",
+        "TBbar",
+        "TWm2L",
+        "TbarWp2L",
+        "TWm1L",
+        "TbarWp1L"
     ],
 
     "isData": {
@@ -59,9 +80,30 @@
         "ZZ2L2Q": 0,
         "ZZ2L2Nu": 0,
 
-        "TTHH_incl": 0,
-        "TTHH_2B2V": 0,
-        "TTHH_2B2Tau": 0
+        "TTTT": 0,
+        "TTHBB": 0,
+        "TTHZZ": 0,
+        "TTWH": 0,
+        "TTZH": 0,
+        "TTWW": 0,
+        "TTWZ": 0,
+        "TTZZ": 0,
+
+        "TTHH_DL_2B2V": 0,
+        "TTHH_DL_2B2Tau": 0,
+        "TTHH_SL_2B2V": 0,
+        "TTHH_SL_2B2Tau": 0,
+
+        "QCD_80_120_mu": 0,
+        "QCD_120_170_mu": 0,
+        "QCD_170_300_mu": 0,
+
+        "TbarB":0,
+        "TBbar":0,
+        "TWm2L":0,
+        "TbarWp2L":0,
+        "TWm1L":0,
+        "TbarWp1L":0
     },
 
     "needMerge" : {

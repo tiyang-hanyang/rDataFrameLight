@@ -1,0 +1,345 @@
+{
+    "diMuonM": {
+        "label": "m_{#mu#mu}",
+        "nBins": "20",
+        "min": "50.0",
+        "max": "250.0"
+    },
+    "leadingMuonPt": {
+        "label": "leading Muon p_{T} / GeV",
+        "nBins": "27",
+        "min": "30.0",
+        "max": "300.0"
+    },
+    "leadingMuonEta": {
+        "label": "leading Muon #eta",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "leadingMuonPhi": {
+        "label": "leading Muon #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "subleadingMuonPt": {
+        "label": "subleading Muon p_{T} / GeV",
+        "nBins": "27",
+        "min": "30.0",
+        "max": "300.0"
+    },
+    "subleadingMuonEta": {
+        "label": "subleading Muon #eta",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "subleadingMuonPhi": {
+        "label": "subleading Muon #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "diMuonPt": {
+        "label": "Di-muon p_{T} / GeV",
+        "nBins": "23",
+        "min": "70.0",
+        "max": "300.0"
+    },
+    "diMuonEta": {
+        "label": "Di-muon #eta",
+        "nBins": "36",
+        "min": "-9.0",
+        "max": "9.0"
+    },
+    "diMuonPhi": {
+        "label": "Di-muon #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "nGoodMuon": {
+        "label": "Muon Multiplicity",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "nTightMuon": {
+        "label": "Tight Muon Multiplicity",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "nIsoMuon": {
+        "label": "Isolated Muon Multiplicity",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "nGoodJet": {
+        "label": "Jet Multiplicity",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "nBJet": {
+        "label": "b-Jet Multiplicity",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "MET_phi":
+    {
+        "label": "MET #phi",
+        "nBins": "20",
+        "min": "-3.14",
+        "max": "3.14"
+    },
+    "MET_pt":
+    {
+        "label": "MET p_{T}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "200.0"
+    },
+    "leadingBJet_pt": {
+        "label": "leading b-jet p_{T} / GeV",
+        "nBins": "27",
+        "min": "30.0",
+        "max": "300.0"
+    },
+    "leadingBJet_eta": {
+        "label": "leading b-jet #eta",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "leadingBJet_phi": {
+        "label": "leading b-jet #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "nMuon_pt17": {
+        "label": "Muon Multiplicity p_{T}#geq17 GeV",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "nMuon_pt8": {
+        "label": "Muon Multiplicity p_{T}#geq8 GeV",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },"nMuon_pt10": {
+        "label": "Muon Multiplicity p_{T}#geq10 GeV",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "nMuon_pt15": {
+        "label": "Muon Multiplicity p_{T}#geq15 GeV",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "nMuon_pt20": {
+        "label": "Muon Multiplicity p_{T}#geq20 GeV",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "nMuon_pt25": {
+        "label": "Muon Multiplicity p_{T}#geq25 GeV",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "nMuon_pt30": {
+        "label": "Muon Multiplicity p_{T}#geq30 GeV",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "leadingMuonPt_pt17": {
+        "label": "Leading Muon p_{T}#geq17 GeV",
+        "nBins": "29",
+        "min": "10.",
+        "max": "300.0"
+    },
+    "leadingMuonPhi_pt17": {
+        "label": "Leading Muon #phi p_{T}#geq17 GeV",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "leadingMuonEta_pt17": {
+        "label": "Leading Muon #eta p_{T}#geq17 GeV",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "leadingMuonPt_pt20": {
+        "label": "Leading Muon p_{T}#geq20 GeV",
+        "nBins": "28",
+        "min": "20.",
+        "max": "300.0"
+    },
+    "leadingMuonPhi_pt20": {
+        "label": "Leading Muon #phi p_{T}#geq20 GeV",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "leadingMuonEta_pt20": {
+        "label": "Leading Muon #eta p_{T}#geq20 GeV",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "leadingMuonPt_pt25": {
+        "label": "Leading Muon p_{T}#geq25 GeV",
+        "nBins": "28",
+        "min": "20.",
+        "max": "300.0"
+    },
+    "leadingMuonPhi_pt25": {
+        "label": "Leading Muon #phi p_{T}#geq25 GeV",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "leadingMuonEta_pt25": {
+        "label": "Leading Muon #eta p_{T}#geq25 GeV",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "leadingMuonPt_pt30": {
+        "label": "Leading Muon p_{T}#geq30 GeV",
+        "nBins": "27",
+        "min": "30.",
+        "max": "300.0"
+    },
+    "leadingMuonPhi_pt30": {
+        "label": "Leading Muon #phi p_{T}#geq30 GeV",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "leadingMuonEta_pt30": {
+        "label": "Leading Muon #eta p_{T}#geq30 GeV",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "leadingMuonPt_pt35": {
+        "label": "Leading Muon p_{T}#geq35 GeV",
+        "nBins": "27",
+        "min": "30.",
+        "max": "300.0"
+    },
+    "leadingMuonPhi_pt35": {
+        "label": "Leading Muon #phi p_{T}#geq35 GeV",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "leadingMuonEta_pt35": {
+        "label": "Leading Muon #eta p_{T}#geq35 GeV",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "subleadingMuonPt_pt17": {
+        "label": "Subleading Muon p_{T}#geq17 GeV",
+        "nBins": "29",
+        "min": "10.",
+        "max": "300.0"
+    },
+    "subleadingMuonPhi_pt17": {
+        "label": "Subleading Muon #phi p_{T}#geq17 GeV",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "subleadingMuonEta_pt17": {
+        "label": "Subleading Muon #eta p_{T}#geq17 GeV",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "subleadingMuonPt_pt20": {
+        "label": "Subleading Muon p_{T}#geq20 GeV",
+        "nBins": "28",
+        "min": "20.",
+        "max": "300.0"
+    },
+    "subleadingMuonPhi_pt20": {
+        "label": "Subleading Muon #phi p_{T}#geq20 GeV",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "subleadingMuonEta_pt20": {
+        "label": "Subleading Muon #eta p_{T}#geq20 GeV",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "subleadingMuonPt_pt25": {
+        "label": "Subleading Muon p_{T}#geq25 GeV",
+        "nBins": "28",
+        "min": "20.",
+        "max": "300.0"
+    },
+    "subleadingMuonPhi_pt25": {
+        "label": "Subleading Muon #phi p_{T}#geq25 GeV",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "subleadingMuonEta_pt25": {
+        "label": "Subleading Muon #eta p_{T}#geq25 GeV",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "subleadingMuonPt_pt30": {
+        "label": "Subleading Muon p_{T}#geq30 GeV",
+        "nBins": "27",
+        "min": "30.",
+        "max": "300.0"
+    },
+    "subleadingMuonPhi_pt30": {
+        "label": "Subleading Muon #phi p_{T}#geq30 GeV",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "subleadingMuonEta_pt30": {
+        "label": "Subleading Muon #eta p_{T}#geq30 GeV",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "subleadingMuonPt_pt35": {
+        "label": "Subleading Muon p_{T}#geq35 GeV",
+        "nBins": "27",
+        "min": "30.",
+        "max": "300.0"
+    },
+    "subleadingMuonPhi_pt35": {
+        "label": "Subleading Muon #phi p_{T}#geq35 GeV",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
+    },
+    "subleadingMuonEta_pt35": {
+        "label": "Subleading Muon #eta p_{T}#geq35 GeV",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    }
+}

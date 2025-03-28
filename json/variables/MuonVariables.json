@@ -42,7 +42,7 @@
         "max": "3.14159"
     },
     "diMuonPt": {
-        "label": "leading Muon p_{T} / GeV",
+        "label": "Di-muon p_{T} / GeV",
         "nBins": "23",
         "min": "70.0",
         "max": "300.0"
@@ -61,6 +61,18 @@
     },
     "nGoodMuon": {
         "label": "Muon Multiplicity",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "nTightMuon": {
+        "label": "Tight Muon Multiplicity",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0"
+    },
+    "nIsoMuon": {
+        "label": "Isolated Muon Multiplicity",
         "nBins": "6",
         "min": "0.0",
         "max": "6.0"
@@ -90,5 +102,23 @@
         "nBins": "20",
         "min": "0.0",
         "max": "200.0"
+    },
+    "leadingBJet_pt": {
+        "label": "leading b-jet p_{T} / GeV",
+        "nBins": "27",
+        "min": "30.0",
+        "max": "300.0"
+    },
+    "leadingBJet_eta": {
+        "label": "leading b-jet #eta",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4"
+    },
+    "leadingBJet_phi": {
+        "label": "leading b-jet #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159"
     }
 }

@@ -8,7 +8,7 @@
     "era": "Run2023D",
     "sampleConfig": "",
     "XSConfig": "",
-    "outDir": "AtLeastDimuon_skim/",
+    "outDir": "RelaxedTriggeredMuon_skim/",
     "datasets": [
         "Muon0",
         "Muon1",
@@ -23,7 +23,28 @@
         "ZZ2L2Nu",
         "WW",
         "WZ",
-        "ZZ"
+        "ZZ",
+
+        "TTTT",
+        "TTHBB",
+        "TTHZZ",
+        "TTWH",
+        "TTZH",
+        "TTWW",
+        "TTWZ",
+        "TTZZ",
+        "QCD_30_50_mu",
+        "QCD_50_80_mu",
+        "QCD_80_120_mu",
+        "QCD_120_170_mu",
+        "QCD_170_300_mu",
+
+        "TbarB",
+        "TBbar",
+        "TWm2L",
+        "TbarWp2L",
+        "TWm1L",
+        "TbarWp1L"
     ],
     "isData": {
         "Muon0": 1,
@@ -39,14 +60,34 @@
         "ZZ2L2Nu": 0,
         "WW": 0,
         "WZ": 0,
-        "ZZ": 0
+        "ZZ": 0,
+
+        "TTTT": 0,
+        "TTHBB": 0,
+        "TTHZZ": 0,
+        "TTWH": 0,
+        "TTZH": 0,
+        "TTWW": 0,
+        "TTWZ": 0,
+        "TTZZ": 0,
+        "QCD_30_50_mu": 0,
+        "QCD_50_80_mu": 0,
+        "QCD_80_120_mu": 0,
+        "QCD_120_170_mu": 0,
+        "QCD_170_300_mu": 0,
+
+        "TbarB": 0,
+        "TBbar": 0,
+        "TWm2L": 0,
+        "TbarWp2L": 0,
+        "TWm1L": 0,
+        "TbarWp1L": 0
     },
     "mcWeight": "genWeight",
     "cut": [
         "json/cuts/DiMuonTrigger2023.json",
-        "json/cuts/GoodMuon.json",
-        "json/cuts/AtLeastDiMuon.json"
+        "json/cuts/RelaxedMuon.json"
     ],
 
-    "branchConfig": "json/branches/DiMuonSkim.json"
+    "branchConfig": "json/branches/MuonRelax.json"
 }

@@ -1,0 +1,118 @@
+{
+    "dir": {
+        "Muon0": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/data/Run2023D/Muon0/NANOAOD/22Sep2023_v1-v1/",
+        "Muon1": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/data/Run2023D/Muon1/NANOAOD/22Sep2023_v1-v1/",
+        "DY2L": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/DYto2L-4Jets_MLL-50_TuneCP5_13p6TeV_madgraphMLM-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "ttbarDL": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TTto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "ttbarSL": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TTtoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "WJets": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/WtoLNu-4Jets_TuneCP5_13p6TeV_madgraphMLM-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "WW": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/WW_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "WZ": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/WZ_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "ZZ": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/ZZ_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "TTTT": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TTTT_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v6-v2/",
+        "TTHBB": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TTHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "TTHZZ": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TTH_Hto2Z_4LFilter_M-125_TuneCP5_13p6TeV_powheg-jhugenv752-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v6-v2/",
+        "TTWH": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TTWH_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v6-v2/",
+        "TTZH": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TTZH_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v6-v2/",
+        "TTWW": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TTWW_TuneCP5_13p6TeV_madgraph-madspin-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v6-v2/",
+        "TTWZ": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TTWZ_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v6-v2/",
+        "TTZZ": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TTZZ_TuneCP5_13p6TeV_madgraph-madspin-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v6-v2/",
+        "QCD_30_50_mu": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/QCD_PT-30to50_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "QCD_50_80_mu": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/QCD_PT-50to80_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "QCD_80_120_mu": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/QCD_PT-80to120_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "QCD_120_170_mu": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/QCD_PT-120to170_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "QCD_170_300_mu": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/QCD_PT-170to300_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v2/",
+        "TbarB": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v6-v2/",
+        "TBbar": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v6-v2/",
+        "TWm2L": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TWminusto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "TbarWp2L": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TbarWplusto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v6-v2/",
+        "TWm1L": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TWminustoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v2-v3/",
+        "TbarWp1L": "/home/tiyang/public/rDataFrameLight_git/run/Run2023DSkim/OnlyOneMuon_skim/mc/Run3Summer23BPixNanoAODv12/TbarWplustoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_postBPix_v6-v2/"
+    },
+    "file": {
+        "Muon0": [
+            "Muon0_2023OnlyOneMuonSkim.root"
+        ],
+        "Muon1": [
+            "Muon1_2023OnlyOneMuonSkim.root"
+        ],
+        "DY2L": [
+            "DY2L_2023OnlyOneMuonSkim.root"
+        ],
+        "ttbarDL": [
+            "ttbarDL_2023OnlyOneMuonSkim.root"
+        ],
+        "ttbarSL": [
+            "ttbarSL_2023OnlyOneMuonSkim.root"
+        ],
+        "WJets": [
+            "WJets_2023OnlyOneMuonSkim.root"
+        ],
+        "WW": [
+            "WW_2023OnlyOneMuonSkim.root"
+        ],
+        "WZ": [
+            "WZ_2023OnlyOneMuonSkim.root"
+        ],
+        "ZZ": [
+            "ZZ_2023OnlyOneMuonSkim.root"
+        ],
+        "TTTT": [
+            "TTTT_2023OnlyOneMuonSkim.root"
+        ],
+        "TTHBB": [
+            "TTHBB_2023OnlyOneMuonSkim.root"
+        ],
+        "TTHZZ": [
+            "TTHZZ_2023OnlyOneMuonSkim.root"
+        ],
+        "TTWH": [
+            "TTWH_2023OnlyOneMuonSkim.root"
+        ],
+        "TTZH": [
+            "TTZH_2023OnlyOneMuonSkim.root"
+        ],
+        "TTWW": [
+            "TTWW_2023OnlyOneMuonSkim.root"
+        ],
+        "TTWZ": [
+            "TTWZ_2023OnlyOneMuonSkim.root"
+        ],
+        "TTZZ": [
+            "TTZZ_2023OnlyOneMuonSkim.root"
+        ],
+        "QCD_30_50_mu": [
+            "QCD_30_50_mu_2023OnlyOneMuonSkim.root"
+        ],
+        "QCD_50_80_mu": [
+            "QCD_50_80_mu_2023OnlyOneMuonSkim.root"
+        ],
+        "QCD_80_120_mu": [
+            "QCD_80_120_mu_2023OnlyOneMuonSkim.root"
+        ],
+        "QCD_120_170_mu": [
+            "QCD_120_170_mu_2023OnlyOneMuonSkim.root"
+        ],
+        "QCD_170_300_mu": [
+            "QCD_170_300_mu_2023OnlyOneMuonSkim.root"
+        ],
+        "TbarB": [
+            "TbarB_2023OnlyOneMuonSkim.root"
+        ],
+        "TBbar": [
+            "TBbar_2023OnlyOneMuonSkim.root"
+        ],
+        "TWm2L": [
+            "TWm2L_2023OnlyOneMuonSkim.root"
+        ],
+        "TbarWp2L": [
+            "TbarWp2L_2023OnlyOneMuonSkim.root"
+        ],
+        "TWm1L": [
+            "TWm1L_2023OnlyOneMuonSkim.root"
+        ],
+        "TbarWp1L": [
+            "TbarWp1L_2023OnlyOneMuonSkim.root"
+        ]
+    }
+}

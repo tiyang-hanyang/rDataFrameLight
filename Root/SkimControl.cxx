@@ -7,6 +7,9 @@
 #include <stdexcept>
 #include <memory>
 #include <regex>
+#include <csignal>
+#include <unistd.h>
+#include <atomic>
 
 #include "TFile.h"
 #include "TTree.h"
@@ -36,7 +39,7 @@ void SkimControl::readConfig(nlohmann::json origConfigFile)
 
     // mkdir for output
     this->_outDir = configFile.at("outDir").get<std::string>();
-    rdfWS_utility::creatingFolder("[SkimControl]", this->_outDir);
+    rdfWS_utility::creatingFolder("SkimControl", this->_outDir);
 
     // channel info
     this->_channels = configFile.at("datasets").get<std::vector<std::string>>();
@@ -49,7 +52,7 @@ void SkimControl::readConfig(nlohmann::json origConfigFile)
     this->_mcWeight = configFile.at("mcWeight").get<std::string>();
 
     // XS value should be in the json folder
-    std::string XSConfigPath = configFile.at("XSConfig") ;
+    std::string XSConfigPath = configFile.at("XSConfig");
     if (XSConfigPath == "")
         this->_XSvalues = rdfWS_utility::readJson("SkimControl", "json/XS/" + this->_run + ".json");
     else
@@ -72,8 +75,9 @@ void SkimControl::readConfig(nlohmann::json origConfigFile)
     }
 
     // branch list
-    std::string branchConfig = configFile.at("branchConfig");
-    this->_branchList = nlohmann::json(branchConfig);
+    std::string branchPath = configFile.at("branchConfig");
+    rdfWS_utility::JsonObject branchJson(rdfWS_utility::readJson("SkimControl", branchPath), "Branch Config");
+    this->_branchList = branchJson.get<std::vector<std::string>>();
     // this->_branchList = configFile["branch"];
 }
 
@@ -188,13 +192,36 @@ void SkimControl::turnOff(const std::string &channels)
     }
 }
 
+////////////////////////////////////////////////// Exiting check gracefully
+
+SkimControl *SkimControl::instance = nullptr;
+
+void SkimControl::signalHandler(int signum)
+{
+    if (instance)
+    {
+        instance->stop_requested = true;
+    }
+}
+
 ////////////////////////////////////////////////// Process the Skim running
 
 void SkimControl::run()
 {
+    // add a ctrl+C detector
+    instance = this;
+    signal(SIGINT, SkimControl::signalHandler);
+
     // need to use chain, as skim requires reweighting based
     for (const auto &channel : this->_channels)
     {
+        // detect stopping message, handling after this loop
+        if (stop_requested)
+        {
+            rdfWS_utility::messageINFO("SkimControl", "Stop requested. Exiting before processing dataset " + channel);
+            break;
+        }
+
         if (!this->_isOn[channel])
             continue;
         rdfWS_utility::messageINFO("SkimControl", "Starting processing channel " + channel);
@@ -218,8 +245,19 @@ void SkimControl::run()
         if (isData)
         {
             std::string dirPart = filePaths[0];
+            if (dirPart.find("/data/") == std::string::npos)
+                rdfWS_utility::messageERROR("SkimControl", "The data path does not have '/data/' in the path, please have a check");
             dirPart = dirPart.substr(dirPart.find("/data/"));
             dirPart = dirPart.substr(0, dirPart.rfind("/"));
+            // 2024 storage structure is different, need special treatment
+            // a typical 2023 sample: /data1/common/NanoAOD/data/Run2023C/Muon0/NANOAOD/22Sep2023_v1-v1/2530000/030eead5-93f9-405c-863c-a62244712e91.root
+            // 2024 case: /data1/common/NanoAOD/data/Run2024C/Muon0/NANOAOD/PromptReco-v1/000/379/415/00000/80b3773e-c489-435b-a25b-027ff8e64f64.root
+            if (this->_year == "2024")
+            {
+                dirPart = dirPart.substr(0, dirPart.rfind("/"));
+                dirPart = dirPart.substr(0, dirPart.rfind("/"));
+                dirPart = dirPart.substr(0, dirPart.rfind("/"));
+            }
             dirPart = dirPart.substr(0, dirPart.rfind("/") + 1);
             outDir += dirPart;
         }

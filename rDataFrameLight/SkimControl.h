@@ -36,7 +36,7 @@ private:
     std::string _mcWeight;
     std::map<std::string, float> _XSvalues;
     std::optional<SampleControl> _samples;
-    // allow mannually turn off
+    // allow allow manually turn off
     std::map<std::string, int> _isOn;
 
     // branch to keep
@@ -52,6 +52,11 @@ private:
     void _createGoldenJsonFunc();
     // ROOT::RDF::RNode applyGoldenJson(ROOT::RDF::RNode origData);
 
+    // for gracefully exit
+    static void signalHandler(int signum);
+    static SkimControl* instance;
+    std::atomic<bool> stop_requested{false};
+
 public:
     SkimControl() = default;
     explicit SkimControl(nlohmann::json configFile);
@@ -63,8 +68,8 @@ public:
     void readConfig(const std::string& configPath);
 
     // turn off & turn on channels to run
-    void turnOn(const std::string& channles);
-    void turnOff(const std::string& channles);
+    void turnOn(const std::string& channels);
+    void turnOff(const std::string& channels);
 
     // better to split run one by one file, to avoid failure in the middle
     void run();
