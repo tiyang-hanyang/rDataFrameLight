@@ -35,6 +35,38 @@ make
 source setup.sh
 ```
 
+## preparing the correctionlib
+```
+cd ../
+mkdir correction/
+cd correction
+# downloading Rochester correction
+git clone https://gitlab.cern.ch/cms-muonPOG/muonscarekit.git RochesterCorr
+# downloading PU, jetvetomap, Muon SF corrections
+git clone https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration.git POGCorr
+cd POGCorr/POG/JME/2023_Summer23/
+gunzip jetvetomaps.json.gz
+cd ../2023_Summer23BPix/
+gunzip jetvetomaps.json.gz
+cd ../../LUM/2023_Summer23/
+gunzip puWeights.json.gz
+cd ../2023_Summer23BPix
+gunzip puWeights.json.gz
+cd ../../MUO/2023_Summer23/
+gunzip muon_Z.json.gz
+cd ../2023_Summer23BPix
+gunzip muon_Z.json.gz
+cd ../../../../
+# downloading Drell-Yan Z pt corrections
+git clone https://gitlab.cern.ch/cms-higgs-leprare/hleprare.git DYZptCorr
+cd DYZptCorr/DYweightCorrlib/
+gunzip DY_pTll_weights_2023preBPix_v2.json.gz
+gunzip DY_pTll_weights_2023postBPix_v2.json.gz
+cd ../../../run/
+```
+The names of the CMS correction packages are very important here for the correction scripts to find the files. Do not change them here.
+For the POG json correctionlib integration, the json files are all archived, here shows the method to unzip the 2023 files. If want to do more period, one can unzip corresponding files as well.
+
 ## Running Analysis
 
 ### skimSamples
