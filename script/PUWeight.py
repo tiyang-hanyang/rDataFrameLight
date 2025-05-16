@@ -12,7 +12,6 @@ class PUReweightProcesser(postProcess.correctionApplier):
         branchArray = list(rdf.GetColumnNames())
         branchArray.append("PUWeight")
 
-#############
         rdf = rdf.Define("PUWeight", "PUReweightFunc(Pileup_nTrueInt)")
 
         print("PU reweighting DONE")
@@ -47,11 +46,14 @@ def main():
     # correctionlib json files accordingly
     correctionFiles = {
         # "Run3Summer22EENanoAODv12": "/home/tiyang/public/rDataFrameLight_git/correction/",
-        "Run3Summer23NanoAODv12": "/home/tiyang/public/rDataFrameLight_git/correction/jsonpog-integration-master/POG/LUM/2023_Summer23/puWeights.json",
-        "Run3Summer23BPixNanoAODv12": "/home/tiyang/public/rDataFrameLight_git/correction/jsonpog-integration-master/POG/LUM/2023_Summer23BPix/puWeights.json"
+        "Run3Summer23NanoAODv12": this_dir+ "/../../" +"correction/POGCorr/POG/LUM/2023_Summer23/puWeights.json",
+        "Run3Summer23BPixNanoAODv12": this_dir+ "/../../" +"correction/POGCorr/POG/LUM/2023_Summer23BPix/puWeights.json"
     }
 
     from MetricSkimmedFiles import PUFileLists as jsonLists
+    for key in jsonLists.keys():
+        jsonLists[key] = this_dir+ "/../" + jsonLists[key]
+
     # from MetricSkimmedFiles import datasets
 
     # firstly only test the DY2L

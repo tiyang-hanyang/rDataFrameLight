@@ -1,35 +1,45 @@
-JetVetoFileLists = {
-    # mc
-    "Run3Summer22EENanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/MetricMuon/MetricMuonSkimmed_Run3Summer22EENanoAODv12.json",
-    "Run3Summer23NanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/MetricMuon/MetricMuonSkimmed_Run3Summer23NanoAODv12.json",
-    "Run3Summer23BPixNanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/MetricMuon/MetricMuonSkimmed_Run3Summer23BPixNanoAODv12.json",
+RawSampleLists = {
+    # mc 
+    "Run3Summer23NanoAODv12": "json/samples/Run3Summer23NanoAODv12.json",
+    "Run3Summer23BPixNanoAODv12": "json/samples/Run3Summer23BPixNanoAODv12.json",
 
     # data
-    "Run2023C": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/MetricMuon/MetricMuonSkimmed_Run2023C.json",
-    "Run2023D": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/MetricMuon/MetricMuonSkimmed_Run2023D.json"
+    "Run2023C": "json/samples/Run2023C.json",
+    "Run2023D": "json/samples/Run2023D.json"
 }
 
-RochesterFileLists = {
-    "Run3Summer23NanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/JetVeto/JetVeto_Run3Summer23NanoAODv12.json",
-    "Run3Summer23BPixNanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/JetVeto/JetVeto_Run3Summer23BPixNanoAODv12.json",
+MetricSkimmedLists = {
+    # mc
+    "Run3Summer22EENanoAODv12": "json/samples/MetricMuon/MetricMuonSkimmed_Run3Summer22EENanoAODv12.json",
+    "Run3Summer23NanoAODv12": "json/samples/MetricMuon/MetricMuonSkimmed_Run3Summer23NanoAODv12.json",
+    "Run3Summer23BPixNanoAODv12": "json/samples/MetricMuon/MetricMuonSkimmed_Run3Summer23BPixNanoAODv12.json",
 
-    "Run2023C": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/JetVeto/JetVeto_Run2023C.json",
-    "Run2023D": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/JetVeto/JetVeto_Run2023D.json"
+    # data
+    "Run2023C": "json/samples/MetricMuon/MetricMuonSkimmed_Run2023C.json",
+    "Run2023D": "json/samples/MetricMuon/MetricMuonSkimmed_Run2023D.json"
 }
 
-ZPtFileLists = {
-    "Run3Summer23NanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/Rochester/Rochester_Run3Summer23NanoAODv12.json",
-    "Run3Summer23BPixNanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/Rochester/Rochester_Run3Summer23BPixNanoAODv12.json"
+JetVetoedLists = {
+    "Run3Summer23NanoAODv12": "json/samples/JetVeto/JetVeto_Run3Summer23NanoAODv12.json",
+    "Run3Summer23BPixNanoAODv12": "json/samples/JetVeto/JetVeto_Run3Summer23BPixNanoAODv12.json",
+
+    "Run2023C": "json/samples/JetVeto/JetVeto_Run2023C.json",
+    "Run2023D": "json/samples/JetVeto/JetVeto_Run2023D.json"
+}
+
+RochesterCorrectedLists = {
+    "Run3Summer23NanoAODv12": "json/samples/Rochester/Rochester_Run3Summer23NanoAODv12.json",
+    "Run3Summer23BPixNanoAODv12": "json/samples/Rochester/Rochester_Run3Summer23BPixNanoAODv12.json"
 }
 
 PUFileLists = {
-    "Run3Summer23NanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/Run3Summer23NanoAODv12_ForPUWeight.json", 
-    "Run3Summer23BPixNanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/Run3Summer23BPixNanoAODv12_ForPUWeight.json"
+    "Run3Summer23NanoAODv12": "json/samples/Run3Summer23NanoAODv12_ForPUWeight.json", 
+    "Run3Summer23BPixNanoAODv12": "json/samples/Run3Summer23BPixNanoAODv12_ForPUWeight.json"
 }
 
 MuonCorrectionFileLists = {
-    "Run3Summer23NanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/Run3Summer23NanoAODv12_MuonCorr.json", 
-    "Run3Summer23BPixNanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/Run3Summer23BPixNanoAODv12_MuonCorr.json"
+    "Run3Summer23NanoAODv12": "json/samples/Run3Summer23NanoAODv12_MuonCorr.json", 
+    "Run3Summer23BPixNanoAODv12": "json/samples/Run3Summer23BPixNanoAODv12_MuonCorr.json"
 }
 
 MuonDS = ["Muon0", "Muon1"]
@@ -117,7 +127,7 @@ datasets = {
     "2022": MuonDS22,
     "Run2023C": MuonDS,
     "Run2023D": MuonDS,
-    "2024": MuonDS,
+    "Run2024C": MuonDS,
     "Run3Summer22EENanoAODv12": mcDatasets,
     "Run3Summer23NanoAODv12": mcDatasets,
     "Run3Summer23BPixNanoAODv12": mcDatasets,

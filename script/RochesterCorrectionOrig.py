@@ -131,28 +131,30 @@ def main():
 
     # specify the periods to run
     periods = [
-        #"Run3Summer23NanoAODv12", 
+        "Run3Summer23NanoAODv12", 
         "Run3Summer23BPixNanoAODv12"
     ]
 
     # correctionlib json files accordingly
     correctionFiles = {
-        "Run3Summer23NanoAODv12": "/home/tiyang/public/rDataFrameLight_git/correction/Rochester/muonscarekit-master/corrections/2023_Summer23.json",
-        "Run3Summer23BPixNanoAODv12": "/home/tiyang/public/rDataFrameLight_git/correction/Rochester/muonscarekit-master/corrections/2023_Summer23BPix.json"
+        "Run3Summer23NanoAODv12": this_dir+ "/../../" +"correction/RochesterCorr/corrections/2023_Summer23.json",
+        "Run3Summer23BPixNanoAODv12": this_dir+ "/../../" +"correction/RochesterCorr/corrections/2023_Summer23BPix.json"
     }
 
     jsonLists = {
-        "Run3Summer23NanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/Run3Summer23NanoAODv12.json",
-        "Run3Summer23BPixNanoAODv12": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/Run3Summer23BPixNanoAODv12.json"
+        "Run3Summer23NanoAODv12": this_dir+ "/../" +"json/samples/Run3Summer23NanoAODv12.json",
+        "Run3Summer23BPixNanoAODv12": this_dir+ "/../" +"json/samples/Run3Summer23BPixNanoAODv12.json"
     }
-    #datasets = ["DY2L"]
-    from MetricSkimmedFiles import datasets
+
+    datasets = ["DY2L"]
+    #from MetricSkimmedFiles import datasets
 
     for era in periods:
         print("skim era: " + str(era))
         ROOT.gInterpreter.ProcessLine('load_correction("' + correctionFiles[era] +'");')
         # ROOT.gInterpreter.ProcessLine('bind_correction("' + era + '");')
-        postProcess.correction(jsonLists, era, datasets[era], RochesterCorrection)
+        # postProcess.correction(jsonLists, era, datasets[era], RochesterCorrection)
+        postProcess.correction(jsonLists, era, datasets, RochesterCorrection)
 
 if __name__ == "__main__":
     main()

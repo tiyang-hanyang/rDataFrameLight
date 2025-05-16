@@ -105,13 +105,14 @@ def main():
 
     # correctionlib json files accordingly
     correctionFiles = {
-        "Run2023C": "/home/tiyang/public/rDataFrameLight_git/correction/Rochester/muonscarekit-master/corrections/2023_Summer23.json",
-        "Run2023D": "/home/tiyang/public/rDataFrameLight_git/correction/Rochester/muonscarekit-master/corrections/2023_Summer23BPix.json"
+        #"Run2023C": "/home/tiyang/public/rDataFrameLight_git/correction/Rochester/muonscarekit-master/corrections/2023_Summer23.json",
+        "Run2023C": this_dir+ "/../../" +"correction/RochesterCorr/corrections/2023_Summer23.json",
+        "Run2023D": this_dir+ "/../../" +"correction/RochesterCorr/corrections/2023_Summer23BPix.json"
     }
 
     jsonLists = {
-        "Run2023C": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/Run2023C.json",
-        "Run2023D": "/home/tiyang/public/rDataFrameLight_git/source/json/samples/Run2023D.json"
+        "Run2023C": this_dir+ "/../" +"json/samples/Run2023C.json",
+        "Run2023D": this_dir+ "/../" +"json/samples/Run2023D.json"
     }
     datasets = ["Muon0", "Muon1"]
 

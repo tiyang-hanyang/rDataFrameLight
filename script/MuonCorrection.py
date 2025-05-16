@@ -56,14 +56,15 @@ def main():
     # correctionlib json files accordingly
     correctionFiles = {
         # "Run3Summer22EENanoAODv12": "/home/tiyang/public/rDataFrameLight_git/correction/",
-        "Run3Summer23NanoAODv12": "/home/tiyang/public/rDataFrameLight_git/correction/jsonpog-integration-master/POG/MUO/2023_Summer23/muon_Z.json",
-        "Run3Summer23BPixNanoAODv12": "/home/tiyang/public/rDataFrameLight_git/correction/jsonpog-integration-master/POG/MUO/2023_Summer23BPix/muon_Z.json"
+        "Run3Summer23NanoAODv12": this_dir+ "/../../" +"correction/POGCorr/POG/MUO/2023_Summer23/muon_Z.json",
+        "Run3Summer23BPixNanoAODv12": this_dir+ "/../../" +"correction/POGCorr/POG/MUO/2023_Summer23/muon_Z.json"
     }
 
     from MetricSkimmedFiles import MuonCorrectionFileLists as jsonLists
-    # from MetricSkimmedFiles import datasets
+        for key in jsonLists.keys():
+        jsonLists[key] = this_dir+ "/../" + jsonLists[key]
 
-    # firstly only test the DY2L
+    # from MetricSkimmedFiles import datasets
     datasets = ["DY2L"]
 
     for era in periods:
