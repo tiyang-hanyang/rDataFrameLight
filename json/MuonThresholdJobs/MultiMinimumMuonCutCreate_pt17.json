@@ -1,28 +1,22 @@
 {
     "jobType": "draw",
-    "comments": "For plotting histograms from files, using HistControl class to extract histograms of different channels and out put TFiles with hist stored. Need to give the sample json, as the plotting may use skimmed ones, which are not the original ones. Variable information can be found from the vairables json. Cuts will apply one by one, allowing multiple cuts. ",
+    "comments": "Plot the Muon multiplicity with maximum flexibility.",
     "name": "2023MuonThreshold",
 
     "year": "2023",
     "run": "Run3",
     "era": "Run2023C",
-    "outDir": "MinimumCutMuonThreshold",
+    "outDir": "MuonThresholdRegion",
 
     "sampleConfig": "json/samples/MinimumCutSkimmed_Run2023C.json",
 
     "varNames": [
-        "nMuon_pt17",
-        "nMuon_pt8",
-        "nMuon_pt10",
-        "nMuon_pt15",
-        "nMuon_pt20",
-        "nMuon_pt25",
-        "nMuon_pt30"
+        "nMuon_charge_pt17"
     ],
     "varConfig": "json/variables/MuonVariablesThreshold.json",
 
     "cuts": [
-        "json/cuts/Muon_pt17.json"
+        "json/cuts/MuonKinematics/DiMuonCountCharge_pt17.json"
     ],
 
     "datasets": [
@@ -57,6 +51,7 @@
         "TbarWp2L",
         "TWm1L",
         "TbarWp1L",
+        
         "TTZ_low",
         "TTZ_high",
         "TTW",

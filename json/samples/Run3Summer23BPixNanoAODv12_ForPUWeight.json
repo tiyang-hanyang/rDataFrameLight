@@ -1,0 +1,9 @@
+{
+    "dir": {
+        "DY2L": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/RochesterOrigSkim/mc/Run3Summer23BPixNanoAODv12/DY2L/"
+    },
+
+    "file": {
+        "DY2L": ["DY2L_Run3Summer23BPixNanoAODv12_Mu_Skim.root"]
+    }
+}

@@ -114,6 +114,16 @@ ROOT::RDF::RNode CutControl::applyCut(ROOT::RDF::RNode origRDF)
                         p4.SetPtEtaPhiM(pt, eta, phi, m);
                         return p4; }, capturedVar);
                 }
+                else if (operation == "TLVPtEtaPhiM_corr")
+                {
+                    // parse the TLorentzVector input
+                    auto capturedVar = (this->extractTLVComp)(std::get<2>(step));
+                    origRDF = origRDF.Define(std::get<1>(step), [](double pt, float eta, float phi, float m)
+                                             {
+                        TLorentzVector p4;
+                        p4.SetPtEtaPhiM(pt, eta, phi, m);
+                        return p4; }, capturedVar);
+                }
                 else if (operation == "TLVPtEtaPhiE")
                 {
                     // parse the TLorentzVector input

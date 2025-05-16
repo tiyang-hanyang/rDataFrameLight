@@ -1,0 +1,133 @@
+{
+    "dir": {
+        "DY2L": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/DYto2L-4Jets_MLL-50_TuneCP5_13p6TeV_madgraphMLM-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v1/",
+        "WJets": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/WtoLNu-4Jets_TuneCP5_13p6TeV_madgraphMLM-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v3/",
+    
+        "ttbarDL": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "ttbarSL": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTtoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+
+        "WW2L2Nu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/WWto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v4/",
+        "WZ2L2Q": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/WZto2L2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v3/",
+        "ZZ2L2Nu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/ZZto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v3/",
+        "ZZ2L2Q": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/ZZto2L2Q_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v3/",
+        "ZZ4l": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/ZZto4L_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v3/",
+        "WZ3l": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/WZto3LNu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+
+        "WWW": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/WWW_4F_TuneCP5_13p6TeV_amcatnlo-madspin-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "WWZ": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/WWZ_4F_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "WZZ": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/WZZ_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "ZZZ": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/ZZZ_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+
+        "TTTT": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTTT_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+    
+        "TTHBB": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v3/",
+        "TTHnonBB": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTHtoNon2B_M-125_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "THQ": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/THQ_ctcvcp_HIncl_M-125_4FS_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v4/",
+        "THW": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/THW_ctcvcp_HIncl_M-125_5FS_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v4/",
+        "TTWH": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTWH_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v3/",
+        "TTZH": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTZH_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v3/",
+
+        "TTWW": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTWW_TuneCP5_13p6TeV_madgraph-madspin-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TTWZ": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTWZ_TuneCP5_13p6TeV_madgraph-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TTZZ": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTZZ_TuneCP5_13p6TeV_madgraph-madspin-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v4/",
+
+        "QCD_15_20_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-15to20_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v3/",
+        "QCD_20_30_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-20to30_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_30_50_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-30to50_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_50_80_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-50to80_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_80_120_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-80to120_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_120_170_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-120to170_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_170_300_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-170to300_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_300_470_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-300to470_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_470_600_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-470to600_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_600_800_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-600to800_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_800_1000_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-800to1000_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "QCD_1000_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/QCD_PT-1000_MuEnrichedPt5_TuneCP5_13p6TeV_pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+
+        "TWm2L": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TWminusto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v14-v2/",
+        "TbarWp2L": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TbarWplusto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v4/",
+
+        "TTHH_DL_2B2V": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTHH_DL_BBVV/NANOAODSIM/",
+        "TTHH_SL_2B2V": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTHH_SL_BBVV/NANOAODSIM/",
+
+        "TTZ_low": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTLL_MLL-4to50_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TTZ_high": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTLL_MLL-50_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TTW": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TTLNu-1Jets_TuneCP5_13p6TeV_amcatnloFXFX-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "TZQB": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/TZQB-Zto2L-4FS_MLL-30_TuneCP5_13p6TeV_amcatnlo-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+
+        "GGZZ_2mu2e": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/GluGluToContinto2Zto2E2Mu_TuneCP5_13p6TeV_mcfm701-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "GGZZ_4mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/GluGlutoContinto2Zto4Mu_TuneCP5_13p6TeV_mcfm-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "GGZZ_4e": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/GluGlutoContinto2Zto4E_TuneCP5_13p6TeV_mcfm-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "GGZZ_2mu2tau": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/GluGluToContinto2Zto2Mu2Tau_TuneCP5_13p6TeV_mcfm701-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "GGZZ_2e2tau": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/GluGluToContinto2Zto2E2Tau_TuneCP5_13p6TeV_mcfm701-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/",
+        "DYG": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/DYGto2LG-1Jets_MLL-50_PTG-10to100_TuneCP5_13p6TeV_amcatnloFXFX-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v4/",
+        "WG": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/mc/Run3Summer23NanoAODv12/WGtoLNuG-1Jets_PTG-10to100_TuneCP5_13p6TeV_amcatnloFXFX-pythia8/NANOAODSIM/130X_mcRun3_2023_realistic_v15-v2/"
+    },
+
+    "file": {
+        "DY2L": ["DY2L_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "WJets": ["WJets_Run3Summer23NanoAODv12_Mu_Skim.root"],
+
+        "ttbarDL": ["ttbarDL_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "ttbarSL": ["ttbarSL_Run3Summer23NanoAODv12_Mu_Skim.root"],
+
+        "WW2L2Nu": ["WW2L2Nu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "WZ2L2Q": ["WZ2L2Q_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "ZZ2L2Nu": ["ZZ2L2Nu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "ZZ2L2Q": [ "ZZ2L2Q_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "ZZ4l": ["ZZ4l_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "WZ3l": ["WZ3l_Run3Summer23NanoAODv12_Mu_Skim.root"],
+
+        "WWW": ["WWW_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "WWZ": ["WWZ_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "WZZ": ["WZZ_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "ZZZ": ["ZZZ_Run3Summer23NanoAODv12_Mu_Skim.root"],
+
+        "TTTT": ["TTTT_Run3Summer23NanoAODv12_Mu_Skim.root"],
+
+        "TTHBB": ["TTHBB_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TTHnonBB": ["TTHnonBB_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "THQ": ["THQ_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "THW": ["THW_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TTWH": ["TTWH_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TTZH": ["TTZH_Run3Summer23NanoAODv12_Mu_Skim.root"],
+
+        "TTWW": ["TTWW_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TTWZ": ["TTWZ_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TTZZ": ["TTZZ_Run3Summer23NanoAODv12_Mu_Skim.root"],
+
+        "QCD_15_20_mu": ["QCD_15_20_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "QCD_20_30_mu": ["QCD_20_30_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "QCD_30_50_mu": ["QCD_30_50_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "QCD_50_80_mu": ["QCD_50_80_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "QCD_80_120_mu": ["QCD_80_120_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "QCD_120_170_mu": ["QCD_120_170_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "QCD_170_300_mu": ["QCD_170_300_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "QCD_300_470_mu": ["QCD_300_470_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "QCD_470_600_mu": ["QCD_470_600_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "QCD_600_800_mu": ["QCD_600_800_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "QCD_800_1000_mu": ["QCD_800_1000_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "QCD_1000_mu": ["QCD_1000_mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+
+        "TWm2L": ["TWm2L_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TbarWp2L": ["TbarWp2L_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TZQB": ["TZQB_Run3Summer23NanoAODv12_Mu_Skim.root"],
+
+        "TTHH_DL_2B2V": ["TTHH_DL_2B2V_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TTHH_DL_2B2Tau": ["TTHH_DL_2B2Tau_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TTHH_SL_2B2V": ["TTHH_SL_2B2V_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TTHH_SL_2B2Tau": ["TTHH_SL_2B2Tau_Run3Summer23NanoAODv12_Mu_Skim.root"],
+
+        "TTZ_low": ["TTZ_low_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TTZ_high": ["TTZ_high_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "TTW": ["TTW_Run3Summer23NanoAODv12_Mu_Skim.root"],
+
+        "GGZZ_2mu2e": ["GGZZ_2mu2e_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "GGZZ_4mu": ["GGZZ_4mu_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "GGZZ_4e": ["GGZZ_4e_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "GGZZ_2mu2tau": ["GGZZ_2mu2tau_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "GGZZ_2e2tau": ["GGZZ_2e2tau_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "DYG": ["DYG_Run3Summer23NanoAODv12_Mu_Skim.root"],
+        "WG": ["WG_Run3Summer23NanoAODv12_Mu_Skim.root"]
+    }
+}

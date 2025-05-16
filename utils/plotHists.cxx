@@ -14,19 +14,19 @@
 
 std::vector<std::map<std::string, double>> getStackUncert(std::vector<std::string> stackOrder, rdfWS_utility::JsonObject jsonConfig)
 {
-    if (stackOrder.size() == 0) return {};
+    if (stackOrder.size() == 0)
+        return {};
     std::string systFile = jsonConfig.at("stackUncert");
     std::map<std::string, std::vector<double>> systJson = rdfWS_utility::readJson("plotHists", systFile);
 
     std::map<std::string, double> systUp, systDown;
-    for (auto& [key, variation]: systJson)
+    for (auto &[key, variation] : systJson)
     {
         systUp.emplace(key, variation[1]);
         systDown.emplace(key, variation[0]);
     }
     return {systUp, systDown};
 }
-
 
 int main(int argc, char *argv[])
 {
@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
     // parse basic info from json
     std::string jobName = jsonConfig.at("name");
     std::vector<std::string> runEra = jsonConfig.at("era");
+    // split MC and data era to ensure not bounded
+    std::vector<std::string> mcCampaign = jsonConfig.at("mc_era");
 
     // formulate draw texts
     std::vector<std::string> drawText = jsonConfig.at("texts");
@@ -59,6 +61,15 @@ int main(int argc, char *argv[])
         if (text.find("%1.0f") != std::string::npos)
             drawText[i] = Form(text.c_str(), lumiValue);
     }
+
+    // MC lumi used for rescaling MC
+    float mclumi = lumiConfig.at(mcCampaign[0]);
+    for (int i = 1; i < mcCampaign.size(); i++)
+    {
+        float tempLumiValue = lumiConfig.at(mcCampaign[i]);
+        mclumi += tempLumiValue;
+    }
+    auto mcScaling = lumiValue / mclumi;
 
     // load channels
     std::vector<std::string> channels = jsonConfig.at("datasets");
@@ -109,8 +120,40 @@ int main(int argc, char *argv[])
         options.xLabel = varConfig.at("label").get<std::string>();
         options.yLabel = {jsonConfig.at("yLabel"), jsonConfig.at("yRatioLabel")};
         options.doLog = jsonConfig.at("logPlot");
+        options.doNormalize = jsonConfig.at("normalization");
         options.xSize = jsonConfig.at("histXSize");
         options.ySize = jsonConfig.at("histYSize");
+
+        std::vector<std::string> binLabels = varConfig.at("binLabels");
+        // need to truncate if have cropping
+        if (needCrop[varName] == 1 && binLabels.size()>0)
+        {
+            std::cout << "print debugging" << std::endl;
+            std::cout << "orig bin label size: " << binLabels.size() << std::endl;
+            for (auto& labelText: binLabels) std::cout << "\t" << labelText << std::endl;
+            std::vector<int> cropRange = jsonConfig.at("cropedRange").at(varName);
+            std::string strOrigMax = varConfig.at("max");
+            double origMax = std::stod(strOrigMax);
+            std::cout << "original max: " << origMax << std::endl;
+            std::string strOrigMin = varConfig.at("min");
+            double origMin = std::stod(strOrigMin);
+            std::cout << "original min: " << origMin << std::endl;
+            std::string strOrigBins = varConfig.at("nBins");
+            int origBins = std::stoi(strOrigBins);
+            std::cout << "original bins: " << origBins << std::endl;
+            double originalWidth = (origMax - origMin) / origBins;
+            std::cout << "bin width: " << originalWidth << std::endl;
+            int first_bin = static_cast<int>((cropRange[0] - origMin) / originalWidth);
+            std::cout << "new bin start from: " << first_bin << std::endl;
+            int last_bin = static_cast<int>((cropRange[1] - origMin) / originalWidth);
+            std::cout << "new bin up to: " << last_bin << std::endl;
+            if (first_bin < 0) first_bin = 0;
+            if (last_bin >= origBins) last_bin = origBins - 1;
+            binLabels = std::vector<std::string>(binLabels.begin() + first_bin, binLabels.begin() + last_bin + 1);
+            std::cout << "new bin label size: " << binLabels.size() << std::endl;
+            for (auto& labelText: binLabels) std::cout << "\t" << labelText << std::endl;
+            std::cout << "truncate bin labels done!" << std::endl;
+        }
 
         // configure output
         std::string outputDir = jsonConfig.at("outDir");
@@ -126,17 +169,39 @@ int main(int argc, char *argv[])
             plotName += "_crop";
         PlotControl pHelper(plotName);
 
-        // read the histograms in
+        // read the histograms separatedly with MC and data
+        // TODO next step may just split the data era and MC era completely
         HistControl histLoader;
+        // first data era: runEra[0]
         for (const auto &ch : loadChannels)
         {
             std::string histName = ch + "_" + varName + "_";
             if (isDataCopy[ch] == 1)
                 histName += dataWeight;
             else
-                histName += MCWeight;
+            {
+                // if (std::find(mcCampaign.begin(), mcCampaign.end(), runEra[0]) == mcCampaign.end())
+                //     continue;
+                // histName += MCWeight;
+                continue;
+            }
             histLoader.loadHistogram(inDir + "_" + runEra[0] + "/" + histName + ".root", histName, ch, varName);
         }
+        // first mc era: mcCampaign[0]
+        HistControl mcHistLoader;
+        for (const auto &ch : loadChannels)
+        {
+            std::string histName = ch + "_" + varName + "_";
+            if (isDataCopy[ch] == 1)
+                continue;
+            else
+            {
+                histName += MCWeight;
+            }
+            mcHistLoader.loadHistogram(inDir + "_" + mcCampaign[0] + "/" + histName + ".root", histName, ch, varName);
+        }
+        histLoader = histLoader.addHistograms(mcHistLoader);
+
         // add together when more than 1 eras
         for (int i = 1; i < runEra.size(); i++)
         {
@@ -147,8 +212,33 @@ int main(int argc, char *argv[])
                 if (isDataCopy[ch] == 1)
                     histName += dataWeight;
                 else
-                    histName += MCWeight;
+                {
+                    // if (std::find(mcCampaign.begin(), mcCampaign.end(), runEra[i]) == mcCampaign.end())
+                    //     continue;
+                    // histName += MCWeight;
+                    continue;
+                }
                 tempHistLoader.loadHistogram(inDir + "_" + runEra[i] + "/" + histName + ".root", histName, ch, varName);
+            }
+            histLoader = histLoader.addHistograms(tempHistLoader);
+        }
+
+        // mc campaigns
+        for (int i = 1; i < mcCampaign.size(); i++)
+        {
+            HistControl tempHistLoader;
+            for (const auto &ch : loadChannels)
+            {
+                std::string histName = ch + "_" + varName + "_";
+                if (isDataCopy[ch] == 1)
+                    continue;
+                else
+                {
+                    // if (std::find(mcCampaign.begin(), mcCampaign.end(), runEra[i]) == mcCampaign.end())
+                    //     continue;
+                    histName += MCWeight;
+                }
+                tempHistLoader.loadHistogram(inDir + "_" + mcCampaign[i] + "/" + histName + ".root", histName, ch, varName);
             }
             histLoader = histLoader.addHistograms(tempHistLoader);
         }
@@ -157,7 +247,6 @@ int main(int argc, char *argv[])
         if (needCrop[varName] == 1)
         {
             std::vector<int> cropRange = jsonConfig.at("cropedRange").at(varName);
-            ;
             histLoader = histLoader.cropHistograms(cropRange[0], cropRange[1]);
         }
 
@@ -176,30 +265,22 @@ int main(int argc, char *argv[])
             options.isData[1].emplace(key, isDataCopy[key]);
         }
 
-        // allowing normalization, if no stack
-        if (stackOrder.size() == 0)
-        {
-            if (jsonConfig.at("normalization").get<int>() == 1)
-            {
-                for (auto hist : histsNeeded)
-                {
-                    hist.second->Scale(1.0 / hist.second->Integral());
-                }
-            }
-        }
-
         std::map<std::string, TH1D *> ratioHists = {};
         // currently only allowing ratio plot with respect to stack
         if (doRatio && stackOrder.size() > 0)
         {
-            ratioHists = histLoader.getRatios(numerator, stackOrder);
+            ratioHists = histLoader.getRatios(numerator, stackOrder, options.doNormalize);
         }
 
         // to add possible uncertainties
         auto stackUncert = getStackUncert(stackOrder, jsonConfig);
-        std::map<std::string, double> stackUp = stackUncert[0];
-        std::map<std::string, double> stackDown = stackUncert[1];
-        pHelper.drawStackHistWithRatio(histsNeeded, stackOrder, stackUp, stackDown, reOrder, ratioHists, options, colorScheme, channelLabels, drawText);
+        std::map<std::string, double> stackUp, stackDown;
+        if (stackUncert.size() == 2)
+        {
+            stackUp = stackUncert[0];
+            stackDown = stackUncert[1];
+        }
+        pHelper.drawStackHistWithRatio(histsNeeded, stackOrder, stackUp, stackDown, reOrder, ratioHists, options, mcScaling, colorScheme, channelLabels, drawText, {}, binLabels);
         for (auto &[histName, hist] : ratioHists)
         {
             delete hist;

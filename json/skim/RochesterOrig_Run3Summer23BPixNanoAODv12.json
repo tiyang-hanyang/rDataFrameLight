@@ -1,0 +1,22 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run3Summer23BPixNanoAODv12 (mc corresponding to Run2023D).",
+
+    "name": "Run3Summer23BPixNanoAODv12_Mu_Skim",
+    "year": "2023",
+    "run": "Run3",
+    "era": "Run3Summer23BPixNanoAODv12",
+    "sampleConfig": "json/samples/Run3Summer23BPixNanoAODv12_RochesterOrig.json",
+    "XSConfig": "",
+    "outDir": "RochesterOrigSkim/",
+    "datasets": [
+        "DY2L"
+    ],
+    "isData": 0,
+    "mcWeight": "genWeight",
+    "cut": [
+        "json/cuts/DefineMuonNew.json"
+    ],
+
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

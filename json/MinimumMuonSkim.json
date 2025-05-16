@@ -2,16 +2,17 @@
     "jobType": "skim",
     "commments": "For skimming the dimuon samples",
 
-    "name": "2024MuonMinimumSkim",
-    "year": "2024",
+    "name": "2023MuonMinimumSkim",
+    "year": "2023",
     "run": "Run3",
-    "era": "Run2024F",
+    "era": "Run2023C",
     "sampleConfig": "",
     "XSConfig": "",
     "outDir": "Muon_minimum_skim/",
     "datasets": [
-        "Muon0",
-        "Muon1"
+        "ZZ4l",
+        "WZ3l",
+        "TZQB"
     ],
     "isData": {
         "Muon0": 1,

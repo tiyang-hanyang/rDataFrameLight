@@ -1,0 +1,11 @@
+[
+    ["cut", "require diMuon", "Muon_charge.size()>1"],
+    ["define", "leading_pt17", "(abs(Muon_eta[0])<2.4) && Muon_tightId[0] && (Muon_pfRelIso04_all[0]<0.15) && (Muon_pt[0]>17)"],
+    ["cut", "require leading pT", "leading_pt17"],
+    ["define", "subleading_pt8", "(abs(Muon_eta[1])<2.4) && Muon_tightId[1] && (Muon_pfRelIso04_all[1]<0.15) && (Muon_pt[1]>8)"],
+    ["cut", "require subleading pT", "subleading_pt8"],
+    ["define", "isMuonSS", "(Muon_charge[0] * Muon_charge[1])>0 && Muon_charge.size()==2"],
+    ["cut", "require SS", "isMuonSS"],
+    ["define", "leadingMuonPt_pt17", "Muon_pt[0]"],
+    ["define", "subleadingMuonPt_pt8", "Muon_pt[1]"]
+]

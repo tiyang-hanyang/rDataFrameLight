@@ -1,0 +1,23 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run2024F data.",
+
+    "name": "Run2024F_Mu_Skim",
+    "year": "2024",
+    "run": "Run3",
+    "era": "Run2024F",
+    "sampleConfig": "",
+    "XSConfig": "",
+    "outDir": "MetricMuonSkim/",
+    "datasets": [
+        "Muon1"
+    ],
+    "isData": 1,
+    "mcWeight": "genWeight",
+    "cut": [
+        "json/cuts/MetricMuon/MuonMetricSkim.json",
+        "json/cuts/MetricMuon/MuonMetricSkimDimuon.json"
+    ],
+
+    "branchConfig": "json/branches/MuonMetricBranchDimuon.json"
+}

@@ -1,0 +1,67 @@
+{
+    "jobType": "draw",
+    "comments": "Plotting the histograms for Run2023C. Including the correction of Jet veto map and Rochester correction.",
+    "name": "2023MuonThreshold",
+
+    "run": "Run3",
+    "era": "Run2023C",
+    "outDir": "AdditionalMuonCutKinematics",
+
+    "sampleConfig": "json/samples/ZPt_corr/ZPt_Run2023C.json",
+
+    "varNames": [
+        "nMuon_cat",
+
+        "nPassVetoJet",
+        "nPassVetoBJet",
+        "nGoodJet",
+        "nBJet",
+        
+        "leadingMuonPt_Rcorr",
+        "subleadingMuonPt_Rcorr",
+        "leadingMuonPt",
+        "leadingMuonPhi",
+        "leadingMuonEta",
+        "subleadingMuonPt",
+        "subleadingMuonPhi",
+        "subleadingMuonEta",
+
+        "diMuonM_Rcorr",
+        "diMuonPt_Rcorr",
+        "diMuonEta_Rcorr",
+        "diMuonPhi_Rcorr",
+        "diMuonDEta_Rcorr",
+        "diMuonM",
+        "diMuonPt",
+        "diMuonEta",
+        "diMuonPhi",
+        "diMuonDEta"
+    ],
+    "varConfig": "json/variables/MetricMuonVariables.json",
+
+    "cuts": [
+        "json/cuts/HistPlot/AdditionalMuonCut.json",
+        "json/cuts/HistPlot/Rochester_corr_Dimuon.json"
+    ],
+
+    "datasets": [
+        "Muon"
+    ],
+
+    "isData": {
+        "Muon": 1
+    },
+
+    "needMerge" : {
+        "Muon":[
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "MCweight": [
+        "weight_XS"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

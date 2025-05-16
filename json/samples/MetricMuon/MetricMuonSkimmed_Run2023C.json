@@ -1,0 +1,14 @@
+{
+    "dir": {
+        "Muon0": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/data/Run2023C/Muon0/NANOAOD/22Sep2023_v1-v1/",
+        "Muon1": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/MetricMuonSkim/data/Run2023C/Muon1/NANOAOD/22Sep2023_v1-v1/"
+    },
+    "file": {
+        "Muon0": [
+            "Muon0_Run2023C_Mu_Skim.root"
+        ],
+        "Muon1": [
+            "Muon1_Run2023C_Mu_Skim.root"
+        ]
+    }
+}

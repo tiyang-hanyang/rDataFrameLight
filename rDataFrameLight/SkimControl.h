@@ -31,7 +31,8 @@ private:
 
     // all the channels processed in this run
     std::vector<std::string> _channels;
-    std::map<std::string, int> _isData;
+    // std::map<std::string, int> _isData;
+    int _isData;
     // for mc, the XS value of this samples need to be computed
     std::string _mcWeight;
     std::map<std::string, float> _XSvalues;

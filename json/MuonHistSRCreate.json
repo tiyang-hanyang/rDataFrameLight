@@ -1,0 +1,103 @@
+{
+    "jobType": "draw",
+    "comments": "For plotting histograms from files, using HistControl class to extract histograms of different channels and out put TFiles with hist stored. Need to give the sample json, as the plotting may use skimmed ones, which are not the original ones. Variable information can be found from the vairables json. Cuts will apply one by one, allowing multiple cuts. ",
+    "name": "2023muonKine",
+    "year": "2023",
+    "run": "Run3",
+    "era": "Run2023C",
+    "outDir": "PreliminarySR",
+    "sampleConfig": "json/samples/skimmed_Run2023C.json",
+    "varNames": [
+        "leadingMuonPt",
+        "leadingMuonEta",
+        "leadingMuonPhi",
+        "subleadingMuonPt",
+        "subleadingMuonEta",
+        "subleadingMuonPhi",
+        "diMuonM",
+        "diMuonPt",
+        "diMuonEta",
+        "diMuonPhi",
+        "MET_pt",
+        "MET_phi"
+    ],
+    "varConfig": "json/variables/MuonVariables.json",
+    "cuts": [
+        "json/cuts/GoodJets.json",
+        "json/cuts/PreliminarySR.json"
+    ],
+    "datasets": [
+        "DY2L",
+        "ttbarDL",
+        "ttbarSL",
+        "WJets",
+        "WW2L2Nu",
+        "WZ2L2Q",
+        "ZZ2L2Q",
+        "ZZ2L2Nu",
+        "TTTT",
+        "TTHBB",
+        "TTHZZ",
+        "TTWH",
+        "TTZH",
+        "TTWW",
+        "TTWZ",
+        "TTZZ",
+        "TTHH_DL_2B2V",
+        "TTHH_DL_2B2Tau",
+        "TTHH_SL_2B2V",
+        "TTHH_SL_2B2Tau",
+        "QCD",
+        "TbarB",
+        "TBbar",
+        "TWm2L",
+        "TbarWp2L",
+        "TWm1L",
+        "TbarWp1L"
+    ],
+    "isData": {
+        "Muon": 1,
+        "DY2L": 0,
+        "ttbarDL": 0,
+        "ttbarSL": 0,
+        "WJets": 0,
+        "WW2L2Nu": 0,
+        "WZ2L2Q": 0,
+        "ZZ2L2Q": 0,
+        "ZZ2L2Nu": 0,
+        "TTTT": 0,
+        "TTHBB": 0,
+        "TTHZZ": 0,
+        "TTWH": 0,
+        "TTZH": 0,
+        "TTWW": 0,
+        "TTWZ": 0,
+        "TTZZ": 0,
+        "TTHH_DL_2B2V": 0,
+        "TTHH_DL_2B2Tau": 0,
+        "TTHH_SL_2B2V": 0,
+        "TTHH_SL_2B2Tau": 0,
+        "QCD": 0,
+        "TbarB":0,
+        "TBbar":0,
+        "TWm2L":0,
+        "TbarWp2L":0,
+        "TWm1L":0,
+        "TbarWp1L":0
+    },
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ],
+        "QCD": [
+            "QCD_80_120_mu",
+            "QCD_120_170_mu",
+            "QCD_170_300_mu"
+        ]
+    },
+    "MCweight": [
+        "weight_XS"
+    ],
+    "lumiConfig": "json/Lumi/Run3.json"
+}

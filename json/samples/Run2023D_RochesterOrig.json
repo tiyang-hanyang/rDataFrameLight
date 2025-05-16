@@ -1,0 +1,11 @@
+{
+    "dir": {
+        "Muon0": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/RochesterCorrection/Run2023D/data/Muon0/",
+        "Muon1": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/RochesterCorrection/Run2023D/data/Muon1/"
+    },
+
+    "file": {
+        "Muon0": ["Muon0_Rcorr.root"],
+        "Muon1": ["Muon1_Rcorr.root"]
+    }
+}

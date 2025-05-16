@@ -5,52 +5,22 @@
     "year": "2023",
     "run": "Run3",
     "era": [
-        "Run2023D"
+        "Run2023C", "Run2023D"
     ],
-    "inDir": "MuonThresholdKinematics",
-    "outDir": "MuonThresholdKinematics_plot/",
-    "yLabel": "Events",
-    "yRatioLabel": "Data/MC",
+    "inDir": "MuonThresholdKinematics_SS",
+    "outDir": "MuonThresholdKinematics_SS_MC_plot/",
+    "yLabel": "Normalized Events",
+    "yRatioLabel": "Sig./Bkg.",
     "histXSize": 600,
     "histYSize": 600,
-    "logPlot": 1,
+    "logPlot": 0,
     "varNames": [
-        "leadingMuonPt_pt17",
-        "leadingMuonPhi_pt17",
-        "leadingMuonEta_pt17",
-        "leadingMuonPt_pt20",
-        "leadingMuonPhi_pt20",
-        "leadingMuonEta_pt20",
-        "leadingMuonPt_pt25",
-        "leadingMuonPhi_pt25",
-        "leadingMuonEta_pt25",
-        "leadingMuonPt_pt30",
-        "leadingMuonPhi_pt30",
-        "leadingMuonEta_pt30",
-        "leadingMuonPt_pt35",
-        "leadingMuonPhi_pt35",
-        "leadingMuonEta_pt35",
-        "subleadingMuonPt_pt17",
-        "subleadingMuonPhi_pt17",
-        "subleadingMuonEta_pt17",
-        "subleadingMuonPt_pt20",
-        "subleadingMuonPhi_pt20",
-        "subleadingMuonEta_pt20",
-        "subleadingMuonPt_pt25",
-        "subleadingMuonPhi_pt25",
-        "subleadingMuonEta_pt25",
-        "subleadingMuonPt_pt30",
-        "subleadingMuonPhi_pt30",
-        "subleadingMuonEta_pt30",
-        "subleadingMuonPt_pt35",
-        "subleadingMuonPhi_pt35",
-        "subleadingMuonEta_pt35"
+        "leadingMuonPt_pt17"
     ],
     "varConfig": "json/variables/MuonVariablesThreshold.json",
     "needCrop": {},
     "cropedRange": {},
     "datasets": [
-        "Muon",
         "DYW",
         "ttbar",
         "diBoson",
@@ -150,7 +120,7 @@
         "TTHH"
     ],
     "numerator": [
-        "Muon"
+        "TTHH"
     ],
     "stackOrder": [
         "DYW",
@@ -163,13 +133,13 @@
         "QCD"
     ],
     "reOrder": 1,
-    "stackUncert": "json/syst/Run3XSonly.json",
+    "stackUncert": "json/syst/Run3_XSonly.json",
     "texts": [
         "CMS Preliminary",
         "#sqrt{s} = 13.6 TeV, L= %1.0f pb^{-1}",
-        "t#bar{t}HH Tight Iso Muon"
+        "SS2l p_{T}>17,8 GeV"
     ],
     "lumiConfig": "json/Lumi/Run3.json",
     "doRatio": 1,
-    "normalization": 0
+    "normalization": 1
 }

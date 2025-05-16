@@ -1,7 +1,7 @@
 {
     "dir": {
-        "Muon0": "/data1/common/NanoAOD/data/Run2024G/Muon0/NANOAOD/",
-        "Muon1": "/data1/common/NanoAOD/data/Run2024G/Muon1/NANOAOD/"
+        "Muon0": "/data2/common/NanoAOD/v12/data/Run2024G/Muon0/NANOAOD/",
+        "Muon1": "/data2/common/NanoAOD/v12/data/Run2024G/Muon1/NANOAOD/"
     },
     "file": {
         "Muon0": [

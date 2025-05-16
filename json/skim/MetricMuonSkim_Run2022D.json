@@ -1,0 +1,23 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run2022D data.",
+
+    "name": "Run2022D_Mu_Skim",
+    "year": "2022",
+    "run": "Run3",
+    "era": "Run2022D",
+    "sampleConfig": "",
+    "XSConfig": "",
+    "outDir": "MetricMuonSkim/",
+    "datasets": [
+        "Muon"
+    ],
+    "isData": 1,
+    "mcWeight": "genWeight",
+    "cut": [
+        "json/cuts/MetricMuon/MuonMetricSkim.json",
+        "json/cuts/MetricMuon/MuonMetricSkimDimuon.json"
+    ],
+
+    "branchConfig": "json/branches/MuonMetricBranchDimuon.json"
+}

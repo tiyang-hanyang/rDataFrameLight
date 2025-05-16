@@ -48,7 +48,8 @@ void SkimControl::readConfig(nlohmann::json origConfigFile)
     {
         this->_isOn.emplace(channel, 1);
     }
-    this->_isData = configFile.at("isData").get<std::map<std::string, int>>();
+    // this->_isData = configFile.at("isData").get<std::map<std::string, int>>();
+    this->_isData = configFile.at("isData").get<int>();
     this->_mcWeight = configFile.at("mcWeight").get<std::string>();
 
     // XS value should be in the json folder
@@ -229,7 +230,7 @@ void SkimControl::run()
         if (filePaths.size() == 0)
             continue;
         // if is data
-        auto isData = this->_isData.at(channel);
+        auto isData = this->_isData;
 
         // loading dataframe
         TChain *chDS = new TChain("Events");
@@ -306,7 +307,8 @@ void SkimControl::run()
             branchArray.push_back(brName);
         }
         // MC need weight_XS
-        if (!(this->_isData.at(channel)))
+        // if (!(this->_isData.at(channel)))
+        if (!isData)
             branchArray.push_back("weight_XS");
 
         // output

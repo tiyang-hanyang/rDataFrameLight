@@ -1,0 +1,137 @@
+{
+    "jobType": "plot",
+    "comments": "For plotting histograms from files, using HistControl class to extract histograms of different channels and out put TFiles with hist stored. Need to give the sample json, as the plotting may use skimmed ones, which are not the original ones. Variable information can be found from the vairables json. Cuts will apply one by one, allowing multiple cuts. Note currently I had some sigfault with stack hist to clear, that varNames cannot put more than 1 observable, to fix in Feb week 3",
+    "name": "Run2023C_Run2023D_SSDiMuon_Plot",
+    "year": "2023",
+    "run": "Run3",
+    "era": ["Run2023C", "Run2023D"],
+    "inDir": "PreliminaryTopCR_b50",
+    "outDir": "PreliminaryTopCR_b50_plot_withoutSignal/",
+    "yLabel": "Events",
+    "yRatioLabel": "Data/MC",
+    "histXSize": 600,
+    "histYSize": 600,
+    "logPlot": 0,
+    "varNames": [
+        "leadingMuonPt",
+        "leadingMuonEta",
+        "leadingMuonPhi",
+        "MET_pt",
+        "MET_phi",
+        "leadingBJet_pt",
+        "leadingBJet_eta",
+        "leadingBJet_phi"
+    ],
+    "varConfig": "json/variables/MuonVariables.json",
+    "needCrop": {
+        "leadingMuonPt": 0,
+        "leadingMuonEta": 0,
+        "leadingMuonPhi": 0,
+        "subleadingMuonPt": 0,
+        "subleadingMuonEta": 0,
+        "subleadingMuonPhi": 0,
+        "diMuonM": 1,
+        "diMuonPt": 0,
+        "diMuonEta": 0,
+        "diMuonPhi": 0,
+        "leadingBJet_pt": 0,
+        "leadingBJet_eta": 0,
+        "leadingBJet_phi": 0
+    },
+    "cropedRange": {
+        "diMuonM": [
+            70,
+            160
+        ]
+    },
+    "datasets": [
+        "Muon",
+        "DYW",
+        "ttbar",
+        "diBoson",
+        "SingleTop",
+        "SingleH",
+        "TTVV",
+        "TTTT",
+        "QCD"
+    ],
+    "datasetLabel": {
+        "DYW": "DY & W",
+        "ttbar": "t#bar{t}",
+        "diBoson": "diBoson",
+        "TTTT": "t#bar{t}t#bar{t}",
+        "SingleTop": "t",
+        "SingleH": "H",
+        "TTVV": "t#bar{t}VV",
+        "QCD": "QCD"
+    },
+    "needMerge": {
+        "ttbar": [
+            "ttbarDL",
+            "ttbarSL"
+        ],
+        "DYW": [
+            "DY2L",
+            "WJets"
+        ],
+        "SingleH": [
+            "TTHBB",
+            "TTHZZ",
+            "TTWH",
+            "TTZH"
+        ],
+        "SingleTop": [
+            "TbarB",
+            "TBbar",
+            "TWm2L",
+            "TbarWp2L",
+            "TWm1L",
+            "TbarWp1L"
+        ],
+        "diBoson": [
+            "WW",
+            "WZ",
+            "ZZ"
+        ],
+        "TTVV": [
+            "TTWW",
+            "TTWZ",
+            "TTZZ"
+        ]
+    },
+    "isData": {
+        "Muon":1,
+        "DYW":0,
+        "ttbar":0,
+        "diBoson":0,
+        "SingleTop":0,
+        "SingleH":0,
+        "TTVV":0,
+        "TTTT":0,
+        "QCD":0
+    },
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+    "numerator": [
+        "Muon"
+    ],
+    "stackOrder": [
+        "DYW",
+        "ttbar",
+        "diBoson",
+        "TTTT",
+        "TTVV",
+        "SingleTop",
+        "SingleH",
+        "QCD"
+    ],
+    "reOrder": 1,
+    "texts": [
+        "CMS Preliminary",
+        "#sqrt{s} = 13.6 TeV, L= %1.0f pb^{-1}",
+        "t#bar{t}HH signal"
+    ],
+    "lumiConfig": "json/Lumi/Run3.json",
+    "doRatio": 1,
+    "normalization": 0
+}

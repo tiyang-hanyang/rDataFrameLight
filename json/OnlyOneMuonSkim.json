@@ -1,0 +1,67 @@
+{
+    "jobType": "skim",
+    "commments": "For skimming the only one samples, used for backgrounds estimation",
+
+    "name": "2023OnlyOneMuonSkim",
+    "year": "2023",
+    "run": "Run3",
+    "era": "Run2023C",
+    "sampleConfig": "",
+    "XSConfig": "",
+    "outDir": "OnlyOneMuon_skim/",
+    "datasets": [
+        "QCD_170_300_mu",
+
+        "TbarB",
+        "TBbar",
+        "TWm2L",
+        "TbarWp2L",
+        "TWm1L",
+        "TbarWp1L"
+    ],
+    "isData": {
+        "Muon0": 1,
+        "Muon1": 1,
+
+        "DY2L": 0,
+        "ttbarDL": 0,
+        "ttbarSL": 0,
+        "WJets": 0,
+        "WW2L2Nu": 0,
+        "WZ2L2Q": 0,
+        "ZZ2L2Q": 0,
+        "ZZ2L2Nu": 0,
+        "WW": 0,
+        "WZ": 0,
+        "ZZ": 0,
+
+        "TTTT": 0,
+        "TTHBB": 0,
+        "TTHZZ": 0,
+        "TTWH": 0,
+        "TTZH": 0,
+        "TTWW": 0,
+        "TTWZ": 0,
+        "TTZZ": 0,
+        "QCD_30_50_mu": 0,
+        "QCD_50_80_mu": 0,
+        "QCD_80_120_mu": 0,
+        "QCD_120_170_mu": 0,
+        "QCD_170_300_mu": 0,
+
+        "TbarB": 0,
+        "TBbar": 0,
+        "TWm2L": 0,
+        "TbarWp2L": 0,
+        "TWm1L": 0,
+        "TbarWp1L": 0
+    },
+    "mcWeight": "genWeight",
+    "cut": [
+        "json/cuts/DiMuonTrigger2023.json",
+        "json/cuts/GoodMuon.json",
+        "json/cuts/OnlyOneMuon.json"
+    ],
+
+    "branchConfig": "json/branches/OneMuonBkg.json"
+}

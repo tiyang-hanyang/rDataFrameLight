@@ -1,0 +1,10 @@
+[
+    ["TLVPtEtaPhiM_corr", "leadingMuonP4_Rcorr", "leadingMuonPt_Rcorr,leadingMuonEta,leadingMuonPhi,leadingMuonMass"],
+    ["TLVPtEtaPhiM_corr", "subleadingMuonP4_Rcorr", "subleadingMuonPt_Rcorr,subleadingMuonEta,subleadingMuonPhi,subleadingMuonMass"],
+    ["define", "diMuonP4_Rcorr", "leadingMuonP4_Rcorr+subleadingMuonP4_Rcorr"],
+    ["define", "diMuonM_Rcorr", "diMuonP4_Rcorr.M()"],
+    ["define", "diMuonPt_Rcorr", "diMuonP4_Rcorr.Pt()"],
+    ["define", "diMuonEta_Rcorr", "diMuonP4_Rcorr.Eta()"],
+    ["define", "diMuonPhi_Rcorr", "diMuonP4_Rcorr.Phi()"],
+    ["define", "diMuonDEta_Rcorr", "leadingMuonEta - subleadingMuonEta"]
+]

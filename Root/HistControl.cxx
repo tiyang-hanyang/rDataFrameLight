@@ -415,7 +415,7 @@ HistControl HistControl::cropHistograms(double newMin, double newMax)
 
     // get a new object with the same varName but cropped histograms
     int newFirstBin = this->_templateHist->FindBin(newMin);
-    int newLastBin = this->_templateHist->FindBin(newMax);
+    int newLastBin = std::min(this->_templateHist->FindBin(newMax),  this->_templateHist->GetNbinsX());
     int nNewBins = newLastBin - newFirstBin + 1;
 
     double croppedMin = this->_templateHist->GetXaxis()->GetBinLowEdge(newFirstBin);
@@ -500,7 +500,7 @@ TH1D *HistControl::mergeHistograms(const std::vector<std::string> &histKeys, con
 /// @param numerator The neumerators need to take ratio with up to the summed up denominator
 /// @param referenceName all reference histograms, to sum up
 /// @return
-std::map<std::string, TH1D *> HistControl::getRatios(const std::vector<std::string> &numerator, const std::vector<std::string> &referenceNames)
+std::map<std::string, TH1D *> HistControl::getRatios(const std::vector<std::string> &numerator, const std::vector<std::string> &referenceNames, bool doNormalize)
 {
     std::map<std::string, TH1D *> ratioHists;
 
@@ -520,6 +520,8 @@ std::map<std::string, TH1D *> HistControl::getRatios(const std::vector<std::stri
         }
     }
 
+    double mergedInt = mergedRef->Integral();
+
     // only get ratio plots for the channels needed
     for (auto key : numerator)
     {
@@ -527,9 +529,12 @@ std::map<std::string, TH1D *> HistControl::getRatios(const std::vector<std::stri
         {
             throw std::runtime_error("ratio hist numerator channel " + key + " does not exist in internal histograms");
         }
-
+        double numerInt = this->_histograms[key]->Integral();
         std::string ratioName = key + "_ratio_to_" + mergedRefName;
         TH1D *ratioHist = calculateRatio(this->_histograms[key], mergedRef, ratioName);
+        if (doNormalize && numerInt>0) {
+            ratioHist->Scale(mergedInt / numerInt);
+        }
         ratioHists[ratioName] = ratioHist;
     }
 

@@ -1,6 +1,6 @@
 {
     "dir": {
-        "Muon": "/data1/common/NanoAOD/data/Run2022F/Muon/NANOAOD/"
+        "Muon": "/data2/common/NanoAOD/data/Run2022F/Muon/NANOAOD/"
     },
     "file": {
         "Muon": [

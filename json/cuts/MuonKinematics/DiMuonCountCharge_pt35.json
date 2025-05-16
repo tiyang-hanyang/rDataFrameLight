@@ -1,0 +1,7 @@
+[
+    ["define", "SelIsoMuon_pt35", "(abs(Muon_eta)<2.4) && Muon_tightId && (Muon_pfRelIso04_all<0.15) && (Muon_pt>35)"],
+    ["define", "Muon_pt35_charge", "Muon_charge[SelIsoMuon_pt35]"],
+    ["cut", "require diMuon", "Muon_pt35_charge.size()>1"],
+    ["define", "isMuonSS_pt35", "(Muon_pt35_charge[0] * Muon_pt35_charge[1])>0 && Muon_pt35_charge.size()==2"],
+    ["define", "nMuon_charge_pt35", "Muon_pt35_charge.size() - isMuonSS_pt35"]
+]

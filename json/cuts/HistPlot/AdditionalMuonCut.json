@@ -1,0 +1,6 @@
+[
+    ["cut", "leading Muon pt", "(leadingMuonPt_Rcorr>35.)"],
+    ["cut", "subleading Muon pt", "(subleadingMuonPt_Rcorr>35.)"],
+    ["define", "OnlyTwo", "(nGoodMuon==2) ? 1: (GoodMuon_pt[2] < 35.0)"],
+    ["cut", "Original Two Muon", "(OnlyTwo == 1)"]
+]

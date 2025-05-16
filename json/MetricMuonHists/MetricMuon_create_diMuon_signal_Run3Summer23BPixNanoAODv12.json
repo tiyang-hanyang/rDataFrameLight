@@ -1,0 +1,103 @@
+{
+    "jobType": "draw",
+    "comments": "Plotting the histograms for Run3Summer23BPixNanoAODv12 (corresponding to Run2023D). Including the correction of Jet veto map, Rochester correction and ZPt correction",
+    "name": "2023MuonThreshold",
+
+    "run": "Run3",
+    "era": "Run3Summer23BPixNanoAODv12",
+    "outDir": "MetricMuonKinematicsCorrection",
+
+    "sampleConfig": "json/samples/ZPt_corr/ZPt_Run3Summer23BPixNanoAODv12.json",
+
+    "varNames": [
+        "nPassVetoBJet"
+    ],
+    "varConfig": "json/variables/MetricMuonVariables.json",
+
+    "cuts": [
+        "json/cuts/HistPlot/Rochester_corr_Dimuon.json"
+    ],
+
+    "datasets": [
+        "TTHH_DL_2B2V",
+        "TTHH_SL_2B2V"
+    ],
+
+    "isData": {
+        "DY2L": 0,
+        "ttbarDL": 0,
+        "ttbarSL": 0,
+        "WJets": 0,
+        "WW": 0,
+        "WZ": 0,
+        "ZZ": 0,
+
+        "WWW": 0,
+        "WWZ": 0,
+        "WZZ": 0,
+        "ZZZ": 0,
+
+        "TTTT": 0,
+        "TTHBB": 0,
+        "TTHZZ": 0,
+        "TTWH": 0,
+        "TTZH": 0,
+        "TTWW": 0,
+        "TTWZ": 0,
+        "TTZZ": 0,
+
+        "TTHH_DL_2B2V": 0,
+        "TTHH_DL_2B2Tau": 0,
+        "TTHH_SL_2B2V": 0,
+        "TTHH_SL_2B2Tau": 0,
+
+        "QCD": 0,
+
+        "TbarB":0,
+        "TBbar":0,
+        "TWm2L":0,
+        "TbarWp2L":0,
+        "TWm1L":0,
+        "TbarWp1L":0,
+        
+        "TTZ_low": 0,
+        "TTZ_high": 0,
+        "TTW": 0,
+        "TTHnonBB": 0,
+        "THQ": 0,
+        "THW": 0,
+        "GGZZ_2mu2e": 0,
+        "GGZZ_4mu": 0,
+        "GGZZ_4e": 0,
+        "GGZZ_2mu2tau": 0,
+        "GGZZ_2e2tau": 0,
+        "DYG": 0,
+        "WG": 0,
+        "ZZ4l": 0,
+        "WZ3l": 0,
+        "TZQB": 0
+    },
+
+    "needMerge" : {
+        "QCD":[
+            "QCD_15_20_mu",
+            "QCD_20_30_mu",
+            "QCD_30_50_mu",
+            "QCD_50_80_mu",
+            "QCD_80_120_mu",
+            "QCD_120_170_mu",
+            "QCD_170_300_mu",
+            "QCD_300_470_mu",
+            "QCD_470_600_mu",
+            "QCD_600_800_mu",
+            "QCD_800_1000_mu",
+            "QCD_1000_mu"
+        ]
+    },
+
+    "MCweight": [
+        "weight_XS"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

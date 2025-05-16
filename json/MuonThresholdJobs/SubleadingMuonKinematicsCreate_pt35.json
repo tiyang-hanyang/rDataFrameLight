@@ -5,10 +5,10 @@
 
     "year": "2023",
     "run": "Run3",
-    "era": "Run2023D",
+    "era": "Run2023C",
     "outDir": "MuonThresholdKinematics",
 
-    "sampleConfig": "json/samples/MinimumCutSkimmed_Run2023D.json",
+    "sampleConfig": "json/samples/MinimumCutSkimmed_Run2023C.json",
 
     "varNames": [
         "subleadingMuonPt_pt35",
@@ -64,8 +64,6 @@
         "GGZZ_4e",
         "GGZZ_2mu2tau",
         "GGZZ_2e2tau",
-        "GGZZ_2mu2nu",
-        "GGZZ_2e2nu",
         "DYG",
         "WG",
         "ZZ4l",

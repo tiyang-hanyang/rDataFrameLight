@@ -1,0 +1,7 @@
+[
+    ["cut", "trimuon", "(nGoodMuon>=3)"],
+    ["define", "thirdMuonPt", "GoodMuon_pt[2]"],
+    ["define", "thirdMuonEta", "GoodMuon_eta[2]"],
+    ["define", "thirdMuonPhi", "GoodMuon_phi[2]"],
+    ["define", "thirdMuonMass", "GoodMuon_mass[2]"]
+]

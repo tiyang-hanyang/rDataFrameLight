@@ -1,0 +1,30 @@
+[
+    ["cut", "DiMuonTrigger", "(HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8)"],
+    ["define", "MuonSel", "(abs(Muon_eta)<2.4) && Muon_tightId && (Muon_pfRelIso04_all<0.15) && (Muon_pt>15.0)"],
+    ["define", "GoodMuon_pt", "Muon_pt[MuonSel]"],
+    ["cut", "at least one muon", "GoodMuon_pt.size()>0"],
+    ["cut", "leading muon pt", "GoodMuon_pt[0]>25.0"],
+    ["define", "GoodMuon_eta", "Muon_eta[MuonSel]"],
+    ["define", "GoodMuon_phi", "Muon_phi[MuonSel]"],
+    ["define", "GoodMuon_charge", "Muon_charge[MuonSel]"],
+    ["define", "GoodMuon_mass", "Muon_mass[MuonSel]"],
+    ["define", "GoodMuon_dxy", "Muon_dxy[MuonSel]"],
+    ["define", "GoodMuon_dz", "Muon_dz[MuonSel]"],
+    ["define", "nGoodMuon", "GoodMuon_pt.size()"],
+
+    ["define", "SelGoodJetRun3", "(Jet_pt>25.0) && (Jet_eta < 2.5) && (Jet_eta>-2.5) && (Jet_jetId==6 || Jet_jetId==2)"],
+    ["define", "GoodJet_jetId", "Jet_jetId[SelGoodJetRun3]"],
+    ["define", "nGoodJet", "GoodJet_jetId.size()"],
+    ["define", "GoodJet_pt", "Jet_pt[SelGoodJetRun3]"],
+    ["define", "GoodJet_eta", "Jet_eta[SelGoodJetRun3]"],
+    ["define", "GoodJet_phi", "Jet_phi[SelGoodJetRun3]"],
+    ["define", "GoodJet_mass", "Jet_mass[SelGoodJetRun3]"],
+
+    ["define", "SelBJetRun3", "(Jet_btagPNetB > 0.1917) && (Jet_pt>25.0) && (Jet_eta < 2.5) && (Jet_eta>-2.5) && (Jet_jetId==6 || Jet_jetId==2)"],
+    ["define", "BJet_jetId", "Jet_jetId[SelBJetRun3]"],
+    ["define", "nBJet", "BJet_jetId.size()"],
+    ["define", "BJet_pt", "Jet_pt[SelBJetRun3]"],
+    ["define", "BJet_eta", "Jet_eta[SelBJetRun3]"],
+    ["define", "BJet_phi", "Jet_phi[SelBJetRun3]"],
+    ["define", "BJet_mass", "Jet_mass[SelBJetRun3]"]
+]

@@ -65,7 +65,7 @@ public:
     // get merged internal histograms
     TH1D *mergeHistograms(const std::vector<std::string> &histNames, const std::string &mergedName);
     // get ratio hists
-    std::map<std::string, TH1D *> getRatios(const std::vector<std::string>& numerator, const std::vector<std::string> &referenceNames);
+    std::map<std::string, TH1D *> getRatios(const std::vector<std::string>& numerator, const std::vector<std::string> &referenceNames, bool doNormalize);
 
     // to add histogram together
     HistControl addHistograms(const HistControl& toAdd);
