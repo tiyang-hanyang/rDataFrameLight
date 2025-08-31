@@ -37,6 +37,15 @@ void SkimControl::readConfig(nlohmann::json origConfigFile)
     this->_year = configFile.at("year").get<std::string>();
     this->_era = configFile.at("era").get<std::string>();
 
+    // check if preliminary
+    // by default is preliminary selection
+    int preliminary(1);
+    if (configFile.contains("preliminary"))
+    {
+        if (configFile.at("preliminary").get<int>() == 0) preliminary=0;
+    }
+    this->_isPreliminary = preliminary;
+
     // mkdir for output
     this->_outDir = configFile.at("outDir").get<std::string>();
     rdfWS_utility::creatingFolder("SkimControl", this->_outDir);
@@ -242,55 +251,72 @@ void SkimControl::run()
         ROOT::RDF::RNode rndDS(rdfDS);
 
         // determine output Dir for this channel
+        // non preliminary not need to have the folder spliting, as not doing MC reweighting or data golden json match
         auto outDir = this->_outDir;
-        if (isData)
+        if (this->_isPreliminary)
         {
-            std::string dirPart = filePaths[0];
-            if (dirPart.find("/data/") == std::string::npos)
-                rdfWS_utility::messageERROR("SkimControl", "The data path does not have '/data/' in the path, please have a check");
-            dirPart = dirPart.substr(dirPart.find("/data/"));
-            dirPart = dirPart.substr(0, dirPart.rfind("/"));
-            // 2024 storage structure is different, need special treatment
-            // a typical 2023 sample: /data1/common/NanoAOD/data/Run2023C/Muon0/NANOAOD/22Sep2023_v1-v1/2530000/030eead5-93f9-405c-863c-a62244712e91.root
-            // 2024 case: /data1/common/NanoAOD/data/Run2024C/Muon0/NANOAOD/PromptReco-v1/000/379/415/00000/80b3773e-c489-435b-a25b-027ff8e64f64.root
-            if (this->_year == "2024")
+            if (isData)
             {
+                std::string dirPart = filePaths[0];
+                if (dirPart.find("/data/") == std::string::npos)
+                    rdfWS_utility::messageERROR("SkimControl", "The data path does not have '/data/' in the path, please have a check");
+                dirPart = dirPart.substr(dirPart.find("/data/"));
                 dirPart = dirPart.substr(0, dirPart.rfind("/"));
-                dirPart = dirPart.substr(0, dirPart.rfind("/"));
-                dirPart = dirPart.substr(0, dirPart.rfind("/"));
+                // 2024 storage structure is different, need special treatment
+                // a typical 2023 sample: /data1/common/NanoAOD/data/Run2023C/Muon0/NANOAOD/22Sep2023_v1-v1/2530000/030eead5-93f9-405c-863c-a62244712e91.root
+                // 2024 case: /data1/common/NanoAOD/data/Run2024C/Muon0/NANOAOD/PromptReco-v1/000/379/415/00000/80b3773e-c489-435b-a25b-027ff8e64f64.root
+                if (this->_year == "2024")
+                {
+                    dirPart = dirPart.substr(0, dirPart.rfind("/"));
+                    dirPart = dirPart.substr(0, dirPart.rfind("/"));
+                    dirPart = dirPart.substr(0, dirPart.rfind("/"));
+                }
+                dirPart = dirPart.substr(0, dirPart.rfind("/") + 1);
+                outDir += dirPart;
             }
-            dirPart = dirPart.substr(0, dirPart.rfind("/") + 1);
-            outDir += dirPart;
-        }
-        else
-        {
-            std::string dirPart = filePaths[0];
-            dirPart = dirPart.substr(dirPart.find("/mc/"));
-            dirPart = dirPart.substr(0, dirPart.rfind("/"));
-            dirPart = dirPart.substr(0, dirPart.rfind("/") + 1);
-            outDir += dirPart;
-        }
-        rdfWS_utility::creatingFolder("SkimControl", outDir);
-        std::string outputPath = outDir + "/" + channel + "_" + this->_skimName + ".root";
+            else
+            {
+                std::string dirPart = filePaths[0];
+                if (dirPart.find("/mc/") == std::string::npos)
+                    rdfWS_utility::messageERROR("SkimControl", "The data path does not have '/mc/' in the path, please have a check");
+                dirPart = dirPart.substr(dirPart.find("/mc/"));
+                dirPart = dirPart.substr(0, dirPart.rfind("/"));
+                dirPart = dirPart.substr(0, dirPart.rfind("/") + 1);
+                outDir += dirPart;
+            }
 
-        if (isData)
-        {
-            // apply golden json
-            if (!(this->_goldenJsonLambda))
+            if (isData)
             {
-                this->_createGoldenJsonFunc();
+                // apply golden json
+                if (!(this->_goldenJsonLambda))
+                {
+                    this->_createGoldenJsonFunc();
+                }
+                rndDS = this->_goldenJsonLambda.value()(rndDS);
             }
-            rndDS = this->_goldenJsonLambda.value()(rndDS);
+            else
+            {
+                // need to compute weight of XS before taking the filter for MC
+                double totalGenWeight = rndDS.Sum("genWeight").GetValue();
+std::cout << "total sum gen weight: " << totalGenWeight << std::endl;
+                // store weight to XS per lumi to enable scaling
+                // weight_XS = genWeight * (1 (lumi/fb-1) * 1000 * XS (pb)) / totalGenWeight
+                double weightXSScale = 1000 * this->_XSvalues.at(channel) / totalGenWeight;
+
+//std::cout << "weight XS scale number: " << std::to_string(weightXSScale) << std::endl;
+//                rndDS = rndDS.Define("weight_XS", std::string("(double(genWeight) * double(") + std::to_string(weightXSScale) + "))");
+                std::ostringstream oss;
+                oss << std::setprecision(15) << weightXSScale;
+                std::string weightScaleStr = oss.str();
+std::cout << "weight XS scale number: " << weightScaleStr << std::endl;
+                rndDS = rndDS.Define("weight_XS", std::string("(genWeight * ") + weightScaleStr + ")");
+
+std::cout << "Now, tell me what is the weight_XS after the scaling: " << rndDS.Sum("weight_XS").GetValue() << std::endl;
+            }
         }
-        else
-        {
-            // need to compute weight of XS before taking the filter for MC
-            float totalGenWeight = rndDS.Sum("genWeight").GetValue();
-            // store weight to XS per lumi to enable scaling
-            // weight_XS = genWeight * (1 (lumi/fb-1) * 1000 * XS (pb)) / totalGenWeight
-            float weightXSScale = 1000 * this->_XSvalues.at(channel) / totalGenWeight;
-            rndDS = rndDS.Define("weight_XS", std::string("(genWeight * ") + std::to_string(weightXSScale) + ")");
-        }
+
+        rdfWS_utility::creatingFolder("SkimControl", outDir + "/" + this->_era + "/");
+        std::string outputPath = outDir + "/" + this->_era + "/" + channel + "_" + this->_skimName + ".root";
 
         // apply the filter
         rndDS = this->_skimCut.applyCut(rndDS);

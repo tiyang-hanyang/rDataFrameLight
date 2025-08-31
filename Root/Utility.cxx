@@ -98,6 +98,11 @@ void rdfWS_utility::creatingFolder(const std::string &prog, const std::string &f
 
 rdfWS_utility::JsonObject::JsonObject(nlohmann::json jsonConfig, const std::string &jsonName) : _json(jsonConfig), _name(jsonName) {}
 
+bool rdfWS_utility::JsonObject::contains(const std::string& key)
+{
+    return this->_json.contains(key);
+}
+
 rdfWS_utility::JsonObject rdfWS_utility::JsonObject::at(const std::string &item)
 {
     try

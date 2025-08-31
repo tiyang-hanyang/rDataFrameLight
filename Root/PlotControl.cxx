@@ -133,12 +133,13 @@ void PlotControl::setHanyangHist(TH1D *hist, int color, int isData, const std::v
         // data draw option is ep
         hist->SetMarkerStyle(20);
         hist->SetMarkerSize(0.5);
-        hist->SetLineStyle(0);
+        hist->SetLineStyle(1);
     }
     else
     {
         // MC draw option is e hist
         hist->SetLineWidth(2);
+        hist->SetLineStyle(1);
     }
 
     // axis style setting
@@ -202,6 +203,10 @@ void PlotControl::setMax(std::map<std::string, TH1D *> hists, int doLog, int isR
         }
         maxVal *= 1.2;
         minVal *= 0.8;
+
+        // take the fixed range option now
+        // maxVal = 1.2;
+        // minVal = 0.8;
         
     }
     else
@@ -301,15 +306,20 @@ void PlotControl::drawNonStackedHists(
             {
                 if (hist->GetMinimum() > 1.0) hist->SetMinimum(0.8);
                 if (hist->GetMaximum() < 1.0) hist->SetMaximum(1.2);
+
+                // force setting a fixed min and max
+                // hist->SetMinimum(0.8);
+                // hist->SetMaximum(1.2);
             }
-            std::string drawOption = "HIST";
+            std::cout << "[DEBUG] Why I cannot see the line in hist when draw " << histName << std::endl;
+            std::string drawOption = "HISTE";
+            // if (isRatio)
+            // {
+            //     drawOption += " E";
+            // }
             if (same)
             {
                 drawOption += " SAME";
-            }
-            if (isRatio)
-            {
-                drawOption += " E";
             }
 
             hist->Draw(drawOption.c_str());
@@ -382,15 +392,23 @@ void PlotControl::drawCanvasHists(
     drawTexts(plotTexts, scale);
 }
 
-void PlotControl::saveCanvas(const std::string &fileName)
+void PlotControl::saveCanvas(const std::string &fileName, int doLog)
 {
     if (!this->_canvas)
     {
         rdfWS_utility::messageERROR("PlotControl", "Internal canvas not properly setup: " + this->_controllerName);
     }
-    this->_canvas->SaveAs((fileName + ".png").c_str());
-    this->_canvas->SaveAs((fileName + ".pdf").c_str());
-    this->_canvas->SaveAs((fileName + ".eps").c_str());
+
+    std::string fileDir = fileName.substr(0, fileName.rfind("/"));
+    std::string outFileName = fileName.substr(fileName.rfind("/")+1);
+    if (doLog) 
+        outFileName = "log_"+outFileName;
+    else
+        outFileName = "linear_"+outFileName;
+    outFileName = fileDir+"/"+outFileName;
+    this->_canvas->SaveAs((outFileName + ".png").c_str());
+    this->_canvas->SaveAs((outFileName + ".pdf").c_str());
+    this->_canvas->SaveAs((outFileName + ".eps").c_str());
 }
 
 // prepare THStack
@@ -544,8 +562,6 @@ TGraphAsymmErrors *getRatioUncert(TGraphAsymmErrors *origUncert)
     return ratioUncert;
 }
 
-// 5b8ea728-e1bc-4b9c-9072-b18ac3c4b39b.root
-
 void PlotControl::drawStackHistWithRatio(
     const std::map<std::string, TH1D *> &hists,
     const std::vector<std::string> &stackOrder,
@@ -604,6 +620,8 @@ void PlotControl::drawStackHistWithRatio(
     // Add stack histogram uncertainties
     auto systStack = uncertaintyHist(stack, plotHists, reStackOrder, stackUp, stackDown);
 
+    // to make sure the stacked hist maximum also covers the non-stack hist range
+    double nonStackMax = stack->GetMaximum();
     std::map<std::string, TH1D *> nonStackedHists;
     for (auto &[name, hist] : plotHists)
     {
@@ -619,6 +637,7 @@ void PlotControl::drawStackHistWithRatio(
                 hist->SetLineStyle(9);
             }
             nonStackedHists.emplace(name, hist);
+            if (hist->GetMaximum() > nonStackMax) nonStackMax = hist->GetMaximum();
         }
     }
 
@@ -632,12 +651,12 @@ void PlotControl::drawStackHistWithRatio(
     axisHist->Reset();
     if (setup.doLog)
     {
-        axisHist->SetMaximum(std::max(axisHist->GetMaximum(), stack->GetMaximum()) * 5000.);
+        axisHist->SetMaximum(std::max(axisHist->GetMaximum(), nonStackMax) * 5000.);
         axisHist->SetMinimum(1.);
     }
     else
     {
-        axisHist->SetMaximum(std::max(axisHist->GetMaximum(), stack->GetMaximum()) * 1.5);
+        axisHist->SetMaximum(std::max(axisHist->GetMaximum(), nonStackMax) * 1.5);
         axisHist->SetMinimum(0.);
     }
 
@@ -728,7 +747,7 @@ void PlotControl::drawStackHistWithRatio(
         this->_canvas->Update();
     }
 
-    saveCanvas(this->_controllerName);
+    saveCanvas(this->_controllerName, setup.doLog);
 
     delete axisHist;
     delete stack;

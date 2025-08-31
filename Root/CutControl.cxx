@@ -134,6 +134,17 @@ ROOT::RDF::RNode CutControl::applyCut(ROOT::RDF::RNode origRDF)
                         p4.SetPtEtaPhiE(pt, eta, phi, e);
                         return p4; }, capturedVar);
                 }
+                else if (operation == "defineDR")
+                {
+                    // parse the TLorentzVector input
+                    auto capturedVar = this->extractTLVComp(std::get<2>(step));
+                    origRDF = origRDF.Define(std::get<1>(step), [](float eta1, float eta2, float phi1, float phi2)
+                                             {
+                        auto deta2 = pow(eta1-eta2, 2.0);
+                        auto dphi2 = pow(phi1-phi2, 2.0);
+                        auto dr = pow(deta2+dphi2, 0.5);
+                        return dr; }, capturedVar);
+                }
                 else
                 {
                     throw std::runtime_error("[CutControl] Operation type of the step not defined: " + operation + ". Must one of define, cut, TLVPtEtaPhiM and TLVPtEtaPhiE! Please check your json file");

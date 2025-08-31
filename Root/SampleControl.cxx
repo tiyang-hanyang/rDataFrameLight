@@ -82,7 +82,7 @@ std::vector<std::string> SampleControl::getFiles(std::string type)
 
     if (this->_filePaths.find(type) == this->_filePaths.end())
     {
-        rdfWS_utility::messageERROR("SampleControl", "Requested type '" + type + "' does not exist in loaded samples.");
+        rdfWS_utility::messageWARN("SampleControl", "Requested type '" + type + "' does not exist in loaded samples.");
     }
 
     return this->_filePaths[type];
@@ -106,7 +106,7 @@ std::vector<std::string> SampleControl::getMergedFiles(const std::vector<std::st
 
     if (mergedFiles.empty())
     {
-        rdfWS_utility::messageERROR("SampleControl", "No valid files found for the provided types.");
+        rdfWS_utility::messageWARN("SampleControl", "No valid files found for the provided types.");
     }
 
     return mergedFiles;

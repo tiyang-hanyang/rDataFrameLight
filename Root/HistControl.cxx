@@ -415,7 +415,7 @@ HistControl HistControl::cropHistograms(double newMin, double newMax)
 
     // get a new object with the same varName but cropped histograms
     int newFirstBin = this->_templateHist->FindBin(newMin);
-    int newLastBin = std::min(this->_templateHist->FindBin(newMax),  this->_templateHist->GetNbinsX());
+    int newLastBin = std::min(this->_templateHist->FindBin(newMax), this->_templateHist->GetNbinsX());
     int nNewBins = newLastBin - newFirstBin + 1;
 
     double croppedMin = this->_templateHist->GetXaxis()->GetBinLowEdge(newFirstBin);
@@ -532,7 +532,8 @@ std::map<std::string, TH1D *> HistControl::getRatios(const std::vector<std::stri
         double numerInt = this->_histograms[key]->Integral();
         std::string ratioName = key + "_ratio_to_" + mergedRefName;
         TH1D *ratioHist = calculateRatio(this->_histograms[key], mergedRef, ratioName);
-        if (doNormalize && numerInt>0) {
+        if (doNormalize && numerInt > 0)
+        {
             ratioHist->Scale(mergedInt / numerInt);
         }
         ratioHists[ratioName] = ratioHist;
@@ -546,6 +547,13 @@ std::map<std::string, TH1D *> HistControl::getRatios(const std::vector<std::stri
 /// @return
 HistControl HistControl::addHistograms(const HistControl &toAdd)
 {
+    // if the initial histogram is empty, would just copy the toAdd one
+    if (this->_histograms.size() == 0)
+    {
+        HistControl result = toAdd;
+        return result;
+    }
+
     // Check addbility
     // varName must match
     if (this->_varName != toAdd._varName)
@@ -674,4 +682,11 @@ HistControl &HistControl::operator=(const HistControl &other)
         }
     }
     return *this;
+}
+
+
+std::map<std::string, TH1D*> HistControl::getHistInstance()
+{
+    std::cout << "You are directly accessing the histogram!" << std::endl;
+    return this->_histograms;
 }
