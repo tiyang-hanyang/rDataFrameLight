@@ -26,6 +26,9 @@ private:
     std::string _year;
     std::string _era;
 
+    // enable to store in separated or merging samples
+    int _ifMerging;
+
     // the very top outDir folder, if not exist, create it
     std::string _outDir;
 
@@ -58,12 +61,14 @@ private:
     static SkimControl* instance;
     std::atomic<bool> stop_requested{false};
 
+    // in case distinguish preliminary selection and further cut
+    int _isPreliminary;
+
 public:
     SkimControl() = default;
     explicit SkimControl(nlohmann::json configFile);
     explicit SkimControl(const std::string& configPath);
     ~SkimControl() = default;
-    // no need to copy skim jobs I suppose
 
     void readConfig(nlohmann::json configFile);
     void readConfig(const std::string& configPath);
@@ -71,6 +76,11 @@ public:
     // turn off & turn on channels to run
     void turnOn(const std::string& channels);
     void turnOff(const std::string& channels);
+
+    // operations inside the run
+    double _getTotalGenWeight(std::vector<std::string> fileLists);
+    ROOT::RDF::RNode _preliminaryDeco(ROOT::RDF::RNode rndDS, int isData, const std::string& channel, double totalGenWeight);
+    std::vector<std::string> _getBranchArray(ROOT::RDF::RNode rndDS, int isData, int isPreliminary);
 
     // better to split run one by one file, to avoid failure in the middle
     void run();

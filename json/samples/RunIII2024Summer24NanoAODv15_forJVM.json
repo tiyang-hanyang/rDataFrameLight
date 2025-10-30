@@ -1,0 +1,30 @@
+{
+    "dir": {
+        "DY2L": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/",
+        "DY2L_low": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/",
+        "ttbarDL": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/",
+        "ttbarSL": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/",
+        "ttbar4Q": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/",
+        "QCD_80_120_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/",
+        "QCD_120_170_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/",
+        "QCD_170_300_mu": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/",
+        "TbarWp2L": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/",
+        "TWm2L": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/",
+        "TTHBB": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/",
+        "TTHnonBB": "/home/tiyang/public/rDataFrameLight_git/SkimmedSamples/Rochester/MuonScaleCorrected/RunIII2024Summer24NanoAODv15/"
+    },
+    "file": {
+        "DY2L": ["DY2L_skimmed_DiMuonCorrected.root"],
+        "DY2L_low": ["DY2L_low_skimmed_DiMuonCorrected.root"],
+        "ttbarDL": ["ttbarDL_skimmed_DiMuonCorrected.root"],
+        "ttbarSL": ["ttbarSL_skimmed_DiMuonCorrected.root"],
+        "ttbar4Q": ["ttbar4Q_skimmed_DiMuonCorrected.root"],
+        "QCD_80_120_mu": ["QCD_80_120_mu_skimmed_DiMuonCorrected.root"],
+        "QCD_120_170_mu": ["QCD_120_170_mu_skimmed_DiMuonCorrected.root"],
+        "QCD_170_300_mu": ["QCD_170_300_mu_skimmed_DiMuonCorrected.root"],
+        "TbarWp2L": ["TbarWp2L_skimmed_DiMuonCorrected.root"],
+        "TWm2L": ["TWm2L_skimmed_DiMuonCorrected.root"],
+        "TTHBB": ["TTHBB_skimmed_DiMuonCorrected.root"],
+        "TTHnonBB": ["TTHnonBB_skimmed_DiMuonCorrected.root"]
+    }
+}

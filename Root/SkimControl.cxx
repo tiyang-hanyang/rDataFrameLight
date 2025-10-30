@@ -32,6 +32,7 @@ void SkimControl::readConfig(nlohmann::json origConfigFile)
 {
     rdfWS_utility::JsonObject configFile(origConfigFile, "Skim JO config");
     // creating fileList would need era
+    this->_ifMerging = configFile.at("merge").get<int>();
     this->_skimName = configFile.at("name").get<std::string>();
     this->_run = configFile.at("run").get<std::string>();
     this->_year = configFile.at("year").get<std::string>();
@@ -214,15 +215,92 @@ void SkimControl::signalHandler(int signum)
     }
 }
 
+////////////////////////////////////////////////// Skimming methods
+// function for getting the total weight if exist
+double SkimControl::_getTotalGenWeight(std::vector<std::string> fileLists)
+{
+    double totalGenWeight(0.0);
+    for (const auto& fPath: fileLists)
+    {
+        std::unique_ptr<TFile> fTemp{ TFile::Open(fPath.c_str(), "READ") };
+        if (!fTemp || fTemp->IsZombie()) 
+        {
+            rdfWS_utility::messageWARN("SkimControl", fPath+" not exist!");
+            continue;
+        }
+
+        auto sumWeightHist = dynamic_cast<TH1D*>(fTemp->Get("genWeightSum"));
+        if (!sumWeightHist)
+        {
+            rdfWS_utility::messageWARN("SkimControl", fPath+" does not have genWeightSum! Try manually add.");
+            auto tTemp = dynamic_cast<TTree*>(fTemp->Get("Events"));
+
+            ROOT::RDataFrame dfTemp(*tTemp);
+            try {
+                totalGenWeight += dfTemp.Sum("genWeight").GetValue();
+            } catch (const std::exception& e) {
+                rdfWS_utility::messageWARN("SkimControl", fPath+" cannot add genWeight, skip...");
+                continue;
+            }
+        }
+        else
+            totalGenWeight += sumWeightHist->GetBinContent(1);
+    }
+    rdfWS_utility::messageINFO("SkimControl", "Total genWeight: " + std::to_string(totalGenWeight) );
+    return totalGenWeight;
+}
+
+ROOT::RDF::RNode SkimControl::_preliminaryDeco(ROOT::RDF::RNode rndDS, int isData, const std::string& channel, double totalGenWeight) 
+{
+    // for preliminary skim, must applying golden json for data, and rescaling MC weight
+    if (isData)
+    {
+        // apply golden json
+        if (!(this->_goldenJsonLambda))
+        {
+            this->_createGoldenJsonFunc();
+        }
+        rndDS = this->_goldenJsonLambda.value()(rndDS);
+    }
+    else
+    {
+        // weight_XS = genWeight * (1 (lumi/fb-1) * 1000 * XS (pb)) / totalGenWeight
+        double weightXSScale = 1000 * this->_XSvalues.at(channel) / totalGenWeight;
+        std::ostringstream oss;
+        oss << std::setprecision(15) << weightXSScale;
+        std::string weightScaleStr = oss.str();
+        rndDS = rndDS.Define("weight_XS", std::string("double(genWeight * ") + weightScaleStr + ")");
+    }
+
+    return rndDS;
+}
+
+std::vector<std::string> SkimControl::_getBranchArray(ROOT::RDF::RNode rndDS, int isData, int isPreliminary)
+{
+    // keep the branches in the config only and dump into files
+    std::vector<std::string> branchArray;
+    std::vector<std::string> originalBRs = rndDS.GetColumnNames();
+    for (const auto &brName : this->_branchList)
+    {
+        if (std::find(originalBRs.begin(), originalBRs.end(), brName) == originalBRs.end())
+            continue;
+        branchArray.push_back(brName);
+    }
+
+    // MC need weight_XS
+    if ((!isData) && isPreliminary) branchArray.push_back("weight_XS");
+
+    return branchArray;
+}
+
 ////////////////////////////////////////////////// Process the Skim running
 
 void SkimControl::run()
 {
-    // add a ctrl+C detector
+    // enhance ctrl+C trigger sensitivity
     instance = this;
     signal(SIGINT, SkimControl::signalHandler);
 
-    // need to use chain, as skim requires reweighting based
     for (const auto &channel : this->_channels)
     {
         // detect stopping message, handling after this loop
@@ -232,114 +310,105 @@ void SkimControl::run()
             break;
         }
 
+        // skip off channels 
         if (!this->_isOn[channel])
             continue;
+        
         rdfWS_utility::messageINFO("SkimControl", "Starting processing channel " + channel);
         auto filePaths = this->_samples.value().getFiles(channel);
         if (filePaths.size() == 0)
             continue;
-        // if is data
+        
+        // skim property
         auto isData = this->_isData;
+        auto isPreSkim = this->_isPreliminary;
 
-        // loading dataframe
-        TChain *chDS = new TChain("Events");
-        for (const auto &filePath : filePaths)
+        // in case of MC, for preliminary skimming, need get the MC total genWeight
+        double totalGenWeight(0.0);
+        if ((!isData) && isPreSkim)
+            totalGenWeight = _getTotalGenWeight(filePaths);
+
+        // determine the outDir
+        auto outDir = this->_outDir+"/"+ (isData?"data":"mc") +"/"+this->_era+"/"+channel+"/";
+        rdfWS_utility::creatingFolder("SkimControl", outDir);
+
+        // enable choose to do merging or not
+        if (this->_ifMerging) 
         {
-            chDS->Add(filePath.c_str());
-        }
-        ROOT::RDataFrame rdfDS(*chDS);
-        ROOT::RDF::RNode rndDS(rdfDS);
-
-        // determine output Dir for this channel
-        // non preliminary not need to have the folder spliting, as not doing MC reweighting or data golden json match
-        auto outDir = this->_outDir;
-        if (this->_isPreliminary)
-        {
-            if (isData)
+            // loading dataframe
+            TChain *chDS = new TChain("Events");
+            for (const auto &filePath : filePaths)
             {
-                std::string dirPart = filePaths[0];
-                if (dirPart.find("/data/") == std::string::npos)
-                    rdfWS_utility::messageERROR("SkimControl", "The data path does not have '/data/' in the path, please have a check");
-                dirPart = dirPart.substr(dirPart.find("/data/"));
-                dirPart = dirPart.substr(0, dirPart.rfind("/"));
-                // 2024 storage structure is different, need special treatment
-                // a typical 2023 sample: /data1/common/NanoAOD/data/Run2023C/Muon0/NANOAOD/22Sep2023_v1-v1/2530000/030eead5-93f9-405c-863c-a62244712e91.root
-                // 2024 case: /data1/common/NanoAOD/data/Run2024C/Muon0/NANOAOD/PromptReco-v1/000/379/415/00000/80b3773e-c489-435b-a25b-027ff8e64f64.root
-                if (this->_year == "2024")
-                {
-                    dirPart = dirPart.substr(0, dirPart.rfind("/"));
-                    dirPart = dirPart.substr(0, dirPart.rfind("/"));
-                    dirPart = dirPart.substr(0, dirPart.rfind("/"));
-                }
-                dirPart = dirPart.substr(0, dirPart.rfind("/") + 1);
-                outDir += dirPart;
+                chDS->Add(filePath.c_str());
             }
-            else
-            {
-                std::string dirPart = filePaths[0];
-                if (dirPart.find("/mc/") == std::string::npos)
-                    rdfWS_utility::messageERROR("SkimControl", "The data path does not have '/mc/' in the path, please have a check");
-                dirPart = dirPart.substr(dirPart.find("/mc/"));
-                dirPart = dirPart.substr(0, dirPart.rfind("/"));
-                dirPart = dirPart.substr(0, dirPart.rfind("/") + 1);
-                outDir += dirPart;
-            }
+            ROOT::RDataFrame rdfDS(*chDS);
+            ROOT::RDF::RNode rndDS(rdfDS);
 
-            if (isData)
-            {
-                // apply golden json
-                if (!(this->_goldenJsonLambda))
-                {
-                    this->_createGoldenJsonFunc();
-                }
-                rndDS = this->_goldenJsonLambda.value()(rndDS);
-            }
-            else
-            {
-                // need to compute weight of XS before taking the filter for MC
-                double totalGenWeight = rndDS.Sum("genWeight").GetValue();
-std::cout << "total sum gen weight: " << totalGenWeight << std::endl;
-                // store weight to XS per lumi to enable scaling
-                // weight_XS = genWeight * (1 (lumi/fb-1) * 1000 * XS (pb)) / totalGenWeight
-                double weightXSScale = 1000 * this->_XSvalues.at(channel) / totalGenWeight;
+            // for preliminary skim, must applying golden json for data, and rescaling MC weight
+            if (this->_isPreliminary)
+                rndDS = this->_preliminaryDeco(rndDS, isData, channel, totalGenWeight);
 
-//std::cout << "weight XS scale number: " << std::to_string(weightXSScale) << std::endl;
-//                rndDS = rndDS.Define("weight_XS", std::string("(double(genWeight) * double(") + std::to_string(weightXSScale) + "))");
-                std::ostringstream oss;
-                oss << std::setprecision(15) << weightXSScale;
-                std::string weightScaleStr = oss.str();
-std::cout << "weight XS scale number: " << weightScaleStr << std::endl;
-                rndDS = rndDS.Define("weight_XS", std::string("(genWeight * ") + weightScaleStr + ")");
-
-std::cout << "Now, tell me what is the weight_XS after the scaling: " << rndDS.Sum("weight_XS").GetValue() << std::endl;
-            }
-        }
-
-        rdfWS_utility::creatingFolder("SkimControl", outDir + "/" + this->_era + "/");
-        std::string outputPath = outDir + "/" + this->_era + "/" + channel + "_" + this->_skimName + ".root";
-
-        // apply the filter
-        rndDS = this->_skimCut.applyCut(rndDS);
-        if (rndDS.Count().GetValue() == 0)
-            continue;
-
-        // keep the branches in the config only and dump into files
-        std::vector<std::string> branchArray;
-        std::vector<std::string> originalBRs = rndDS.GetColumnNames();
-        for (const auto &brName : this->_branchList)
-        {
-            if (std::find(originalBRs.begin(), originalBRs.end(), brName) == originalBRs.end())
+            // apply the filter
+            rndDS = this->_skimCut.applyCut(rndDS);
+            if (rndDS.Count().GetValue() == 0)
                 continue;
-            branchArray.push_back(brName);
-        }
-        // MC need weight_XS
-        // if (!(this->_isData.at(channel)))
-        if (!isData)
-            branchArray.push_back("weight_XS");
 
-        // output
-        ROOT::RDF::RSnapshotOptions SSoption;
-        SSoption.fCompressionLevel = 9;
-        rndDS.Snapshot("Events", outputPath, branchArray, SSoption);
+            // keep the branches in the config only and dump into files
+            auto branchArray = this->_getBranchArray(rndDS, isData, isPreSkim);
+
+            // output
+            ROOT::RDF::RSnapshotOptions SSoption;
+            SSoption.fCompressionLevel = 9;
+            std::string outputPath = outDir + "/" + channel + "_" + this->_skimName + ".root";
+            rndDS.Snapshot("Events", outputPath, branchArray, SSoption);
+
+            // collect memory
+            delete chDS;
+        }
+        else
+        {
+            for (const auto &filePath: filePaths)
+            {
+                // check if alreayd processed first
+                // file naming structure
+                // original: data or mc /era/channel/ (NANOAOD/MINIAOD) or condition/ runNumber / sampleName
+                // after Rochester corr, uniformed: data or mc /era/channel/ (runNumber+sample)
+                auto outSampleName = filePath.substr(filePath.rfind("/")+1);
+                if (!outSampleName.find("Rcorr")) 
+                {
+                    auto dirPart = filePath.substr(0, filePath.rfind("/"));
+                    auto runNumber =  dirPart.substr(dirPart.rfind("/")+1);
+                    outSampleName = runNumber+"-"+outSampleName;
+                }
+                std::string outputPath = outDir + "/" + outSampleName;
+
+                if (std::filesystem::exists(outputPath)) 
+                {
+                    rdfWS_utility::messageINFO("SkimControl", outputPath + " already exist, skip");
+                    continue;
+                }
+
+                // loading dataframe
+                ROOT::RDataFrame rdfDS("Events", filePath.c_str());
+                ROOT::RDF::RNode rndDS(rdfDS);
+
+                // for preliminary skim, must applying golden json for data, and rescaling MC weight
+                if (this->_isPreliminary)
+                    rndDS = this->_preliminaryDeco(rndDS, isData, channel, totalGenWeight);
+
+                // apply the filter
+                rndDS = this->_skimCut.applyCut(rndDS);
+                if (rndDS.Count().GetValue() == 0)
+                    continue;
+
+                // keep the branches in the config only and dump into files
+                auto branchArray = this->_getBranchArray(rndDS, isData, isPreSkim);
+
+                // output
+                ROOT::RDF::RSnapshotOptions SSoption;
+                SSoption.fCompressionLevel = 9;
+                rndDS.Snapshot("Events", outputPath, branchArray, SSoption);
+            }
+        }
     }
 }

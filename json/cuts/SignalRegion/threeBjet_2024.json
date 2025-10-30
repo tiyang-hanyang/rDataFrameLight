@@ -1,0 +1,9 @@
+[
+    ["define", "GoodJetCond", "(Jet_pt > 30.0) && (abs(Jet_eta)<2.5) && (Jet_neHEF<0.99) && (Jet_neEmEF<0.90) && (Jet_nConstituents>1) && (Jet_muEF<0.80) && (Jet_chHEF>0.01) && (Jet_chMultiplicity>0) && (Jet_chEmEF<0.80) && (PassJetVeto == 1)"],
+    ["define", "GoodJet_pt", "Jet_pt[GoodJetCond]"],
+    ["define", "nGoodJet", "GoodJet_pt.size()"],
+    ["define", "BJetCond", "GoodJetCond && (Jet_btagUParTAK4B > 0.1272)"],
+    ["define", "BJet_pt", "Jet_pt[BJetCond]"],
+    ["define", "nBJet", "BJet_pt.size()"],
+    ["cut", "at least three bjet", "(nBJet>=3)"]
+]

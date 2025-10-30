@@ -98,77 +98,14 @@ def main():
         "Run3Summer23BPixNanoAODv12": this_dir+ "/../" +"json/samples/Run3Summer23BPixNanoAODv12.json",
         "Run3Summer22NanoAODv12": this_dir+ "/../" +"json/samples/Run3Summer22NanoAODv12.json",
         "Run3Summer22EENanoAODv12": this_dir+ "/../" +"json/samples/Run3Summer22EENanoAODv12.json",
-        "RunIII2024Summer24NanoAODv15": this_dir+ "/../" +"json/samples/RunIII2024Summer24NanoAODv15.json",
+        "RunIII2024Summer24NanoAODv15": this_dir+ "/../" +"json/samples/Signal_RunIII2024Summer24NanoAODv15.json",
     }
 
     # from MetricSkimmedFiles import datasets
     #datasets = ["DY2L", "DY2L_low"]
     datasets = [
-        #"DY2L", 
-        #"DY2L_low",
-        #"ttbarDL",
-        #"ttbarSL",
-        #"ttbar4Q",
-
-        "WJet_1J",
-        "WJet_2J",
-        "WJet_3J",
-        "WJet_4J",
-
-        #Sep 17, new
-        # "ggHBB",
-        # "ggHWW2L",
-        # "ggHWW1L",
-        # "VBFHBB",
-        # "VBFHWW2L",
-        # "VBFHWW1L",
-        # "TbarWp1L",
-        # "TbarB_t",
-        # "TbarB_s",
-        # "TWm1L",
-        # "TBbar_t",
-        # "TBbar_s",
-        # "WWLNu2Q",
-        # "WZLNu2Q"
-
-        # QCD
-        #"QCD_15_20_mu",
-        #"QCD_20_30_mu",
-        #"QCD_30_50_mu",
-        #"QCD_50_80_mu",
-        #"QCD_80_120_mu",
-        #"QCD_120_170_mu",
-        #"QCD_170_300_mu",
-        #"QCD_300_470_mu",
-        #"QCD_470_600_mu",
-        #"QCD_600_800_mu",
-        #"QCD_800_1000_mu",
-        #"QCD_1000_mu",
-
-        # diboson
-        # guess should use the full samples but not 2L ones
-        #"WW2L2Nu",
-        #"WZ2L2Q",
-        #"ZZ2L2Q",
-        #"ZZ2L2Nu",
-        #"WZ3l",
-        #"ZZ4l",
-        #"WWW",
-        #"WWZ",
-        #"WZZ",
-        #"ZZZ",
-
-        #"TbarWp2L",
-        #"TWm2L"
-
-        # W+Jets
-        #"WJets",
-        #"QCD_800_1000_mu",
-
-        #"TTHBB",
-        #"TTHnonBB",
-        #"WZ2L2Q",
-        
+        "TTHH_SL_2B2W_batch1",
+        "TTHH_SL_2B2W_batch2",
     ]
 
     for era in periods:

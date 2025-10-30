@@ -1,0 +1,22 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run2024G.",
+    "name": "Run2024G_Mu_Skim",
+    "year": "2024",
+    "run": "Run3",
+    "era": "Run2024G",
+    "merge": 0,
+    "sampleConfig": "json/samples/Run2024G_RochesterOrig.json",
+    "XSConfig": "",
+    "outDir": "/data2/common/skimmed_NanoAOD/skim_1025_MVAtight/",
+    "datasets": [
+        "Muon0",
+        "Muon1"
+    ],
+    "isData": 1,
+    "mcWeight": "genWeight",
+    "cut": [
+        "json/cuts/MetricMuon/MuonMetricSkimMVA2024.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

@@ -1,9 +1,11 @@
 {
     "Run2022C": 5.0104,
     "Run2022D": 2.9700,
+    "Run3Summer22NanoAODv12": 7.9804,
     "Run2022E": 5.8070,
     "Run2022F": 17.7819,
     "Run2022G": 3.0828,
+    "Run3Summer22EENanoAODv12": 26.6717,
     "Run2023C": 17.794,
     "Run3Summer23NanoAODv12": 17.794,
     "Run2023D": 9.451,
@@ -14,5 +16,6 @@
     "Run2024F": 27.76,
     "Run2024G": 37.77,
     "Run2024H": 5.44,
-    "Run2024I": 11.47
+    "Run2024I": 11.47,
+    "RunIII2024Summer24NanoAODv15": 108.96
 }

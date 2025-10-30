@@ -1,9 +1,10 @@
 {
-    "DY2L": 6345.99,
+    "DY2L": 2115.33,
     "WJets": 63199.9,
 
     "ttbarDL": 96.9,
     "ttbarSL": 404.0,
+    "ttbar4Q": 419.7,
 
     "WW2L2Nu": 12.98,
     "WZ2L2Q": 8.17,
@@ -69,5 +70,18 @@
     "GGZZ_2e2nu":0.0363,
     "DYG": 126.5,
     "WG": 662.2,
-    "TZQB": 0.08
+    "TZQB": 0.08,
+
+    "DY2L_low": 6660.83,
+
+    "ggHWW2L": 1.185,
+    "VBFHBB": 2.375,
+    "VBFHWW2L": 0.09256,
+
+    "TbarB_t": 87.2,
+    "TbarB_s": 1.478,
+    "TBbar_t": 145.0,
+    "TBbar_s": 2.361,
+    "WWLNu2Q": 55.22,
+    "WZLNu2Q": 11.24
 }

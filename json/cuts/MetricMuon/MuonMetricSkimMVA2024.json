@@ -1,0 +1,16 @@
+[
+    ["define", "MuonTriggers", "(HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8 || HLT_IsoMu20 || HLT_IsoMu24 || HLT_IsoMu24_eta2p1 || HLT_IsoMu27 || HLT_Mu50 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8 || HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8 || HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8 || HLT_TripleMu_5_3_3_Mass3p8_DZ || HLT_TripleMu_10_5_5_DZ || HLT_TripleMu_12_10_5)"],
+    ["cut", "Trigger Menu", "MuonTriggers"],
+    ["define", "METFilters", "Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter && Flag_BadPFMuonDzFilter && Flag_hfNoisyHitsFilter"],
+    ["cut", "MET filter", "METFilters"],
+
+    ["cut", "has PV", "(PV_npvsGood>0)"],
+
+    ["define", "isGoodMuon_mva", "(Muon_pt_Rcorr>15.0) && (abs(Muon_eta)<2.4) && (abs(Muon_dxy)<0.05) && (abs(Muon_dz)<0.1) && (abs(Muon_dz/Muon_dzErr) < 8) && Muon_tightId && (Muon_jetDF<0.2480) && (Muon_promptMVA > 0.64)"],
+    ["define", "nGoodMuon_mva", "ROOT::VecOps::Sum(isGoodMuon_mva)"],
+    ["define", "MuonPresel", "(nGoodMuon_mva > 1)"],
+
+    ["cut", "Muon presel", "MuonPresel"],
+    ["define", "leadingMuonIdx", "Nonzero(isGoodMuon_mva)[0]"],
+    ["define", "subleadingMuonIdx", "Nonzero(isGoodMuon_mva)[1]"]
+]

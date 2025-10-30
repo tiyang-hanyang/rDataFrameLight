@@ -14,14 +14,15 @@ class correctionApplier(ABC):
         self.dataset = dataset
         fileDir = jsonFull["dir"][dataset]
         fileList = jsonFull["file"][dataset]
+        self.ifExist = 1
+        self.c1 = ROOT.TChain("Events")
         self.numberOfFiles = 0 
-        self.filePaths=[]
         for fUnique in fileList:
             filePath = fileDir+"/"+fUnique
             if os.path.isfile(filePath):
-                self.filePaths.append(filePath)
+                self.c1.Add(filePath)
                 self.numberOfFiles += 1
-        print("available files:", self.numberOfFiles)
+        print("chain loaded")
 
     @abstractmethod
     def reweight_and_save(self):
