@@ -1,0 +1,623 @@
+{
+    "nGoodMuon_mva": {
+        "label": "Muon multiplicity",
+        "nBins": "4",
+        "min": "2.0",
+        "max": "6.0",
+        "binLabels": []
+    },
+    "nGoodJet": {
+        "label": "Jet multiplicity",
+        "nBins": "10",
+        "min": "0.0",
+        "max": "10.0",
+        "binLabels": []
+    },
+    "nDefaultGoodJet": {
+        "label": "Jet multiplicity",
+        "nBins": "10",
+        "min": "0.0",
+        "max": "10.0",
+        "binLabels": []
+    },
+    "nBJet": {
+        "label": "b-Jet multiplicity",
+        "nBins": "10",
+        "min": "0.0",
+        "max": "10.0",
+        "binLabels": []
+    },
+    "nDefaultBJet": {
+        "label": "b-Jet multiplicity",
+        "nBins": "10",
+        "min": "0.0",
+        "max": "10.0",
+        "binLabels": []
+    },
+
+    "MET_phi": {
+        "label": "MET #phi",
+        "nBins": "20",
+        "min": "-3.14",
+        "max": "3.14",
+        "binLabels": []
+    },
+    "MET_pt": {
+        "label": "MET #it{p}_{T}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "200.0",
+        "binLabels": []
+    },
+
+    "PuppiMET_phi": {
+        "label": "MET #phi",
+        "nBins": "20",
+        "min": "-3.14",
+        "max": "3.14",
+        "binLabels": []
+    },
+    "PuppiMET_pt": {
+        "label": "MET #it{p}_{T}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "200.0",
+        "binLabels": []
+    },
+    "PuppiMET_sumEt": {
+        "label": "MET #it{p}_{T}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "200.0",
+        "binLabels": []
+    },
+
+    "leadingMuon_pt": {
+        "label": "Leading muon #it{p}_{T} (GeV)",
+        "nBins": "19",
+        "min": "15.",
+        "max": "205.0",
+        "binLabels": []
+    },
+    "leadingMuon_phi": {
+        "label": "Leading muon #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159",
+        "binLabels": []
+    },
+    "leadingMuon_eta": {
+        "label": "Leading muon #eta",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4",
+        "binLabels": []
+    },
+
+    "subleadingMuon_pt": {
+        "label": "Subleading muon #it{p}_{T} (GeV)",
+        "nBins": "19",
+        "min": "15.",
+        "max": "205.0",
+        "binLabels": []
+    },
+    "subleadingMuon_phi": {
+        "label": "Subleading muon #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159",
+        "binLabels": []
+    },
+    "subleadingMuon_eta": {
+        "label": "Subleading muon #eta",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4",
+        "binLabels": []
+    },
+
+    "thirdMuonPt": {
+        "label": "Third muon #it{p}_{T} (GeV)",
+        "nBins": "37",
+        "min": "15.",
+        "max": "200.0",
+        "binLabels": []
+    },
+    "thirdMuonPhi": {
+        "label": "Third muon #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159",
+        "binLabels": []
+    },
+    "thirdMuonEta": {
+        "label": "Third muon #eta",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4",
+        "binLabels": []
+    },
+
+    "nMuon_cat": {
+        "label": "Muon multiplicity categories",
+        "nBins": "5",
+        "min": "1.",
+        "max": "6.",
+        "binLabels": ["1l", "2l OS", "2l SS", "3l", "4l"]
+    },
+
+
+    "leadingBJet_pt": {
+        "label": "Leading b-jet #it{p}_{T} (GeV)",
+        "nBins": "27",
+        "min": "30.0",
+        "max": "300.0",
+        "binLabels": []
+    },
+    "leadingBJet_eta": {
+        "label": "Leading b-jet #eta",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4",
+        "binLabels": []
+    },
+    "leadingBJet_phi": {
+        "label": "Leading b-jet #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159",
+        "binLabels": []
+    },
+
+    "subleadingBJet_pt": {
+        "label": "Subleading b-jet #it{p}_{T} (GeV)",
+        "nBins": "27",
+        "min": "30.0",
+        "max": "300.0",
+        "binLabels": []
+    },
+    "subleadingBJet_eta": {
+        "label": "Subleading b-jet #eta",
+        "nBins": "20",
+        "min": "-2.4",
+        "max": "2.4",
+        "binLabels": []
+    },
+    "subleadingBJet_phi": {
+        "label": "Subleading b-jet #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159",
+        "binLabels": []
+    },
+
+    "yield": {
+        "label": "1",
+        "nBins": "1",
+        "min": "0.0",
+        "max": "2.0",
+        "binLabels": []
+    },
+
+    "diMuon_mass": {
+        "label": "m_{#mu#mu}",
+        "nBins": "74",
+        "min": "30.0",
+        "max": "400.0",
+        "binLabels": []
+    },
+
+    "diMuon_pt": {
+        "label": "p_{T,#mu#mu} (GeV)",
+        "nBins": "40",
+        "min": "0.0",
+        "max": "400.0",
+        "binLabels": []
+    },
+    "diMuon_eta": {
+        "label": "#eta_{#mu#mu}",
+        "nBins": "36",
+        "min": "-9.0",
+        "max": "9.0",
+        "binLabels": []
+    },
+    "diMuon_deltaEta": {
+        "label": "#Delta #eta_{#mu#mu}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "5.0",
+        "binLabels": []
+    },
+    "diMuon_dphi": {
+        "label": "#Delta #phi_{#mu#mu}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "3.14159",
+        "binLabels": []
+    },
+    "diMuon_phi": {
+        "label": "#phi_{#mu#mu}",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159",
+        "binLabels": []
+    },
+    "diMuon_dR": {
+        "label": "#Delta R_{#mu#mu}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "6.0",
+        "binLabels": []
+    },
+
+    "nPassVetoJet": {
+        "label": "Jet multiplicity after jetvetomap",
+        "nBins": "9",
+        "min": "1.0",
+        "max": "10.0",
+        "binLabels": []
+    },
+    "nPassVetoBJet": {
+        "label": "b-Jet multiplicity after jetvetomap",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0",
+        "binLabels": []
+    },
+    "Pileup_nPU": {
+        "label": "N(PU)",
+        "nBins": "10",
+        "min": "0.0",
+        "max": "120.",
+        "binLabels": []
+    },
+    "Pileup_nTrueInt": {
+        "label": "N(PU) float",
+        "nBins": "10",
+        "min": "0.0",
+        "max": "120.",
+        "binLabels": []
+    },
+    "allJet_pt": {
+        "label": "all Jet #it{p}_{T}",
+        "nBins": "14",
+        "min": "20.0",
+        "max": "300.",
+        "binLabels": []
+    },
+
+    "PV_npvsGood": {
+        "label": "n(Primary Vertices)",
+        "nBins": "50",
+        "min": "0.0",
+        "max": "100.",
+        "binLabels": []
+    },
+
+
+
+    "relaxedMuonPt": {
+        "label": "relaxed Muon #it{p}_{T} (GeV)",
+        "nBins": "37",
+        "min": "15.",
+        "max": "200.0",
+        "binLabels": []
+    },
+    "relaxedMuonEta": {
+        "label": "relaxed Muon #eta",
+        "nBins": "48",
+        "min": "-2.4",
+        "max": "2.4",
+        "binLabels": []
+    },
+    "MT_fix": {
+        "label": "M_{T}^{fix} (GeV)",
+        "nBins": "30",
+        "min": "0.",
+        "max": "150.0",
+        "binLabels": []
+    },
+
+    "leadingJet_pt": {
+        "label": "leading Jet #it{p}_{T} (GeV)",
+        "nBins": "14",
+        "min": "20.0",
+        "max": "300.",
+        "binLabels": []
+    },
+    "subleadingJet_pt": {
+        "label": "subleading Jet #it{p}_{T} (GeV)",
+        "nBins": "14",
+        "min": "20.0",
+        "max": "300.",
+        "binLabels": []
+    },
+    "defaultLeadingJet_pt": {
+        "label": "leading Jet #it{p}_{T} (GeV)",
+        "nBins": "14",
+        "min": "20.0",
+        "max": "300.",
+        "binLabels": []
+    },
+    "defaultSubleadingJet_pt": {
+        "label": "subleading Jet #it{p}_{T} (GeV)",
+        "nBins": "14",
+        "min": "20.0",
+        "max": "300.",
+        "binLabels": []
+    },
+    "leadingJet_eta": {
+        "label": "leading Jet #eta",
+        "nBins": "20",
+        "min": "-2.5",
+        "max": "2.5",
+        "binLabels": []
+    },
+    "subleadingJet_eta": {
+        "label": "subleading Jet #eta",
+        "nBins": "20",
+        "min": "-2.5",
+        "max": "2.5",
+        "binLabels": []
+    },
+    "defaultLeadingJet_eta": {
+        "label": "leading Jet #eta",
+        "nBins": "20",
+        "min": "-2.5",
+        "max": "2.5",
+        "binLabels": []
+    },
+    "defaultSubleadingJet_eta": {
+        "label": "subleading Jet #eta",
+        "nBins": "20",
+        "min": "-2.5",
+        "max": "2.5",
+        "binLabels": []
+    },
+    "leadingJet_phi": {
+        "label": "leading Jet #phi",
+        "nBins": "20",
+        "min": "-3.14",
+        "max": "3.14",
+        "binLabels": []
+    },
+    "subleadingJet_phi": {
+        "label": "subleading Jet #phi",
+        "nBins": "20",
+        "min": "-3.14",
+        "max": "3.14",
+        "binLabels": []
+    },
+    "defaultLeadingJet_phi": {
+        "label": "leading Jet #phi",
+        "nBins": "20",
+        "min": "-3.14",
+        "max": "3.14",
+        "binLabels": []
+    },
+    "defaultSubleadingJet_phi": {
+        "label": "subleading Jet #phi",
+        "nBins": "20",
+        "min": "-3.14",
+        "max": "3.14",
+        "binLabels": []
+    },
+
+
+    "b1_pt":{
+        "label": "B-Jet_{1} ##it{p}_{T}",
+        "nBins": "28",
+        "min": "20.0",
+        "max": "300.0",
+        "binLabels": []
+    },
+    "b2_pt":{
+        "label": "B-Jet_{2} ##it{p}_{T}",
+        "nBins": "28",
+        "min": "20.0",
+        "max": "300.0",
+        "binLabels": []
+    },
+    "b3_pt":{
+        "label": "B-Jet_{3} ##it{p}_{T}",
+        "nBins": "28",
+        "min": "20.0",
+        "max": "300.0",
+        "binLabels": []
+    },
+    "b4_pt":{
+        "label": "B-Jet_{4} ##it{p}_{T}",
+        "nBins": "28",
+        "min": "20.0",
+        "max": "300.0",
+        "binLabels": []
+    },
+    "b1_eta":{
+        "label": "B-Jet_{1} #eta",
+        "nBins": "20",
+        "min": "-2.5",
+        "max": "2.5",
+        "binLabels": []
+    },
+    "b2_eta":{
+        "label": "B-Jet_{2} #eta",
+        "nBins": "20",
+        "min": "-2.5",
+        "max": "2.5",
+        "binLabels": []
+    },
+    "b3_eta":{
+        "label": "B-Jet_{3} #eta",
+        "nBins": "20",
+        "min": "-2.5",
+        "max": "2.5",
+        "binLabels": []
+    },
+    "b4_eta":{
+        "label": "B-Jet_{4} #eta",
+        "nBins": "20",
+        "min": "-2.5",
+        "max": "2.5",
+        "binLabels": []
+    },
+    "b1_phi":{
+        "label": "B-Jet_{1} #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159",
+        "binLabels": []
+    },
+    "b2_phi":{
+        "label": "B-Jet_{2} #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159",
+        "binLabels": []
+    },
+    "b3_phi":{
+        "label": "B-Jet_{3} #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159",
+        "binLabels": []
+    },
+    "b4_phi":{
+        "label": "B-Jet_{4} #phi",
+        "nBins": "20",
+        "min": "-3.14159",
+        "max": "3.14159",
+        "binLabels": []
+    },
+    "b12_dr": {
+        "label": "B-Jet_{1,2} #Delta R",
+        "nBins": "50",
+        "min": "0.0",
+        "max": "5.0",
+        "binLabels": []
+    },
+    "b13_dr": {
+        "label": "B-Jet_{1,3} #Delta R",
+        "nBins": "50",
+        "min": "0.0",
+        "max": "5.0",
+        "binLabels": []
+    },
+    "b14_dr": {
+        "label": "B-Jet_{1,4} #Delta R",
+        "nBins": "50",
+        "min": "0.0",
+        "max": "5.0",
+        "binLabels": []
+    },
+    "b23_dr": {
+        "label": "B-Jet_{2,3} #Delta R",
+        "nBins": "50",
+        "min": "0.0",
+        "max": "5.0",
+        "binLabels": []
+    },
+    "b24_dr": {
+        "label": "B-Jet_{2,4} #Delta R",
+        "nBins": "50",
+        "min": "0.0",
+        "max": "5.0",
+        "binLabels": []
+    },
+    "b34_dr": {
+        "label": "B-Jet_{3,4} #Delta R",
+        "nBins": "50",
+        "min": "0.0",
+        "max": "5.0",
+        "binLabels": []
+    },
+
+    "leadingMuonMVA": {
+        "label": "leading Muon promptMVA",
+        "nBins": "50",
+        "min": "-1.0",
+        "max": "1.0",
+        "binLabels": []
+    },
+    "subleadingMuonMVA": {
+        "label": "subleading Muon promptMVA",
+        "nBins": "50",
+        "min": "-1.0",
+        "max": "1.0",
+        "binLabels": []
+    },
+    "leadingMuonIso": {
+        "label": "leading Muon I_{rel}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "1.0",
+        "binLabels": []
+    },
+    "subleadingMuonIso": {
+        "label": "subleading Muon I_{rel}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "1.0",
+        "binLabels": []
+    },
+
+    "JES_Z_R_JEC": {
+        "label": "|jet pt (JEC)| / |di-muon pt|",
+        "nBins": "40",
+        "min": "0.0",
+        "max": "2.0",
+        "binLabels": []
+    },
+    "JES_Z_R": {
+        "label": "|jet pt| / |di-muon pt|",
+        "nBins": "40",
+        "min": "0.0",
+        "max": "2.0",
+        "binLabels": []
+    },
+
+    "mTfix": {
+        "label": "m_{T}^{fix} (GeV)",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "200.0",
+        "binLabels": []
+    },
+
+
+    "leadingMuon_miniPFRelIso_all": {
+        "label": "leading Muon I_{mini}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "1.0",
+        "binLabels": []
+    },
+
+    "leadingMuon_dxy": {
+        "label": "leading Muon d_{xy}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "1.0",
+        "binLabels": []
+    },
+    "leadingMuon_dz": {
+        "label": "leading Muon d_{z}",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "2.0",
+        "binLabels": []
+    },
+    "leadingMuon_sip3d": {
+        "label": "leading Muon #sigma_{3d}",
+        "nBins": "10",
+        "min": "0.0",
+        "max": "10.0",
+        "binLabels": []
+    },
+    "leadingMuon_jetDF": {
+        "label": "leading Muon jet DeepFlav",
+        "nBins": "20",
+        "min": "0.0",
+        "max": "1.0",
+        "binLabels": []
+    }
+}
