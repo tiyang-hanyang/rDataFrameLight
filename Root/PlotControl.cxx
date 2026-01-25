@@ -44,7 +44,7 @@ void PlotControl::setHanyangCanvas(double xSize, double ySize, int doLog, int do
     this->_canvas = new TCanvas(canvasName.c_str(), canvasName.c_str(), xSize, ySize);
 
     // margin setup
-    double tMargin = 0.05;
+    double tMargin = 0.08;
     double bMargin = 0.15;
     this->_topMargin = tMargin;
     this->_bottomMargin = bMargin;
@@ -55,7 +55,8 @@ void PlotControl::setHanyangCanvas(double xSize, double ySize, int doLog, int do
     if (doLog)
     {
         this->_canvas->SetLogy();
-        this->_canvas->SetGrid();
+        // Not want grid even in log scale
+        // this->_canvas->SetGrid();
     }
 
     // margin scheme
@@ -85,7 +86,7 @@ void PlotControl::setHanyangCanvas(double xSize, double ySize, int doLog, int do
         if (doLog)
         {
             this->_abovePad->SetLogy();
-            this->_abovePad->SetGrid();
+            // this->_abovePad->SetGrid();
         }
 
         std::string bpName = "pRatio_" + this->_controllerName;
@@ -132,8 +133,8 @@ void PlotControl::setHanyangHist(TH1D *hist, int color, int isData, const std::v
     {
         // data draw option is ep
         hist->SetMarkerStyle(20);
-        hist->SetMarkerSize(0.5);
-        hist->SetLineStyle(1);
+        hist->SetMarkerSize(0.8);
+        hist->SetLineStyle(0);
     }
     else
     {
@@ -145,19 +146,19 @@ void PlotControl::setHanyangHist(TH1D *hist, int color, int isData, const std::v
     // axis style setting
     hist->GetXaxis()->SetTitle(xTitle.c_str());
     hist->GetXaxis()->SetLabelFont(42);
-    hist->GetXaxis()->SetLabelSize(0.04 / scale);
+    hist->GetXaxis()->SetLabelSize(0.03 / scale);
     hist->GetXaxis()->SetLabelOffset(0.007 / scale);
     hist->GetXaxis()->SetTitleFont(42);
-    hist->GetXaxis()->SetTitleSize(0.055 / scale);
+    hist->GetXaxis()->SetTitleSize(0.04 / scale);
     hist->GetXaxis()->SetTitleOffset(0.9);
 
     hist->GetYaxis()->SetTitle(yTitle.c_str());
     hist->GetYaxis()->SetLabelFont(42);
-    hist->GetYaxis()->SetLabelSize(0.04 / scale);
+    hist->GetYaxis()->SetLabelSize(0.03 / scale);
     hist->GetYaxis()->SetLabelOffset(0.007);
     hist->GetYaxis()->SetTitleFont(42);
-    hist->GetYaxis()->SetTitleSize(0.055 / scale);
-    hist->GetYaxis()->SetTitleOffset(1.25 * scale);
+    hist->GetYaxis()->SetTitleSize(0.04 / scale);
+    hist->GetYaxis()->SetTitleOffset(1.5 * scale);
 }
 
 TLegend *PlotControl::setHanyangLegend(int entries, double textSize, double scale)
@@ -168,13 +169,13 @@ TLegend *PlotControl::setHanyangLegend(int entries, double textSize, double scal
     {
         equEntries = (equEntries + 1) / 2;
     }
-    auto len = new TLegend(0.6, 1.0 - (1 - 0.92 + equEntries * textSize) / scale, 0.9, 1.0 - (1.0 - 0.92) / scale, NULL, "brNDC");
+    auto len = new TLegend(0.6, 1.0 - (1 - 0.9 + equEntries * textSize) / scale, 0.89, 1.0 - (1.0 - 0.89) / scale, NULL, "brNDC");
     if (entries > 8)
     {
         len->SetNColumns(2);
     }
     len->SetBorderSize(1);
-    len->SetTextFont(62);
+    len->SetTextFont(42);
     len->SetTextSize(textSize / scale);
     len->SetLineColor(0);
     len->SetLineStyle(1);
@@ -201,12 +202,12 @@ void PlotControl::setMax(std::map<std::string, TH1D *> hists, int doLog, int isR
             if (hist->GetMinimum() < minVal)
                 minVal = hist->GetMinimum();
         }
-        maxVal *= 1.2;
-        minVal *= 0.8;
+        // maxVal *= 1.2;
+        // minVal *= 0.8;
 
         // take the fixed range option now
-        // maxVal = 1.2;
-        // minVal = 0.8;
+        maxVal = 1.2;
+        minVal = 0.8;
         
     }
     else
@@ -223,7 +224,7 @@ void PlotControl::setMax(std::map<std::string, TH1D *> hists, int doLog, int isR
         }
         if (doLog)
         {
-            maxVal *= 5000.0;
+            maxVal *= 50000.0;
             minVal = 1.0;
         }
         else
@@ -240,6 +241,9 @@ void PlotControl::setMax(std::map<std::string, TH1D *> hists, int doLog, int isR
     }
 }
 
+// Nov 24:
+// should not set maximum here, as this is done before scaling 
+// for ratio, can set maximum and minimum values here
 std::map<std::string, TH1D *> PlotControl::setupHists(std::map<std::string, TH1D *> hists, PlotContext setup, const std::map<std::string, int> &colorScheme, const std::vector<std::string> &binLabels, int isRatio)
 {
     // std::vector<int> colorScheme = {2, 3, 4, 5, 6, 8, 9, 11, 28, 42};
@@ -279,7 +283,8 @@ std::map<std::string, TH1D *> PlotControl::setupHists(std::map<std::string, TH1D
     }
 
     // setup maximum value according to all hists
-    setMax(styledHists, setup.doLog, isRatio);
+    if (isRatio)
+        setMax(styledHists, setup.doLog, isRatio);
 
     return styledHists;
 }
@@ -304,15 +309,21 @@ void PlotControl::drawNonStackedHists(
             hist->Scale(mcScaling);
             if (isRatio)
             {
-                if (hist->GetMinimum() > 1.0) hist->SetMinimum(0.8);
-                if (hist->GetMaximum() < 1.0) hist->SetMaximum(1.2);
+                //if (hist->GetMinimum() > 1.0) hist->SetMinimum(0.8);
+                //if (hist->GetMaximum() < 1.0) hist->SetMaximum(1.2);
 
                 // force setting a fixed min and max
                 // hist->SetMinimum(0.8);
                 // hist->SetMaximum(1.2);
+                hist->SetMinimum(0.0);
+                // hist->SetMinimum(0.5);
+                hist->SetMaximum(2.0);
             }
-            std::cout << "[DEBUG] Why I cannot see the line in hist when draw " << histName << std::endl;
-            std::string drawOption = "HISTE";
+            else
+            {
+                hist->SetMaximum(hist->GetMaximum() * mcScaling);
+            }
+            std::string drawOption = "HIST E";
             // if (isRatio)
             // {
             //     drawOption += " E";
@@ -323,6 +334,7 @@ void PlotControl::drawNonStackedHists(
             }
 
             hist->Draw(drawOption.c_str());
+            std::cout << histName << " contribution: " << hist->Integral() << std::endl;
             same = true; // Ensure subsequent histograms use "SAME"
         }
     }
@@ -335,26 +347,72 @@ void PlotControl::drawNonStackedHists(
         }
 
         hists[histName]->Draw(drawOption.c_str());
+        std::cout << histName << " contribution: " << hists[histName]->Integral() << std::endl;
         same = true;
+    }
+}
+
+// temp: not design every text drawing together yet
+// Now, I would want to move the heading to the above
+// \bf{CMS} \it{Preliminary} above the panel, to the left
+// %1.0f fb^{-1} (13.6 TeV) above the panel, to the right
+void PlotControl::drawHeader(const std::vector<std::string>& header,double scale, int doRatio)
+{
+    if (doRatio)
+        this->_abovePad->cd();
+
+    double CMSsize = 0.04;
+    double defaultSize = 0.035;
+
+    TLatex headerText;
+    headerText.SetNDC();
+    headerText.SetTextFont(42);
+
+    // Draw header first
+    if (doRatio) {
+        headerText.SetTextSize(CMSsize / scale);
+        headerText.DrawLatex(0.15, 0.9, "#bf{CMS}");
+        headerText.SetTextSize(defaultSize / scale);
+        std::string CMSheader = "#it{"+header[0]+"}";
+        headerText.DrawLatex(0.25, 0.9, CMSheader.c_str());
+        headerText.DrawLatex(0.65, 0.9, header[1].c_str());
+    }
+    else
+    {
+        headerText.SetTextSize(CMSsize / scale);
+        headerText.DrawLatex(0.15, 0.95, "#bf{CMS}");
+        headerText.SetTextSize(defaultSize / scale);
+        std::string CMSheader = "#it{"+header[0]+"}";
+        headerText.DrawLatex(0.25, 0.95, CMSheader.c_str());
+        headerText.DrawLatex(0.68, 0.95, header[1].c_str());
     }
 }
 
 // latex
 void PlotControl::drawTexts(const std::vector<std::string> &texts, double scale)
 {
-    if (texts.empty())
-    {
-        return;
-    }
+    // if (texts.empty())
+    // {
+    //     return;
+    // }
 
-    double defaultSize = 0.04;
+    // the previous input style
+    // "texts": [
+    //     "CMS Preliminary",
+    //     "#sqrt{s} = 13.6 TeV, L= %1.0f fb^{-1}",
+    //     "S1 dimuon, tight ID jets, UParT"
+    // ],
+
+    double defaultSize = 0.03;
 
     TLatex padText;
     padText.SetNDC();
+    padText.SetTextFont(42);
     padText.SetTextSize(defaultSize / scale);
 
+    // Then draw the above text
     // double initHeight = 1 - (1 + defaultSize - 0.88) * scale;
-    double initHeight = 1 - (1 - 0.88) / scale;
+    double initHeight = 1 - (1 - 0.87) / scale;
     for (const auto &t : texts)
     {
         padText.DrawLatex(0.2, initHeight, t.c_str());
@@ -379,7 +437,7 @@ void PlotControl::drawCanvasHists(
     {
         rdfWS_utility::messageINFO("PlotControl", "legend plot hist size: " + std::to_string(plotHists.size()));
         rdfWS_utility::messageINFO("PlotControl", "legend scale: " + std::to_string(scale));
-        auto len = setHanyangLegend(plotHists.size(), 0.04, scale);
+        auto len = setHanyangLegend(plotHists.size(), 0.03, scale);
         for (auto &[histName, hist] : plotHists)
         {
             len->AddEntry(hist, histName.c_str());
@@ -424,6 +482,7 @@ THStack *PlotControl::prepareStackHists(std::map<std::string, TH1D *> &hists, st
     {
         if (hists.find(name) == hists.end())
             continue;
+        hists[name]->SetMaximum(hists[name]->GetMaximum() * mcScaling);
         hists[name]->Scale(mcScaling);
         float histInt = hists[name]->Integral();
         if (histInt > 1e-6)
@@ -432,6 +491,7 @@ THStack *PlotControl::prepareStackHists(std::map<std::string, TH1D *> &hists, st
             histIntegrals.emplace(name, histInt);
         }
     }
+
     // auto ordering
     if (reOrder)
     {
@@ -467,12 +527,15 @@ THStack *PlotControl::prepareStackHists(std::map<std::string, TH1D *> &hists, st
             // hist->SetFillColor(reverseColorScheme[colorIndex]);
             hist->SetFillColor(hist->GetLineColor());
             hist->SetLineColor(1);
-            hist->SetLineWidth(1);
+            hist->SetLineWidth(0);
             hist->SetFillStyle(1001);
             stack->Add(hist);
             colorIndex++;
         }
     }
+
+    std::cout << "inside the stack, debugging 5" << std::endl;
+
     return stack;
 }
 
@@ -482,6 +545,9 @@ TGraphAsymmErrors *uncertaintyHist(THStack *stackHist, std::map<std::string, TH1
     {
         return nullptr;
     }
+
+    if (stackUp.size() == 0 || stackDown.size() ==0) return nullptr;
+
     TH1D *histUp = dynamic_cast<TH1D *>(hists[stackOrder[0]]->Clone("stack_Up"));
     TH1D *histDown = dynamic_cast<TH1D *>(hists[stackOrder[0]]->Clone("stack_Down"));
     if (stackUp.find(stackOrder[0]) != stackUp.end())
@@ -573,6 +639,7 @@ void PlotControl::drawStackHistWithRatio(
     float mcScaling,
     const std::map<std::string, int> &colorScheme,
     const std::map<std::string, std::string> &labels,
+    const std::vector<std::string> &headerTexts,
     const std::vector<std::string> &aboveTexts,
     const std::vector<std::string> &belowTexts,
     const std::vector<std::string> &binLabels)
@@ -603,7 +670,7 @@ void PlotControl::drawStackHistWithRatio(
         {
             rdfWS_utility::messageERROR("PlotControl", "Histogram '" + name + "' specified in stackOrder does not exist in the provided histograms.");
         }
-        std::cout << name << "contribution: " << hists.at(name)->Integral() << std::endl;
+        std::cout << name << " contribution: " << hists.at(name)->Integral() << std::endl;
     }
 
     // need to setup canvas in advance for scales needed by hist
@@ -633,8 +700,9 @@ void PlotControl::drawStackHistWithRatio(
             }
             else if (std::find(isSignal.begin(), isSignal.end(), name) != isSignal.end())
             {
-                hist->Scale(10000000.);
+                hist->Scale(100000.);
                 hist->SetLineStyle(9);
+                hist->SetLineWidth(2);
             }
             nonStackedHists.emplace(name, hist);
             if (hist->GetMaximum() > nonStackMax) nonStackMax = hist->GetMaximum();
@@ -675,11 +743,11 @@ void PlotControl::drawStackHistWithRatio(
         rdfWS_utility::messageINFO("PlotControl", "Draw with systs in stack.");
         systStack->Draw("E2 SAME");
     }
-    drawNonStackedHists(nonStackedHists, isData, 1, mcScaling);
+    drawNonStackedHists(nonStackedHists, isData, 1, doRatio, mcScaling);
     gPad->RedrawAxis();
 
     // legend and latex
-    auto len = setHanyangLegend(hists.size(), 0.04, this->_scale[0]);
+    auto len = setHanyangLegend(hists.size(), 0.03, this->_scale[0]);
     for (const auto &name : reStackOrder)
     {
         if ((labels.size() == 0) || (labels.find(name) == labels.end()))
@@ -691,10 +759,11 @@ void PlotControl::drawStackHistWithRatio(
     {
         if (isData[name])
         {
-            if ((labels.size() == 0) || (labels.find(name) == labels.end()))
-                len->AddEntry(hist, name.c_str(), "ep");
-            else
-                len->AddEntry(hist, labels.at(name).c_str(), "ep");
+            // if ((labels.size() == 0) || (labels.find(name) == labels.end()))
+            //     len->AddEntry(hist, name.c_str(), "ep");
+            // else
+            //     len->AddEntry(hist, labels.at(name).c_str(), "ep");
+            len->AddEntry(hist, "Data", "ep");
         }
         else
         {
@@ -706,7 +775,7 @@ void PlotControl::drawStackHistWithRatio(
                 labelName = labels.at(name);
             // if (colorScheme.find(name) != colorScheme.end())
             if (std::find(isSignal.begin(), isSignal.end(), name) != isSignal.end())
-                labelName += " #times 1e7";
+                labelName += " #times 1e5";
             len->AddEntry(hist, labelName.c_str(), "l");
             // if ((labels.size() == 0) || (labels.find(name) == labels.end()))
             //     len->AddEntry(hist, name.c_str(), "l");
@@ -714,8 +783,10 @@ void PlotControl::drawStackHistWithRatio(
             //     len->AddEntry(hist, labels.at(name).c_str(), "l");
         }
     }
+
     len->Draw("SAME");
     this->_legends.push_back(len);
+    drawHeader(headerTexts, this->_scale[0], doRatio);
     drawTexts(aboveTexts, this->_scale[0]);
 
     // draw ratio

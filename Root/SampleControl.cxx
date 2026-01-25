@@ -32,6 +32,7 @@ SampleControl::SampleControl(const std::string &jsonFileName)
     {
         rdfWS_utility::messageERROR("SampleControl", "JSON file " + jsonFileName + " structure error: " + std::string(ex.what()));
     }
+    this->_dirMaps = dirMap;
 
     // check dataset and record
     for (const auto &[key, dir] : dirMap)
@@ -110,4 +111,9 @@ std::vector<std::string> SampleControl::getMergedFiles(const std::vector<std::st
     }
 
     return mergedFiles;
+}
+
+std::map<std::string, std::string>  SampleControl::getAllDirs() 
+{
+    return this->_dirMaps;
 }

@@ -20,7 +20,7 @@ find_package(ROOT REQUIRED COMPONENTS RIO Hist Tree Gpad ROOTDataFrame)
 
 include(${ROOT_USE_FILE})
 
-add_compile_options(-std=c++17)
+add_compile_options(-std=c++20)
 
 include_directories(${ROOT_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
@@ -36,12 +36,14 @@ add_executable(skimSamples utils/skimSamples.cxx)
 add_executable(collectHists utils/collectHists.cxx)
 add_executable(plotHists utils/plotHists.cxx)
 add_executable(appendArray utils/appendArray.cxx)
+add_executable(computeBEff utils/computeBEff.cxx)
 
 # Link against ROOT libraries
 target_link_libraries(skimSamples projectlib ${ROOT_LIBRARIES})
 target_link_libraries(collectHists projectlib ${ROOT_LIBRARIES})
 target_link_libraries(plotHists projectlib ${ROOT_LIBRARIES})
 target_link_libraries(appendArray projectlib ${ROOT_LIBRARIES})
+target_link_libraries(computeBEff projectlib ${ROOT_LIBRARIES})
 
 # for simple install
 file(WRITE ${CMAKE_BINARY_DIR}/setup.sh

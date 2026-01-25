@@ -13,6 +13,31 @@
 #include "ROOT/RDataFrame.hxx"
 #include "TChain.h"
 
+// Jan 19
+// function to enable evaluating the lumi scaling at the plotting
+// Then we could have the flexible input number of samples, else we need to determine before skimming
+double gettingTotalWeight(const std::vector<std::string> &fileLists)
+{
+    double totalWeight(0.0);
+    for (auto tempF : fileLists)
+    {
+        std::unique_ptr<TFile> f_temp(TFile::Open(tempF.c_str(), "READ"));
+        if (!f_temp || f_temp->IsZombie())
+        {
+            rdfWS_utility::messageWARN("collectHists", "Cannot open file " + tempF);
+            continue;
+        }
+        auto hsum = dynamic_cast<TH1D *>(f_temp->Get("genWeightSum"));
+        if (!hsum)
+        {
+            rdfWS_utility::messageWARN("collectHists", "no genWeightSum hist in " + tempF);
+            continue;
+        }
+        totalWeight += hsum->Integral();
+    }
+    return totalWeight;
+}
+
 void prepareHist(rdfWS_utility::JsonObject jsonConfig, std::string variable, SampleControl samples)
 {
     // extract dataset info
@@ -47,6 +72,18 @@ void prepareHist(rdfWS_utility::JsonObject jsonConfig, std::string variable, Sam
     std::string era = jsonConfig.at("era");
     float lumiVal = lumiConfig.at(era);
 
+    // and also XS
+    nlohmann::json XS_values;
+    std::string XSConfigPath = "json/XS/Run3.json";
+    if (jsonConfig.contains("XSConfig"))
+    {
+        std::string XSloadPath = jsonConfig.at(std::string("XSConfig"));
+        XSConfigPath = XSloadPath;
+    }
+    if (XSConfigPath == "")
+        XSConfigPath = "json/XS/Run3.json";
+    rdfWS_utility::JsonObject XSConfig(rdfWS_utility::readJson("collectHists", XSConfigPath), "XS Config");
+
     // out dir for storing histograms
     std::string outputDir = jsonConfig.at("outDir");
     // add the runEra infor together
@@ -57,68 +94,152 @@ void prepareHist(rdfWS_utility::JsonObject jsonConfig, std::string variable, Sam
     // creating HistControl contrainer for all the channels
     HistControl varHistController;
 
+    // common MC weight
+    std::vector<std::string> mcWeights = jsonConfig.at("MCweight");
+    std::string MCWeightexp = "";
+    if (mcWeights.size() > 0)
+    {
+        MCWeightexp = "(" + mcWeights[0];
+        for (int i = 1; i < mcWeights.size(); i++)
+        {
+            std::string wName = mcWeights[i];
+            MCWeightexp += " * ";
+            MCWeightexp += wName;
+        }
+        MCWeightexp += ")";
+    }
+
     for (const auto &channel : allChannels)
     {
-        // get file list
-        std::vector<std::string> filePaths = {};
+        // in case of merging histogram
         if (needMerge.find(channel) != needMerge.end())
         {
+
+            std::vector<TH1D *> hists;
+            // if any of the component is MC, then should be all MC, else should be all data
+            std::string weightName = "one";
+            // do one by one, need to compute the
+            ROOT::EnableImplicitMT();
             for (const auto &compName : needMerge[channel])
             {
+
+                // one of channel inside the merging scheme
                 auto compPaths = samples.getFiles(compName);
-                filePaths.insert(filePaths.end(), compPaths.begin(), compPaths.end());
+
+                // scale
+                double scaleFactor = 1.0;
+                // should still looking for the whole channel's status, as if the sum is MC, then component is also MC
+                if (!isData[channel])
+                {
+                    // Jan 20
+                    // add backward compatibility, if we already have the weight_XS instead of the genWeight, we could try with only scaled by lumiVal instead of the following
+                    // in this case, we have the weight_XS = genWeight * XS * 1000 / sum(genWeight) already from the beginning
+                    if (MCWeightexp.find("weight_XS") != std::string::npos)
+                    {
+                        scaleFactor = lumiVal;
+                    }
+                    else
+                    {
+                        // need to get XSval
+                        double XSval = XSConfig.at(compName);
+                        // total weights
+                        double totalWeight = gettingTotalWeight(compPaths);
+                        // the get lumi-XS scaling
+                        if (totalWeight > 0.0)
+                            scaleFactor = lumiVal * XSval * 1000.0 / totalWeight;
+                    }
+                }
+
+                std::vector<std::string> hasEventList;
+                for (auto tempF : compPaths)
+                {
+                    std::unique_ptr<TFile> f_temp(TFile::Open(tempF.c_str(), "READ"));
+                    if (!f_temp || f_temp->IsZombie())
+                    {
+                        rdfWS_utility::messageWARN("collectHists", "Cannot open file " + tempF);
+                        continue;
+                    }
+                    if (f_temp->GetListOfKeys()->FindObject("Events"))
+                    {
+                        hasEventList.push_back(tempF);
+                    }
+                }
+
+                if (hasEventList.size() == 0)
+                    continue;
+
+                // getting rdataframe for extracting histograms
+                ROOT::RDataFrame rdfDS("Events", hasEventList);
+                ROOT::RDF::RNode rndDS(rdfDS);
+                rndDS = histCut.applyCut(rndDS);
+                rndDS = rndDS.Define("one", "1");
+                if (!isData[channel])
+                {
+                    rndDS = rndDS.Define("MCTotalWeight", MCWeightexp);
+                    weightName = "MCTotalWeight";
+                }
+
+                // create histogram without saving, then using additional method to save
+                // WARNING: the return object of creatHistogram is different from the ones read from the histogram TFiles, the container inside the HistController own the pointer as well, do not delete the pointer manually, or segfault will be triggered.
+                // We are still considering if there is anything we could do to solve this
+                auto componentHist = varHistController.createHistogram(rndDS, compName, histBins, variable, weightName, outputDir, 0);
+                componentHist->Scale(scaleFactor);
+                hists.push_back(componentHist);
             }
+
+            // summing histogram, save, and release memory (only needed in case of merging)
+            std::string histName = channel + "_" + variable + "_" + weightName;
+            ROOT::DisableImplicitMT();
+            if (!std::filesystem::exists(outputDir))
+                std::filesystem::create_directories(outputDir);
+            TFile *f_save = new TFile((outputDir + "/" + histName + ".root").c_str(), "RECREATE");
+            TH1D *saveHist = (TH1D *)hists[0]->Clone(histName.c_str());
+
+            std::cout << saveHist->Integral() << std::endl;
+            for (auto iter = hists.begin() + 1; iter < hists.end(); iter++)
+            {
+                saveHist->Add(*iter);
+            }
+
+            saveHist->Write("");
+
+            f_save->Close();
         }
         else
-            filePaths = samples.getFiles(channel);
-
-        if (filePaths.size() == 0)
         {
-            rdfWS_utility::messageWARN("collectHists", "Sample list for " + channel + " is empty!");
-            continue;
-        }
+            auto filePaths = samples.getFiles(channel);
 
-        // create RooDataFrame and doing extraction
-        TChain *chDS = new TChain("Events");
-        for (auto filePath : filePaths)
-        {
-            chDS->Add(filePath.c_str());
-        }
-        ROOT::RDataFrame rdfDS(*chDS);
-        ROOT::RDF::RNode rndDS(rdfDS);
-        rndDS = histCut.applyCut(rndDS);
-
-        // setup weight
-        std::string weightName = "one";
-        auto originalBrs = rndDS.GetColumnNames();
-        if (std::find(originalBrs.begin(), originalBrs.end(), "one") == originalBrs.end())
-            rndDS = rndDS.Define("one", "1");
-        if (!isData[channel])
-        {
-            std::vector<std::string> mcWeights = jsonConfig.at("MCweight");
-            if (mcWeights.size() > 0)
+            double scaleFactor = 1.0;
+            if (!isData[channel])
             {
-                weightName = "MCTotalWeight";
-                if (std::find(originalBrs.begin(), originalBrs.end(), mcWeights[0]) == originalBrs.end())
-                    rdfWS_utility::messageERROR("collectHists", "MC weight component " + mcWeights[0] + " not defined in channel " + channel + "! Please check your skim.");
-                std::string MCWeightexp = "(" + mcWeights[0];
-                for (int i = 1; i < mcWeights.size(); i++)
+                // Jan 20
+                // add backward compatibility, if we already have the weight_XS instead of the genWeight, we could try with only scaled by lumiVal instead of the following
+                if (MCWeightexp.find("weight_XS") != std::string::npos)
                 {
-                    std::string wName = mcWeights[i];
-                    if (std::find(originalBrs.begin(), originalBrs.end(), wName) == originalBrs.end())
-                        rdfWS_utility::messageERROR("collectHists", "MC weight component " + wName + " not defined in channel " + channel + "! Please check your skim.");
-                    MCWeightexp += " * ";
-                    MCWeightexp += wName;
+                    scaleFactor = lumiVal;
                 }
-                MCWeightexp += " * " + std::to_string(lumiVal) + ")";
-                rndDS = rndDS.Define("MCTotalWeight", MCWeightexp);
+                else
+                {
+                    double XSval = XSConfig.at(channel);
+                    double totalWeight = gettingTotalWeight(filePaths);
+                    if (totalWeight > 0.0)
+                        scaleFactor = lumiVal * XSval * 1000 / totalWeight;
+                }
             }
+
+            std::string weightName = "one";
+            ROOT::RDataFrame rdfDS("Events", filePaths);
+            ROOT::RDF::RNode rndDS(rdfDS);
+            rndDS = histCut.applyCut(rndDS);
+            rndDS = rndDS.Define("one", "1");
+            if (!isData[channel])
+            {
+                rndDS = rndDS.Define("MCTotalWeight", MCWeightexp + "*" + std::to_string(scaleFactor));
+                weightName = "MCTotalWeight";
+            }
+
+            varHistController.createHistogram(rndDS, channel, histBins, variable, weightName, outputDir);
         }
-
-        // saving name would be datasetName+"_"+varName+"_"+weightName;
-        varHistController.createHistogram(rndDS, channel, histBins, variable, weightName, outputDir);
-
-        delete chDS;
     }
 
     delete histBins;
@@ -136,6 +257,17 @@ int main(int argc, char *argv[])
     std::string jsonPath = argv[1];
 
     rdfWS_utility::JsonObject jsonConfig(rdfWS_utility::readJson("collectHists", jsonPath), "JO Config");
+    // job type check, better to have to avoid confusion
+    if (configFile.contains("jobType"))
+    {
+        std::string jobType = configFile.at("jobType").get<std::string>();
+        if (jobType != "collectingHists") 
+        {
+            rdfWS_utility::messageERROR("collectHists", "The jobType of your config is not collectingHists! Please check again. Running ceases...");
+            exit(1);
+        }
+    }
+
     // variables & samples
     std::vector<std::string> variables = jsonConfig.at("varNames");
     std::string sampleConfigPath = jsonConfig.at("sampleConfig");

@@ -63,6 +63,11 @@ private:
 
     // in case distinguish preliminary selection and further cut
     int _isPreliminary;
+    // to deal with the stack up samples.
+    int _isStack;
+
+    // limit number of files per channel (0 means no limit)
+    int _maxFilesPerChannel;
 
 public:
     SkimControl() = default;
@@ -79,8 +84,8 @@ public:
 
     // operations inside the run
     double _getTotalGenWeight(std::vector<std::string> fileLists);
-    ROOT::RDF::RNode _preliminaryDeco(ROOT::RDF::RNode rndDS, int isData, const std::string& channel, double totalGenWeight);
-    std::vector<std::string> _getBranchArray(ROOT::RDF::RNode rndDS, int isData, int isPreliminary);
+    ROOT::RDF::RNode _preliminaryDeco(ROOT::RDF::RNode rndDS, const std::string& channel, double totalGenWeight);
+    std::vector<std::string> _getBranchArray(ROOT::RDF::RNode rndDS, int isPreliminary);
 
     // better to split run one by one file, to avoid failure in the middle
     void run();

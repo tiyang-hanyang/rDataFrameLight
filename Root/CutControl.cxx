@@ -8,6 +8,109 @@
 #include <fstream>
 
 #include "TLorentzVector.h"
+#include "ROOT/RVec.hxx"
+#include "TInterpreter.h"
+
+//////////////////////////////////////////////////
+// Free helper functions for the cling calling
+//////////////////////////////////////////////////
+
+int getMatchIdx(float eta, float phi,
+                const ROOT::VecOps::RVec<float> &etas,
+                const ROOT::VecOps::RVec<float> &phis)
+{
+    int   bestIdx = -1;
+    float bestDR  = 0.4f;
+    const auto n = etas.size();
+    for (size_t i = 0; i < n; ++i) {
+        float dr = ROOT::VecOps::DeltaR(eta, etas[i], phi, phis[i]);
+        if (dr < bestDR) {
+            bestDR  = dr;
+            bestIdx = static_cast<int>(i);
+        }
+    }
+    return bestIdx;
+}
+
+namespace {
+    void DeclareHelpersToCling()
+    {
+        static bool done = false;
+        if (done) return;
+        gInterpreter->Declare(R"(
+            #include "ROOT/RVec.hxx"
+            int getMatchIdx(float eta, float phi,
+                const ROOT::VecOps::RVec<float> &etas,
+                const ROOT::VecOps::RVec<float> &phis)
+            {
+                int   bestIdx = -1;
+                float bestDR  = 0.4f;
+                const auto n = etas.size();
+                for (size_t i = 0; i < n; ++i) {
+                    float dr = ROOT::VecOps::DeltaR(eta, etas[i], phi, phis[i]);
+                    if (dr < bestDR) {
+                        bestDR  = dr;
+                        bestIdx = static_cast<int>(i);
+                    }
+                }
+                return bestIdx;
+            }
+            ROOT::VecOps::RVec<float> allJetDRFromMuon( ROOT::VecOps::RVec<float>Jet_eta, float Muon_eta,  ROOT::VecOps::RVec<float> Jet_phi, float Muon_phi) {
+                 ROOT::VecOps::RVec<float> DR;
+                int nJet = Jet_eta.size();
+                for (int i =0;i <nJet; i++) {
+                    DR.push_back(ROOT::VecOps::DeltaR(Jet_eta[i], Muon_eta, Jet_phi[i], Muon_phi));
+                }
+                return DR;
+            }
+            ROOT::VecOps::RVec<float> getMuonMatchJetDR(const ROOT::VecOps::RVec<short>& muon_jetIdx, const ROOT::VecOps::RVec<float>& jet_eta, const ROOT::VecOps::RVec<float>& jet_phi, const ROOT::VecOps::RVec<float>& muon_eta, const ROOT::VecOps::RVec<float>& muon_phi) 
+            {
+                ROOT::VecOps::RVec<float> muonjetdr;
+                int nMuon = muon_jetIdx.size();
+                for (int i=0; i < nMuon; i++) {
+                    if(muon_jetIdx[i]==-1) {
+                        muonjetdr.push_back(999);
+                        continue;
+                    }
+                    muonjetdr.push_back(ROOT::VecOps::DeltaR(muon_eta[i], jet_eta[muon_jetIdx[i]], muon_phi[i], jet_phi[muon_jetIdx[i]]));
+                }
+                return muonjetdr;
+            }
+            ROOT::VecOps::RVec<float> getMuonMatchJetPt(const ROOT::VecOps::RVec<short>& muon_jetIdx, const ROOT::VecOps::RVec<float>& jet_pt) 
+            {
+                ROOT::VecOps::RVec<float> muonjetpt;
+                int nMuon = muon_jetIdx.size();
+                for (int i=0; i < nMuon; i++) {
+                    if(muon_jetIdx[i]==-1) {
+                        muonjetpt.push_back(-999);
+                        continue;
+                    }
+                    muonjetpt.push_back(jet_pt[muon_jetIdx[i]]);
+                }
+                return muonjetpt;
+            }
+            ROOT::VecOps::RVec<short> ensureMuonJetGood(const ROOT::VecOps::RVec<short>& muon_jetIdx, const ROOT::VecOps::RVec<bool>& GoodJetCond) 
+            {
+                ROOT::VecOps::RVec<short> Muon_jetIdxGood;
+                int nMuon = muon_jetIdx.size();
+                for (int i=0; i < nMuon; i++) {
+                    if(muon_jetIdx[i]==-1) {
+                        Muon_jetIdxGood.push_back(-1);
+                        continue;
+                    }
+                    if (GoodJetCond[muon_jetIdx[i]])
+                    {
+                        Muon_jetIdxGood.push_back(muon_jetIdx[i]);
+                    }
+                    else Muon_jetIdxGood.push_back(-1);
+                }
+                return Muon_jetIdxGood;
+            }
+        )");
+        done = true;
+    }
+}
+
 
 ////////////////////////////////////////////////// Constructors
 
@@ -28,32 +131,6 @@ CutControl::CutControl(const CutControl &origControl) : _steps(origControl._step
 void CutControl::loadProcedure(const std::string &jsonFileName)
 {
     auto jsonSteps = rdfWS_utility::readJson("CutControl", jsonFileName);
-
-    // std::cout << "[CutControl] loading steps info from: " + jsonFileName << std::endl;
-    // try
-    // {
-    //     if (!std::filesystem::exists(jsonFileName))
-    //     {
-    //         throw std::runtime_error("JSON file not exist: " + jsonFileName);
-    //     }
-    // }
-    // catch (const std::filesystem::filesystem_error &ex)
-    // {
-    //     std::cerr << "Filesystem error: " << ex.what() << std::endl;
-    // }
-
-    // // load json
-    // nlohmann::json jsonSteps;
-    // try
-    // {
-    //     std::ifstream inputFile(jsonFileName);
-    //     inputFile >> jsonSteps;
-    // }
-    // catch (const nlohmann::json::parse_error &ex)
-    // {
-    //     throw std::runtime_error("JSON " + jsonFileName + " parse error: " + std::string(ex.what()));
-    // }
-
     this->loadProcedure(jsonSteps);
 }
 
@@ -88,6 +165,8 @@ CutControl operator+(const CutControl &con1, const CutControl &con2)
 ///////////////////////////////////////////// Invoking
 ROOT::RDF::RNode CutControl::applyCut(ROOT::RDF::RNode origRDF)
 {
+    DeclareHelpersToCling();
+
     // in case the cut function is not initialized
     if (!(this->_applyLambda))
     {
@@ -141,7 +220,9 @@ ROOT::RDF::RNode CutControl::applyCut(ROOT::RDF::RNode origRDF)
                     origRDF = origRDF.Define(std::get<1>(step), [](float eta1, float eta2, float phi1, float phi2)
                                              {
                         auto deta2 = pow(eta1-eta2, 2.0);
-                        auto dphi2 = pow(phi1-phi2, 2.0);
+                        auto dphi = abs(phi1-phi2);
+                        if (dphi > 3.1416) dphi = 6.2832 - dphi;
+                        auto dphi2 = pow(dphi, 2.0);
                         auto dr = pow(deta2+dphi2, 0.5);
                         return dr; }, capturedVar);
                 }

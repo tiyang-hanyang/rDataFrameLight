@@ -12,11 +12,15 @@
 
 #include "TH1D.h"
 
+// function to read systmatic variables
+// if non provided, will return empty vector and plot nominal-only
 std::vector<std::map<std::string, double>> getStackUncert(std::vector<std::string> stackOrder, rdfWS_utility::JsonObject jsonConfig)
 {
     if (stackOrder.size() == 0)
         return {};
-    std::string systFile = jsonConfig.at("stackUncert");
+    std::string systFile = jsonConfig.at("systConfig");
+    if (systFile == "") return {};
+
     std::map<std::string, std::vector<double>> systJson = rdfWS_utility::readJson("plotHists", systFile);
 
     std::map<std::string, double> systUp, systDown;
@@ -36,8 +40,18 @@ int main(int argc, char *argv[])
         rdfWS_utility::messageERROR("plotHists", "No hist plot job json provided!");
     }
     std::string jsonPath = argv[1];
-    // auto jsonConfig = rdfWS_utility::readJson("plotHists", jsonPath);
     rdfWS_utility::JsonObject jsonConfig(rdfWS_utility::readJson("plotHists", jsonPath), "Job Config");
+
+    // job type check, better to have to avoid confusion
+    if (configFile.contains("jobType"))
+    {
+        std::string jobType = configFile.at("jobType").get<std::string>();
+        if (jobType != "plot") 
+        {
+            rdfWS_utility::messageERROR("plotHists.cxx", "The jobType of your config is not plot! Please check again. Running ceases...");
+            exit(1);
+        }
+    }
 
     // parse basic info from json
     std::string jobName = jsonConfig.at("name");
@@ -45,8 +59,25 @@ int main(int argc, char *argv[])
     // split MC and data era to ensure not bounded
     std::vector<std::string> mcCampaign = jsonConfig.at("mc_era");
 
-    // formulate draw texts
-    std::vector<std::string> drawText = jsonConfig.at("texts");
+    // Nov 26
+    // add the data-driven contribution, these contribution is from data but used similar to the MC
+    int withDD(0);
+    std::vector<std::string> ddCampaign;
+    std::vector<std::string> ddChannels;
+    if (jsonConfig.contains("dd_era"))
+    {
+        withDD=1;
+        ddCampaign = jsonConfig.at("dd_era").get<std::vector<std::string>>();
+        if (jsonConfig.contains("dd_datasets"))
+            ddChannels = jsonConfig.at("dd_datasets").get<std::vector<std::string>>();
+        else
+        {
+            rdfWS_utility::messageWARN("plotHists", "DD era added, but dd_datasets not assigned, using nonprompt as default");
+            ddChannels.emplace_back("nonprompt");
+        }
+    }
+
+    // get lumi-value of the plot
     std::string lumiPath = jsonConfig.at("lumiConfig");
     rdfWS_utility::JsonObject lumiConfig(rdfWS_utility::readJson("plotHists", lumiPath), "Lumi Config");
     float lumiValue = lumiConfig.at(runEra[0]);
@@ -55,12 +86,18 @@ int main(int argc, char *argv[])
         float tempLumiValue = lumiConfig.at(runEra[i]);
         lumiValue += tempLumiValue;
     }
-    for (int i = 0; i < drawText.size(); i++)
+
+    // formulate draw texts
+    // moving the CMS text and luminosity to the header
+    std::vector<std::string> drawHeader = jsonConfig.at("header");
+    for (int i = 0; i < drawHeader.size(); i++)
     {
-        std::string text = drawText[i];
+        std::string text = drawHeader[i];
         if (text.find("%1.0f") != std::string::npos)
-            drawText[i] = Form(text.c_str(), lumiValue);
+            drawHeader[i] = Form(text.c_str(), lumiValue);
     }
+    std::vector<std::string> drawText = jsonConfig.at("texts");
+
 
     // MC lumi used for rescaling MC
     float mclumi = lumiConfig.at(mcCampaign[0]);
@@ -70,6 +107,21 @@ int main(int argc, char *argv[])
         mclumi += tempLumiValue;
     }
     auto mcScaling = lumiValue / mclumi;
+    std::cout << "mc lumi scaling value:" << mcScaling << std::endl;
+
+    // DD rescaling
+    float ddScaling(0.0);
+    if (withDD)
+    {
+        float ddlumi = lumiConfig.at(ddCampaign[0]);
+        for (int i = 1; i < ddCampaign.size(); i++)
+        {
+            float tempLumiValue = lumiConfig.at(ddCampaign[i]);
+            ddlumi += tempLumiValue;
+        }
+        ddScaling = lumiValue / ddlumi;
+        std::cout << "data-driven lumi scaling value:" << ddScaling << std::endl;
+    }
 
     // load channels
     std::vector<std::string> channels = jsonConfig.at("datasets");
@@ -79,7 +131,9 @@ int main(int argc, char *argv[])
     for (const auto &ch : channels)
     {
         if (needMerge.find(ch) == needMerge.end())
+        {
             loadChannels.push_back(ch);
+        }
         else
         {
             auto mergeList = needMerge[ch];
@@ -89,7 +143,8 @@ int main(int argc, char *argv[])
             }
         }
     }
-    // for possible stack plots
+
+    // for default stack plots
     std::vector<std::string> stackOrder = jsonConfig.at("stackOrder");
     int reOrder = jsonConfig.at("reOrder");
     std::vector<std::string> numerator = jsonConfig.at("numerator");
@@ -110,6 +165,9 @@ int main(int argc, char *argv[])
     {
         // setup drawing options
         PlotContext options;
+        options.doLog = jsonConfig.at("doLogPlot");
+        options.doNormalize = jsonConfig.at("doNormPlot");
+
         std::vector<std::string> isSignalCopy = isSignal;
         options.isSignal = isSignalCopy;
         std::map<std::string, int> isDataCopy = isData;
@@ -118,9 +176,20 @@ int main(int argc, char *argv[])
         rdfWS_utility::JsonObject varJson(rdfWS_utility::readJson("plotHists", varConfigPath), "Var Config");
         auto varConfig = varJson.at(varName);
         options.xLabel = varConfig.at("label").get<std::string>();
-        options.yLabel = {jsonConfig.at("yLabel"), jsonConfig.at("yRatioLabel")};
-        options.doLog = jsonConfig.at("logPlot");
-        options.doNormalize = jsonConfig.at("normalization");
+
+        // add default values for y-axis labels
+        std::string yUpperLabel = "Events";
+        if (options.doNormalize) yUpperLabel = "a.u.";
+        std::string yLowerLabel = "Data / MC";
+        if (configFile.contains("yLabel"))
+        {
+            yUpperLabel = configFile.at("yLabel").get<std::string>();
+        }
+        if (configFile.contains("yRatioLabe"))
+        {
+            yLowerLabel = configFile.at("yRatioLabel").get<std::string>();
+        }
+        options.yLabel = {yUpperLabel, yLowerLabel};
         options.xSize = jsonConfig.at("histXSize");
         options.ySize = jsonConfig.at("histYSize");
 
@@ -131,7 +200,7 @@ int main(int argc, char *argv[])
             std::cout << "print debugging" << std::endl;
             std::cout << "orig bin label size: " << binLabels.size() << std::endl;
             for (auto& labelText: binLabels) std::cout << "\t" << labelText << std::endl;
-            std::vector<int> cropRange = jsonConfig.at("cropedRange").at(varName);
+            std::vector<double> cropRange = jsonConfig.at("cropedRange").at(varName);
             std::string strOrigMax = varConfig.at("max");
             double origMax = std::stod(strOrigMax);
             std::cout << "original max: " << origMax << std::endl;
@@ -170,7 +239,6 @@ int main(int argc, char *argv[])
         PlotControl pHelper(plotName);
 
         // read the histograms separatedly with MC and data
-        // TODO next step may just split the data era and MC era completely
         HistControl histLoader;
         // first data era: runEra[0]
         for (const auto &ch : loadChannels)
@@ -179,48 +247,58 @@ int main(int argc, char *argv[])
             if (isDataCopy[ch] == 1)
                 histName += dataWeight;
             else
-            {
-                // if (std::find(mcCampaign.begin(), mcCampaign.end(), runEra[0]) == mcCampaign.end())
-                //     continue;
-                // histName += MCWeight;
                 continue;
-            }
-            histLoader.loadHistogram(inDir + "_" + runEra[0] + "/" + histName + ".root", histName, ch, varName);
+            histLoader.loadHistogram(inDir + "_" + runEra[0] + "/" + histName + ".root", histName, ch, 1.0, varName);
         }
+
         // first mc era: mcCampaign[0]
         HistControl mcHistLoader;
+        int withMC=0;
         for (const auto &ch : loadChannels)
         {
             std::string histName = ch + "_" + varName + "_";
             if (isDataCopy[ch] == 1)
                 continue;
             else
-            {
                 histName += MCWeight;
-            }
-            mcHistLoader.loadHistogram(inDir + "_" + mcCampaign[0] + "/" + histName + ".root", histName, ch, varName);
+            mcHistLoader.loadHistogram(inDir + "_" + mcCampaign[0] + "/" + histName + ".root", histName, ch, mcScaling, varName);
+            withMC++;
         }
-        histLoader = histLoader.addHistograms(mcHistLoader);
+        if (withMC>0)
+            histLoader = histLoader.addHistograms(mcHistLoader);
+
+        // Nov 26, add DD contribution
+        if (withDD)
+        {
+            HistControl DDHistLoader;
+            // dd does not merge histograms, so only need to directly read from the config
+            for (const auto &ch : ddChannels)
+            {
+                // now just hard coding this variable, later maybe I should also try to contain the MC backgrounds
+                std::string histName = ch + "_" + varName + "_" + MCWeight;
+                DDHistLoader.loadHistogram(inDir + "_" + ddCampaign[0] + "/" + histName + ".root", histName, ch, ddScaling, varName);
+            }
+            histLoader = histLoader.addHistograms(DDHistLoader);
+
+        }
 
         // add together when more than 1 eras
         for (int i = 1; i < runEra.size(); i++)
         {
             HistControl tempHistLoader;
+            int histNum=0;
             for (const auto &ch : loadChannels)
             {
                 std::string histName = ch + "_" + varName + "_";
                 if (isDataCopy[ch] == 1)
                     histName += dataWeight;
                 else
-                {
-                    // if (std::find(mcCampaign.begin(), mcCampaign.end(), runEra[i]) == mcCampaign.end())
-                    //     continue;
-                    // histName += MCWeight;
                     continue;
-                }
-                tempHistLoader.loadHistogram(inDir + "_" + runEra[i] + "/" + histName + ".root", histName, ch, varName);
+                tempHistLoader.loadHistogram(inDir + "_" + runEra[i] + "/" + histName + ".root", histName, ch, 1.0, varName);
+                histNum++;
             }
-            histLoader = histLoader.addHistograms(tempHistLoader);
+            if (histNum>0) 
+                histLoader = histLoader.addHistograms(tempHistLoader);
         }
 
         // mc campaigns
@@ -233,20 +311,33 @@ int main(int argc, char *argv[])
                 if (isDataCopy[ch] == 1)
                     continue;
                 else
-                {
-                    // if (std::find(mcCampaign.begin(), mcCampaign.end(), runEra[i]) == mcCampaign.end())
-                    //     continue;
                     histName += MCWeight;
-                }
-                tempHistLoader.loadHistogram(inDir + "_" + mcCampaign[i] + "/" + histName + ".root", histName, ch, varName);
+                tempHistLoader.loadHistogram(inDir + "_" + mcCampaign[i] + "/" + histName + ".root", histName, ch, mcScaling, varName);
             }
             histLoader = histLoader.addHistograms(tempHistLoader);
+        }
+
+        // Nov 26, add DD contribution
+        if (withDD)
+        {
+            for (int i = 1; i < mcCampaign.size(); i++)
+            {
+                HistControl tempDDHistLoader;
+                // dd does not merge histograms, so only need to directly read from the config
+                for (const auto &ch : ddChannels)
+                {
+                    // now just hard coding this variable, later maybe I should also try to contain the MC backgrounds
+                    std::string histName = ch + "_" + varName + "_" + MCWeight;
+                    tempDDHistLoader.loadHistogram(inDir + "_" + ddCampaign[i] + "/" + histName + ".root", histName, ch, ddScaling, varName);
+                }
+                histLoader = histLoader.addHistograms(tempDDHistLoader);
+            }
         }
 
         // take crops TODO
         if (needCrop[varName] == 1)
         {
-            std::vector<int> cropRange = jsonConfig.at("cropedRange").at(varName);
+            std::vector<double> cropRange = jsonConfig.at("cropedRange").at(varName);
             histLoader = histLoader.cropHistograms(cropRange[0], cropRange[1]);
         }
 
@@ -257,8 +348,14 @@ int main(int argc, char *argv[])
         }
 
         // output for working plot
-        auto histsNeeded = histLoader.getHists(channels);
-        int doRatio = jsonConfig.at("doRatio");
+        // Nov 26, dd channel must be added.
+        std::vector<std::string> allChannels = channels;
+        if (withDD)
+        {
+            allChannels.insert(allChannels.end(), ddChannels.begin(), ddChannels.end());
+        }
+        auto histsNeeded = histLoader.getHists(allChannels);
+        int doRatio = jsonConfig.at("doRatioPlot");
         options.isData.push_back(std::map<std::string, int>{});
         for (auto key : numerator)
         {
@@ -280,7 +377,9 @@ int main(int argc, char *argv[])
             stackUp = stackUncert[0];
             stackDown = stackUncert[1];
         }
-        pHelper.drawStackHistWithRatio(histsNeeded, stackOrder, stackUp, stackDown, reOrder, ratioHists, options, mcScaling, colorScheme, channelLabels, drawText, {}, binLabels);
+        // Nov 26, change the scaling in to a map
+        // pHelper.drawStackHistWithRatio(histsNeeded, stackOrder, stackUp, stackDown, reOrder, ratioHists, options, mcScaling, colorScheme, channelLabels, drawHeader, drawText, {}, binLabels);
+        pHelper.drawStackHistWithRatio(histsNeeded, stackOrder, stackUp, stackDown, reOrder, ratioHists, options, 1.0, colorScheme, channelLabels, drawHeader, drawText, {}, binLabels);
         for (auto &[histName, hist] : ratioHists)
         {
             delete hist;

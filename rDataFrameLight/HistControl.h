@@ -51,9 +51,9 @@ public:
     ~HistControl();
 
     // Create a histogram from RDataFrame
-    TH1D *createHistogram(ROOT::RDF::RNode &rnode, const std::string &datasetName, const HistBinning *binning=nullptr, const std::string &varName="", const std::string& weightName="one", const std::string& outDir="");
+    TH1D *createHistogram(ROOT::RDF::RNode &rnode, const std::string &datasetName, const HistBinning *binning=nullptr, const std::string &varName="", const std::string& weightName="one", const std::string& outDir="", bool ifSave=1);
     // Load a histogram from a file
-    TH1D *loadHistogram(const std::string &fileName, const std::string &histName, const std::string & histKey, const std::string &varName="", const std::string& additionalName="");
+    TH1D *loadHistogram(const std::string &fileName, const std::string &histName, const std::string & histKey, float scaling=1.0, const std::string &varName="", const std::string& additionalName="");
     // Save a histogram to a file
     void saveHistogram(const TH1D *hist, const std::string &fileName, const std::string& outDir="");
 
@@ -72,6 +72,9 @@ public:
 
     HistControl(const HistControl &other);
     HistControl &operator=(const HistControl &other);
+
+    // get instance for direct editing, not recommend to use unless necessary
+    std::map<std::string, TH1D*> getHistInstance();
 };
 
 #endif

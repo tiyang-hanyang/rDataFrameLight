@@ -38,6 +38,8 @@ namespace rdfWS_utility
 
     public:
         JsonObject(nlohmann::json jsonConfig, const std::string &jsonName);
+
+        bool contains(const std::string& key);
         JsonObject at(const std::string &item);
 
         template <typename T>

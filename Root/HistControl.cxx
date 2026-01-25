@@ -219,8 +219,9 @@ TH1D *HistControl::calculateRatio(TH1D *numerator, TH1D *denominator, const std:
 /// @param binning binning information of the histogram, can neglect or input nullptr, then the code will find one from dataset
 /// @param varName: Can omit the varName, in case there is already varName provided. Note if there is no varName stored initially, you must provide it!
 /// @param weightName: By default will take "one".
+/// @param ifSave
 /// @return histogram extracted
-TH1D *HistControl::createHistogram(ROOT::RDF::RNode &rnode, const std::string &datasetName, const HistBinning *binning, const std::string &varName, const std::string &weightName, const std::string &outDir)
+TH1D *HistControl::createHistogram(ROOT::RDF::RNode &rnode, const std::string &datasetName, const HistBinning *binning, const std::string &varName, const std::string &weightName, const std::string &outDir, bool ifSave)
 {
     // make sure the variables are correct, one HistControl object should only deal with one variable
     if (this->_varName.empty())
@@ -281,7 +282,7 @@ TH1D *HistControl::createHistogram(ROOT::RDF::RNode &rnode, const std::string &d
     histClone->SetDirectory(0);
     // store in the internal histogram map, save a copy to the disk, and return this hist if need to use
     this->_histograms.emplace(datasetName, histClone);
-    saveHistogram(histClone, histName, outDir);
+    if (ifSave) saveHistogram(histClone, histName, outDir);
     return histClone;
 }
 
@@ -292,7 +293,7 @@ TH1D *HistControl::createHistogram(ROOT::RDF::RNode &rnode, const std::string &d
 /// @param varName: can omit if already initialized
 /// @param additionalName: can omit, just to avoid hist name collisiton
 /// @return
-TH1D *HistControl::loadHistogram(const std::string &fileName, const std::string &histName, const std::string &histKey, const std::string &varName, const std::string &additionalName)
+TH1D *HistControl::loadHistogram(const std::string &fileName, const std::string &histName, const std::string &histKey, float scaling, const std::string &varName, const std::string &additionalName)
 {
     // make sure the variables are correct, one HistControl object should only deal with one variable
     // plottng multiple histograms together would later need the other expantions
@@ -322,6 +323,16 @@ TH1D *HistControl::loadHistogram(const std::string &fileName, const std::string 
         throw std::runtime_error("Histogram " + histName + " not found in file " + fileName);
     }
     hist->SetDirectory(0);
+    hist->Scale(scaling);
+
+    // absorbing the overflow
+    // later should add as an additional function here
+    int containOverflow=1;
+    if (containOverflow)
+    {
+        int maxBin = hist->GetNbinsX();
+        hist->SetBinContent(maxBin, hist->GetBinContent(maxBin)+ hist->GetBinContent(maxBin+1));
+    }
 
     // compare to template to make sure the same binning
     if (this->_templateHist == nullptr)
