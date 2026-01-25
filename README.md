@@ -535,15 +535,18 @@ Most of these scripts need additional modifications to be usable.
 
 #### scirpt/checkTriggerEff.py
 A quick script for testing the trigger efficiency on the signal MC samples.
+```
+python3 checkTriggerEff.py
+```
+The files input and the muon selections in this script is hard-coded. The user need to edit to enable the running.
 
 #### scirpt/createFileList.py
 A quick script for testing the trigger efficiency on the signal MC samples.
 ```
-createFileLists.py
+python3 createFileLists.py <outJsonName> <directory to scan>
 ```
 
-#### script/splitPromptStats.py
-
-#### script/reportPromptStats.py
-A quick check for the 
-
+#### script/splitPromptStats.py script/reportPromptStats.py
+#### Duplicated
+A demonstration of running the prompt, non-prompt contribution checking. The first script split the input sample into prompt and non-prompt contribution. The second script exam the prompt and non-prompt contribution after the splitting.
+Need some modification to enable again.
