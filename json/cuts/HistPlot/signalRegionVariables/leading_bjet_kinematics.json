@@ -1,0 +1,8 @@
+[
+    ["cut", "pass JVM selection", "(JVMweight>0)"],
+    ["cut", "at least one b-jet", "nBJet>0"],
+    ["define", "leadingBJetIdx", "Nonzero(BJetCond)[0]"],
+    ["define", "leadingBJet_pt", "Jet_pt[leadingBJetIdx]"],
+    ["define", "leadingBJet_eta", "Jet_eta[leadingBJetIdx]"],
+    ["define", "leadingBJet_phi", "Jet_phi[leadingBJetIdx]"]
+]

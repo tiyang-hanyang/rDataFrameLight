@@ -1,0 +1,8 @@
+[
+    ["define", "nGoodJet", "Nonzero(GoodJetCond).size()"],
+    ["cut", "at least two jet", "nGoodJet>1"],
+    ["define", "subleadingJetIdx", "Nonzero(defaultGoodJetCond)[1]"],
+    ["define", "subleadingJet_pt", "Jet_pt[subleadingJetIdx]"],
+    ["define", "subleadingJet_eta", "Jet_eta[subleadingJetIdx]"],
+    ["define", "subleadingJet_phi", "Jet_phi[subleadingJetIdx]"]
+]

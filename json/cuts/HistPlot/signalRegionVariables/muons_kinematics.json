@@ -1,0 +1,23 @@
+[
+    ["cut", "pass JVM selection", "(JVMweight>0)"],
+    ["define", "leadingMuon_pt", "Muon_pt[leadingMuonIdx]"],
+    ["define", "leadingMuon_eta", "Muon_eta[leadingMuonIdx]"],
+    ["define", "leadingMuon_phi", "Muon_phi[leadingMuonIdx]"],
+    ["define", "leadingMuon_mass", "Muon_mass[leadingMuonIdx]"],
+    ["TLVPtEtaPhiM", "leadingMuonP4", "leadingMuon_pt,leadingMuon_eta,leadingMuon_phi,leadingMuon_mass"],
+
+    ["define", "subleadingMuon_pt", "Muon_pt[subleadingMuonIdx]"],
+    ["define", "subleadingMuon_eta", "Muon_eta[subleadingMuonIdx]"],
+    ["define", "subleadingMuon_phi", "Muon_phi[subleadingMuonIdx]"],
+    ["define", "subleadingMuon_mass", "Muon_mass[subleadingMuonIdx]"],
+    ["TLVPtEtaPhiM", "subleadingMuonP4", "subleadingMuon_pt,subleadingMuon_eta,subleadingMuon_phi,subleadingMuon_mass"],
+
+    ["define", "diMuonP4", "leadingMuonP4+subleadingMuonP4"],
+    ["define", "diMuon_mass", "diMuonP4.M()"],
+    ["define", "diMuon_dphi_raw", "abs(leadingMuon_phi-subleadingMuon_phi)"],
+    ["define", "diMuon_dphi_counter", "(6.2832-diMuon_dphi_raw)"],
+    ["define", "diMuon_dphi", "TMath::Min(Float_t(diMuon_dphi_raw), Float_t(diMuon_dphi_counter))"],
+    ["define", "diMuon_deltaEta", "abs(leadingMuon_eta-subleadingMuon_eta)"],
+    ["define", "diMuon_dR", "TMath::Sqrt(TMath::Power(diMuon_dphi,2.0)+TMath::Power(diMuon_deltaEta,2.0))"],
+    ["define", "yield", "1.0"]
+]
