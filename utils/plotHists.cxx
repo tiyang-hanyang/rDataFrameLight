@@ -43,9 +43,9 @@ int main(int argc, char *argv[])
     rdfWS_utility::JsonObject jsonConfig(rdfWS_utility::readJson("plotHists", jsonPath), "Job Config");
 
     // job type check, better to have to avoid confusion
-    if (configFile.contains("jobType"))
+    if (jsonConfig.contains("jobType"))
     {
-        std::string jobType = configFile.at("jobType").get<std::string>();
+        std::string jobType = jsonConfig.at("jobType").get<std::string>();
         if (jobType != "plot") 
         {
             rdfWS_utility::messageERROR("plotHists.cxx", "The jobType of your config is not plot! Please check again. Running ceases...");
@@ -181,13 +181,13 @@ int main(int argc, char *argv[])
         std::string yUpperLabel = "Events";
         if (options.doNormalize) yUpperLabel = "a.u.";
         std::string yLowerLabel = "Data / MC";
-        if (configFile.contains("yLabel"))
+        if (jsonConfig.contains("yLabel"))
         {
-            yUpperLabel = configFile.at("yLabel").get<std::string>();
+            yUpperLabel = jsonConfig.at("yLabel").get<std::string>();
         }
-        if (configFile.contains("yRatioLabe"))
+        if (jsonConfig.contains("yRatioLabe"))
         {
-            yLowerLabel = configFile.at("yRatioLabel").get<std::string>();
+            yLowerLabel = jsonConfig.at("yRatioLabel").get<std::string>();
         }
         options.yLabel = {yUpperLabel, yLowerLabel};
         options.xSize = jsonConfig.at("histXSize");

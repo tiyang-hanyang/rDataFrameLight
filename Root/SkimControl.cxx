@@ -402,15 +402,15 @@ void SkimControl::run()
             ROOT::RDataFrame rdfDS(*chDS);
             ROOT::RDF::RNode rndDS(rdfDS);
 
-            // for preliminary skim, must applying golden json for data, and rescaling MC weight
+            // for preliminary skim, must applying golden json for data
             if (this->_isPreliminary && isData)
-                rndDS = this->_preliminaryDeco(rndDS, isData, channel, totalGenWeightMerged);
+                rndDS = this->_preliminaryDeco(rndDS, channel, totalGenWeightMerged);
 
             // apply the filter
             rndDS = this->_skimCut.applyCut(rndDS);
 
             // keep the branches in the config only and dump into files
-            auto branchArray = this->_getBranchArray(rndDS, isData, isPreSkim);
+            auto branchArray = this->_getBranchArray(rndDS, isPreSkim);
 
             // output
             ROOT::RDF::RSnapshotOptions SSoption;
@@ -527,13 +527,13 @@ void SkimControl::run()
 
                         // for preliminary skim, must applying golden json for data, and rescaling MC weight
                         if (this->_isPreliminary)
-                            rndDS = this->_preliminaryDeco(rndDS, isData, channel, totalGenWeight);
+                            rndDS = this->_preliminaryDeco(rndDS, channel, totalGenWeight);
 
                         // apply the filter
                         rndDS = this->_skimCut.applyCut(rndDS);
 
                         // keep the branches in the config only and dump into files
-                        auto branchArray = this->_getBranchArray(rndDS, isData, isPreSkim);
+                        auto branchArray = this->_getBranchArray(rndDS, isPreSkim);
 
                         // output
                         auto snap = rndDS.Snapshot("Events", outputPath, branchArray, SSoption);
@@ -595,13 +595,13 @@ void SkimControl::run()
 
                     // for preliminary skim, must applying golden json for data, and rescaling MC weight
                     if (this->_isPreliminary)
-                        rndDS = this->_preliminaryDeco(rndDS, isData, channel, totalGenWeight);
+                        rndDS = this->_preliminaryDeco(rndDS, channel, totalGenWeight);
 
                     // apply the filter
                     rndDS = this->_skimCut.applyCut(rndDS);
 
                     // keep the branches in the config only and dump into files
-                    auto branchArray = this->_getBranchArray(rndDS, isData, isPreSkim);
+                    auto branchArray = this->_getBranchArray(rndDS, isPreSkim);
 
                     // output
                     rndDS.Snapshot("Events", outputPath, branchArray, SSoption);

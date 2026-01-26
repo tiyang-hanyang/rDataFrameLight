@@ -56,7 +56,7 @@ void prepareHist(rdfWS_utility::JsonObject jsonConfig, std::string variable, Sam
 
     // extract cutflow
     CutControl histCut;
-    std::vector<std::string> cutConfigList = jsonConfig.at("cuts");
+    std::vector<std::string> cutConfigList = jsonConfig.at("cutConfig");
     if (cutConfigList.size() > 0)
     {
         histCut = CutControl(cutConfigList[0]);
@@ -258,9 +258,9 @@ int main(int argc, char *argv[])
 
     rdfWS_utility::JsonObject jsonConfig(rdfWS_utility::readJson("collectHists", jsonPath), "JO Config");
     // job type check, better to have to avoid confusion
-    if (configFile.contains("jobType"))
+    if (jsonConfig.contains("jobType"))
     {
-        std::string jobType = configFile.at("jobType").get<std::string>();
+        std::string jobType = jsonConfig.at("jobType").get<std::string>();
         if (jobType != "collectingHists") 
         {
             rdfWS_utility::messageERROR("collectHists", "The jobType of your config is not collectingHists! Please check again. Running ceases...");
