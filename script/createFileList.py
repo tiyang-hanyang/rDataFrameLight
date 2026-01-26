@@ -121,7 +121,7 @@ def find_single_chain_dir(start_dir):
     current = start_dir
     while True:
         if not os.path.isdir(current):
-            return current
+            return os.path.abspath(current)
         entries = list(os.scandir(current))
         subdirs = [e for e in entries if e.is_dir()]
         has_root_files = any(e.is_file() and e.name.endswith(".root") for e in entries)
@@ -130,7 +130,7 @@ def find_single_chain_dir(start_dir):
             current = subdirs[0].path
             continue
         # when inside begins to have multiple folders or has root file, return and remain further level to files
-        return current
+        return os.path.abspath(current)
 
 # getting everything under the common folder
 def collect_root_files(base_dir):

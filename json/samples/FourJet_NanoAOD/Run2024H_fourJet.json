@@ -1,0 +1,14 @@
+{
+    "dir": {
+        "Muon0": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon_fourJet/data/Run2024H/Muon0/",
+        "Muon1": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon_fourJet/data/Run2024H/Muon1/"
+    },
+    "file": {
+        "Muon0": [
+            "Muon0_skimmed.root"
+        ],
+        "Muon1": [
+            "Muon1_skimmed.root"
+        ]
+    }
+}

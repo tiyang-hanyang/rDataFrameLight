@@ -1,0 +1,162 @@
+{
+    "dir": {
+        "DY2Mu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/DY2Mu/",
+        "DY2Mu_low": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/DY2Mu_low/",
+        "ttbarDL": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/ttbarDL/",
+        "ttbarSL": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/ttbarSL/",
+        "ttbar4Q": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/ttbar4Q/",
+        "TTBB_DL": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/TTBB_DL/",
+        "TTBB_SL": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/TTBB_SL/",
+        "QCD_50_80_mu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/QCD_50_80_mu/",
+        "QCD_80_120_mu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/QCD_80_120_mu/",
+        "QCD_120_170_mu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/QCD_120_170_mu/",
+        "QCD_170_300_mu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/QCD_170_300_mu/",
+        "QCD_300_470_mu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/QCD_300_470_mu/",
+        "QCD_470_600_mu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/QCD_470_600_mu/",
+        "QCD_600_800_mu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/QCD_600_800_mu/",
+        "QCD_800_1000_mu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/QCD_800_1000_mu/",
+        "QCD_1000_mu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/QCD_1000_mu/",
+        "TTHBB": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/TTHBB/",
+        "TTHnonBB": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/TTHnonBB/",
+        "TWm2L": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/TWm2L/",
+        "TbarWp2L": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/TbarWp2L/",
+        "TWm1L": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/TWm1L/",
+        "TbarWp1L": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/TbarWp1L/",
+        "TZQB": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/TZQB/",
+        "WW2L2Nu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/WW2L2Nu/",
+        "WZ2L2Q": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/WZ2L2Q/",
+        "ZZ2L2Q": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/ZZ2L2Q/",
+        "ZZ2L2Nu": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/ZZ2L2Nu/",
+        "WZ3l": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/WZ3l/",
+        "ZZ4l": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/ZZ4l/",
+        "WWW": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/WWW/",
+        "WWZ": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/WWZ/",
+        "WZZ": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/WZZ/",
+        "ZZZ": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/ZZZ/",
+        "WJet_1J": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/WJet_1J/",
+        "WJet_2J": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/WJet_2J/",
+        "WJet_3J": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/WJet_3J/",
+        "WJet_4J": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/WJet_4J/",
+        "TTZ_low": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/TTZ_low/",
+        "TTZ_high": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/RunIII2024Summer24NanoAODv15/TTZ_high/"
+    },
+    "file": {
+        "DY2Mu": [
+            "DY2Mu_skimmed.root"
+        ],
+        "DY2Mu_low": [
+            "DY2Mu_low_skimmed.root"
+        ],
+        "ttbarDL": [
+            "ttbarDL_skimmed.root"
+        ],
+        "ttbarSL": [
+            "ttbarSL_skimmed.root"
+        ],
+        "ttbar4Q": [
+            "ttbar4Q_skimmed.root"
+        ],
+        "TTBB_DL": [
+            "TTBB_DL_skimmed.root"
+        ],
+        "TTBB_SL": [
+            "TTBB_SL_skimmed.root"
+        ],
+        "QCD_50_80_mu": [
+            "QCD_50_80_mu_skimmed.root"
+        ],
+        "QCD_80_120_mu": [
+            "QCD_80_120_mu_skimmed.root"
+        ],
+        "QCD_120_170_mu": [
+            "QCD_120_170_mu_skimmed.root"
+        ],
+        "QCD_170_300_mu": [
+            "QCD_170_300_mu_skimmed.root"
+        ],
+        "QCD_300_470_mu": [
+            "QCD_300_470_mu_skimmed.root"
+        ],
+        "QCD_470_600_mu": [
+            "QCD_470_600_mu_skimmed.root"
+        ],
+        "QCD_600_800_mu": [
+            "QCD_600_800_mu_skimmed.root"
+        ],
+        "QCD_800_1000_mu": [
+            "QCD_800_1000_mu_skimmed.root"
+        ],
+        "QCD_1000_mu": [
+            "QCD_1000_mu_skimmed.root"
+        ],
+        "TTHBB": [
+            "TTHBB_skimmed.root"
+        ],
+        "TTHnonBB": [
+            "TTHnonBB_skimmed.root"
+        ],
+        "TWm2L": [
+            "TWm2L_skimmed.root"
+        ],
+        "TbarWp2L": [
+            "TbarWp2L_skimmed.root"
+        ],
+        "TWm1L": [
+            "TWm1L_skimmed.root"
+        ],
+        "TbarWp1L": [
+            "TbarWp1L_skimmed.root"
+        ],
+        "TZQB": [
+            "TZQB_skimmed.root"
+        ],
+        "WW2L2Nu": [
+            "WW2L2Nu_skimmed.root"
+        ],
+        "WZ2L2Q": [
+            "WZ2L2Q_skimmed.root"
+        ],
+        "ZZ2L2Q": [
+            "ZZ2L2Q_skimmed.root"
+        ],
+        "ZZ2L2Nu": [
+            "ZZ2L2Nu_skimmed.root"
+        ],
+        "WZ3l": [
+            "WZ3l_skimmed.root"
+        ],
+        "ZZ4l": [
+            "ZZ4l_skimmed.root"
+        ],
+        "WWW": [
+            "WWW_skimmed.root"
+        ],
+        "WWZ": [
+            "WWZ_skimmed.root"
+        ],
+        "WZZ": [
+            "WZZ_skimmed.root"
+        ],
+        "ZZZ": [
+            "ZZZ_skimmed.root"
+        ],
+        "WJet_1J": [
+            "WJet_1J_skimmed.root"
+        ],
+        "WJet_2J": [
+            "WJet_2J_skimmed.root"
+        ],
+        "WJet_3J": [
+            "WJet_3J_skimmed.root"
+        ],
+        "WJet_4J": [
+            "WJet_4J_skimmed.root"
+        ],
+        "TTZ_low": [
+            "TTZ_low_skimmed.root"
+        ],
+        "TTZ_high": [
+            "TTZ_high_skimmed.root"
+        ]
+    }
+}

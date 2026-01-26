@@ -1,0 +1,43 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S2 Run2024H data jet variables creation",
+
+    "era": "Run2024H",
+    "outDir": "S2_fourJet",
+
+    "sampleConfig": "json/samples/FourJet_NanoAOD/Run2024H_fourJet.json",
+
+    "varNames": [
+        "leadingJet_pt",
+        "leadingJet_eta", 
+        "leadingJet_phi",
+        "subleadingJet_pt",
+        "subleadingJet_eta", 
+        "subleadingJet_phi"
+    ],
+    "varConfig": "json/variables/variables.json",
+
+    "cuts": [
+        "json/cuts/HistPlot/signalRegionVariables/leading_jet_kinematics.json",
+        "json/cuts/HistPlot/signalRegionVariables/subleading_jet_kinematics.json"
+    ],
+
+    "datasets": [
+        "Muon"
+    ],
+    "isData": {
+        "Muon":1
+    },
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}
