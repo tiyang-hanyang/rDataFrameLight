@@ -1,8 +1,0 @@
-[
-    ["cut", "singlemuon", "(nGoodMuon==1)"],
-    ["define", "leadingMuonPt", "GoodMuon_pt[0]"],
-    ["define", "leadingMuonEta", "GoodMuon_eta[0]"],
-    ["define", "leadingMuonPhi", "GoodMuon_phi[0]"],
-    ["define", "leadingMuonMass", "GoodMuon_mass[0]"],
-    ["TLVPtEtaPhiM", "leadingMuonP4", "leadingMuonPt,leadingMuonEta,leadingMuonPhi,leadingMuonMass"]
-]

@@ -1,7 +1,0 @@
-[
-    ["define", "leadingMuonPt", "GoodMuon_pt[0]"],
-    ["define", "leadingMuonEta", "GoodMuon_eta[0]"],
-    ["define", "leadingMuonPhi", "GoodMuon_phi[0]"],
-    ["define", "leadingMuonMass", "GoodMuon_mass[0]"],
-    ["define", "nMuon_cat", "(nGoodMuon <= 1) ? nGoodMuon : ((nGoodMuon == 2 && GoodMuon_charge[0]*GoodMuon_charge[1] < 0) ? nGoodMuon : nGoodMuon + 1)"]
-]

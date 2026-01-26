@@ -1,3 +1,0 @@
-[
-    ["cut", "muonAnalysisTrigger", "(HLT_IsoMu24 || HLT_Mu50 || HLT_CascadeMu100 || HLT_HighPtTkMu100)"]
-]

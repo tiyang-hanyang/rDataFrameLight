@@ -1,5 +1,0 @@
-[
-    ["cut", "2lSS", "(nGoodMuon==2) && (GoodMuon_charge[0]*GoodMuon_charge[1] > 0)"],
-    ["cut", "IP cut", "(abs(GoodMuon_dxy[0])<0.05) && (abs(GoodMuon_dz[0])<0.1) && (abs(GoodMuon_dxy[1])<0.05) && (abs(GoodMuon_dz[1])<0.1)"],
-    ["define", "yield", "1.0"]
-]

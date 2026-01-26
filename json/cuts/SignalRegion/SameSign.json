@@ -1,0 +1,5 @@
+[
+    ["define", "leadingMuon_charge", "Muon_charge[leadingMuonIdx]"],
+    ["define", "subleadingMuon_charge", "Muon_charge[subleadingMuonIdx]"],
+    ["cut", "require same sign Muon", "(leadingMuon_charge==subleadingMuon_charge)"]
+]

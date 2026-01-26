@@ -1,8 +1,0 @@
-[
-    ["define", "SelGoodJetRun3", "(Jet_pt>30.0) && (Jet_eta < 2.4) && (Jet_eta>-2.4) && (Jet_jetId==6)"],
-    ["define", "GoodJet_jetId", "Jet_jetId[SelGoodJetRun3]"],
-    ["define", "nGoodJet", "GoodJet_jetId.size()"],
-    ["define", "SelBJetRun3", "(Jet_btagPNetB > 0.1917) && (Jet_pt>30.0) && (Jet_eta < 2.4) && (Jet_eta>-2.4) && (Jet_jetId==6)"],
-    ["define", "BJet_jetId", "Jet_jetId[SelBJetRun3]"],
-    ["define", "nBJet", "BJet_jetId.size()"]
-]

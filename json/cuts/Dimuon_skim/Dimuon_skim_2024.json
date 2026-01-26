@@ -1,0 +1,16 @@
+[
+    ["cut", "dimuon trigger", "(HLT_IsoMu24 || HLT_IsoMu24_eta2p1 || HLT_IsoMu27 || HLT_Mu50 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8 || HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8 || HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8)"],
+    ["define", "METFilters", "Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter && Flag_BadPFMuonDzFilter && Flag_hfNoisyHitsFilter"],
+    ["cut", "MET filter", "METFilters"],
+    ["cut", "has PV", "(PV_npvsGood>0)"],
+
+    ["define", "isGoodMuon_mva", "(Muon_pt>15.0) && (abs(Muon_eta)<2.4) && (abs(Muon_dxy)<0.05) && (abs(Muon_dz)<0.1) && (abs(Muon_sip3d)<8) && Muon_mediumId && (Muon_miniPFRelIso_all<0.4) && (Muon_jetDF<0.2480) && (Muon_promptMVA > 0.64)"],
+    ["define", "nGoodMuon_mva", "ROOT::VecOps::Sum(isGoodMuon_mva)"],
+    ["define", "MuonPresel", "(nGoodMuon_mva ==2)"],
+    ["cut", "Muon presel", "MuonPresel"],
+    ["define", "leadingMuonIdx", "Nonzero(isGoodMuon_mva)[0]"],
+    ["define", "subleadingMuonIdx", "Nonzero(isGoodMuon_mva)[1]"],
+
+    ["define", "leadingMuon_pt", "Muon_pt[leadingMuonIdx]"],
+    ["cut", "trigger turn-on avoid", "(leadingMuon_pt>20)"]
+]

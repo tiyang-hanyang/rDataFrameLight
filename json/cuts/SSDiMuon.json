@@ -1,5 +1,0 @@
-[
-    ["cut", "muon number cut", "(nGoodMuon==2)"],
-    ["define", "samesign", "(GoodMuon_charge[0] * GoodMuon_charge[1]) > 0"],
-    ["cut", "pass muon SS", "samesign"]
-]

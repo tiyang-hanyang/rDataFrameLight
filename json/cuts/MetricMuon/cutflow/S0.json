@@ -1,4 +1,0 @@
-[
-    ["cut", "full 2l", "(nGoodMuon==2)"],
-    ["define", "yield", "1.0"]
-]
