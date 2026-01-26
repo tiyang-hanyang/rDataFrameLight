@@ -7,18 +7,20 @@
     "run": "Run3",
     "era": "Run2024F",
     "merge": 0,
-    "sampleConfig": "json/samples/Run2024F_RochesterOrig.json",
+
     "XSConfig": "",
-    "outDir": "/data2/common/skimmed_NanoAOD/skim_1025_MVAtight/",
+    "outDir": "/data2/common/skimmed_NanoAOD/skim_0126_medium_dimuon/",
     "datasets": [
         "Muon0",
         "Muon1"
     ],
     "isData": 1,
     "mcWeight": "genWeight",
-    "cut": [
-        "json/cuts/MetricMuon/MuonMetricSkimMVA2024.json"
-    ],
 
+    "sampleConfig": "json/samples/rawNanoAOD/Run2024F.json",
+    "cutConfig": [
+        "json/cuts/Dimuon_skim/Dimuon_skim_2024.json"
+    ],
     "branchConfig": "json/branches/MuonMetricBranchNew.json"
 }
+

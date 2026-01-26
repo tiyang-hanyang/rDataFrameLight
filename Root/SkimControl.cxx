@@ -438,17 +438,14 @@ void SkimControl::run()
 
             for (const auto &filePath: filePaths)
             {
-                // check if already processed first
                 // file naming structure
                 // original: data or mc /era/channel/ (NANOAOD/MINIAOD) or condition/ runNumber / sampleName
                 // after Rochester corr, uniformed: data or mc /era/channel/ (runNumber+sample)
                 auto outSampleName = filePath.substr(filePath.rfind("/")+1);
-                if (!outSampleName.find("Rcorr")) 
-                {
-                    auto dirPart = filePath.substr(0, filePath.rfind("/"));
-                    auto runNumber =  dirPart.substr(dirPart.rfind("/")+1);
-                    outSampleName = runNumber+"-"+outSampleName;
-                }
+                auto dirPart = filePath.substr(0, filePath.rfind("/"));
+                auto runNumber =  dirPart.substr(dirPart.rfind("/")+1);
+                outSampleName = runNumber+"-"+outSampleName;
+
                 std::string outputPath = outDir + "/" + outSampleName;
 
                 if (std::filesystem::exists(outputPath)) 
@@ -466,7 +463,7 @@ void SkimControl::run()
 
             auto totalJobs = jobs.size();
             if (totalJobs==0) continue;
-            int batchSize=10; // hard coding now
+            int batchSize=8; // hard coding now
 
             // batchSize=1;
             // doing parallel skimming, after each batch, need to write back the weight back
