@@ -177,6 +177,10 @@ def saveFiles(outName, fileDir):
 
         "TTHBB",
         "TTHnonBB",
+        "TTWH",
+        "TTZH",
+        "THQ",
+        "THW",
 
         "WJet_1J",
         "WJet_2J",
@@ -189,6 +193,11 @@ def saveFiles(outName, fileDir):
         "ZZ2L2Nu",
         "WZ3l",
         "ZZ4l",
+
+        "WWW",
+        "WWZ",
+        "WZZ",
+        "ZZZ",
 
         "TbarWp2L",
         "TWm2L",

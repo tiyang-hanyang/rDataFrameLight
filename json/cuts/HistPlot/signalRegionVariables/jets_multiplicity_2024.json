@@ -1,5 +1,0 @@
-[
-    ["cut", "pass JVM selection", "(JVMweight>0)"],
-    ["define", "nGoodJet", "Nonzero(GoodJetCond).size()"],
-    ["define", "nBJet", "Nonzero(GoodJetCond && (Jet_btagUParTAK4B > 0.1272)).size()"]
-]

@@ -1,0 +1,37 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S1 Run2024D data jet variables creation",
+
+    "era": "Run2024D",
+    "outDir": "S1_dimuon",
+
+    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/Run2024D_JEC_corrected.json",
+
+    "varNames": [
+        "nGoodJet"
+    ],
+    "varConfig": "json/variables/variables.json",
+
+    "cutConfig": [
+        "json/cuts/HistPlot/signalRegionVariables/jets_multiplicity.json"
+    ],
+
+    "datasets": [
+        "Muon"
+    ],
+    "isData": {
+        "Muon":1
+    },
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

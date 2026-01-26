@@ -1,0 +1,47 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S1 Run2024I data muon variables creation",
+
+    "era": "Run2024I",
+    "outDir": "S1_dimuon",
+
+    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/Run2024I_JEC_corrected.json",
+
+    "varNames": [
+        "leadingMuon_pt",
+        "leadingMuon_eta",
+        "leadingMuon_phi",
+        "subleadingMuon_pt",
+        "subleadingMuon_eta",
+        "subleadingMuon_phi",
+        "diMuon_mass",
+        "diMuon_deltaEta",
+        "diMuon_dphi",
+        "diMuon_dR",
+        "yield"
+    ],
+    "varConfig": "json/variables/variables.json",
+
+    "cutConfig": [
+        "json/cuts/HistPlot/signalRegionVariables/muons_kinematics.json"
+    ],
+
+    "datasets": [
+        "Muon"
+    ],
+    "isData": {
+        "Muon":1
+    },
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

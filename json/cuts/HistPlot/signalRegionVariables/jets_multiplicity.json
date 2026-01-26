@@ -1,0 +1,4 @@
+[
+    ["cut", "pass JVM selection", "(JVMweight>0)"],
+    ["define", "nGoodJet", "Nonzero(GoodJetCond).size()"]
+]

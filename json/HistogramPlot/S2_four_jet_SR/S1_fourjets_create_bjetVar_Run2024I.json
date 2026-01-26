@@ -1,0 +1,37 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S2 Run2024I data jet variables creation",
+
+    "era": "Run2024I",
+    "outDir": "S2_fourJet",
+
+    "sampleConfig": "json/samples/FourJet_NanoAOD/Run2024I_fourJet.json",
+
+    "varNames": [
+        "nBJet"
+    ],
+    "varConfig": "json/variables/variables.json",
+
+    "cuts": [
+        "json/cuts/HistPlot/signalRegionVariables/bjet_multiplicity_2024.json"
+    ],
+
+    "datasets": [
+        "Muon"
+    ],
+    "isData": {
+        "Muon":1
+    },
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}
