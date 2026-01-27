@@ -363,6 +363,9 @@ def main():
             jsonFull = json.load(jFile)
         for ds in datasets: 
             print("skim ds: "+ str(ds))
+            if ds not in jsonFull["dir"].keys() or ds not in jsonFull["file"].keys():
+                print(ds, "not available after selection.")
+                continue
             sampleList = [ jsonFull["dir"][ds] + i for i in jsonFull["file"][ds]]
             if len(sampleList) == 0:
                 print("DS", ds, "does not exist")

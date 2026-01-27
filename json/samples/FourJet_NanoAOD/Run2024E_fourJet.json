@@ -5,10 +5,10 @@
     },
     "file": {
         "Muon0": [
-            "-Muon0_skimmed.root"
+            "Muon0_Run2024E_Mu_Skim.root"
         ],
         "Muon1": [
-            "-Muon1_skimmed.root"
+            "Muon1_Run2024E_Mu_Skim.root"
         ]
     }
 }

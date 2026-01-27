@@ -14,6 +14,28 @@
 
 void getEff(const std::string& era, const std::vector<std::string>& samplePath, const std::string& sampleType)
 {
+    std::vector<std::string> treeExistSamples;
+    for (auto singleSample: samplePath)
+    {
+        TFile* fTemp = new TFile(singleSample.c_str(), "read");
+        if (!fTemp || fTemp->IsZombie()) 
+        {
+            std::cout << "file not exist: " << singleSample << std::endl;
+            continue;
+        }
+        if (!fTemp->GetListOfKeys()->FindObject("Events")) 
+        {   
+            std::cout << "no Events in " << singleSample << std::endl;
+            continue;
+        }
+        treeExistSamples.push_back(singleSample);
+    }
+    if (treeExistSamples.size() == 0) 
+    {
+        std::cout << "No available files for" << sampleType << std::endl;
+        return;
+    }
+
     ROOT::RDataFrame rdf("Events", samplePath);
     ROOT::RDF::RNode rnd(rdf);
 

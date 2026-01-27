@@ -41,7 +41,7 @@ void Btag_init(const std::string& era)
 void reload_eff(const std::string& era, const std::string& channel)
 {
     // change to the channel final for loading the corresponding efficiency factors
-    std::string btagEffDir = "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/btag_eff_"+era+"/";
+    std::string btagEffDir = "/home/tiyang/public/rDataFrameLight_update/source/json/samples/FourJet_NanoAOD/btag_efficiency_"+era+"/";
     BTagCorr_cseteff = correction::CorrectionSet::from_file(btagEffDir+"/"+channel+"_btag_eff.json");
     BTagCorr_ceff =  BTagCorr_cseteff->at("UParTAK4_eff_values");
 }
