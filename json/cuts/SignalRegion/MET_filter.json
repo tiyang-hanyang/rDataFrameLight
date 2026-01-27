@@ -1,0 +1,4 @@
+[
+    ["define", "METFilters", "Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter && Flag_BadPFMuonDzFilter && Flag_hfNoisyHitsFilter"],
+    ["cut", "apply after the skimming", "METFilters"]
+]

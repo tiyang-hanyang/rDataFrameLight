@@ -2,9 +2,9 @@
     "dir": {
         "DY2Mu": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/DY2Mu/",
         "DY2Mu_low": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/DY2Mu_low/",
-        "ttbarDL": "/home/tiyang/public/SR_medium_muon_0127_ttbar_overlapping_removal/RunIII2024Summer24NanoAODv15/ttbarDL/",
-        "ttbarSL": "/home/tiyang/public/SR_medium_muon_0127_ttbar_overlapping_removal/RunIII2024Summer24NanoAODv15/ttbarSL/",
-        "ttbar4Q": "/home/tiyang/public/SR_medium_muon_0127_ttbar_overlapping_removal/RunIII2024Summer24NanoAODv15/ttbar4Q/",
+        "ttbarDL": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/ttbarDL/",
+        "ttbarSL": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/ttbarSL/",
+        "ttbar4Q": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/ttbar4Q/",
         "TTBB_DL": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/TTBB_DL/",
         "TTBB_SL": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/TTBB_SL/",
         "TTBB_4Q": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/TTBB_4Q/",
