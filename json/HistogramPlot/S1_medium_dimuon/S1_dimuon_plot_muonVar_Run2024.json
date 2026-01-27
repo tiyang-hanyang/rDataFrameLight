@@ -124,12 +124,12 @@
     ],
     "texts": [
         "Exactly 2 muons",
-        "single and di-muon triggers",
+        "full triggers",
         "post PU correction",
         "After JEC and JVM"
     ],
 
-    "varConfig": "json/variables/MetricMuonVariables.json",
+    "varConfig": "json/variables/variables.json",
     "lumiConfig": "json/Lumi/Run3.json",
     "systConfig": "json/syst/Run3_XSonly.json"
 }
