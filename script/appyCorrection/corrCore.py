@@ -205,11 +205,15 @@ def processMergeDS(era, dataset, filePaths, commonOutDir, procedures, recordedMo
 
     # processing
     ch1=ROOT.TChain("Events")
+    samples = 0
     for fin in filePaths:
         fileTest = ROOT.TFile(fin, "read")
         if not "Events" in fileTest.GetListOfKeys():
             continue
         ch1.Add(fin)
+        samples += 1
+    if samples == 0:
+        return recordedModules
     rdf = ROOT.ROOT.RDataFrame(ch1)
     opt = ROOT.RDF.RSnapshotOptions()
     if needSlice:
