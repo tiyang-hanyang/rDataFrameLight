@@ -360,6 +360,9 @@ def main():
         for ds in datasets: 
             print("skim ds: "+ str(ds))
             sampleList = [ jsonFull["dir"][ds] + i for i in jsonFull["file"][ds]]
+            if len(sampleList) == 0:
+                print("DS", ds, "does not exist")
+                continue
             print(sampleList)
             if ds in mergeDS:
                 recordedModules=processMergeDS(era, ds, sampleList, outDir, workflow, recordedModules, needSlice)

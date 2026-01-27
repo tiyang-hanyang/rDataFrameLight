@@ -463,7 +463,7 @@ void SkimControl::run()
 
             auto totalJobs = jobs.size();
             if (totalJobs==0) continue;
-            int batchSize=8; // hard coding now
+            int batchSize=4; // hard coding now
 
             // batchSize=1;
             // doing parallel skimming, after each batch, need to write back the weight back
@@ -523,7 +523,7 @@ void SkimControl::run()
                             // sumws.emplace_back(rndDS.Count());
 
                         // for preliminary skim, must applying golden json for data, and rescaling MC weight
-                        if (this->_isPreliminary)
+                        if (this->_isPreliminary && isData)
                             rndDS = this->_preliminaryDeco(rndDS, channel, totalGenWeight);
 
                         // apply the filter
