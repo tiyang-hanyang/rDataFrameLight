@@ -1,0 +1,25 @@
+{
+    "jobType": "skim",
+    "commments": "For the S3 skimming of Run2024D.",
+
+    "name": "Run2024D_Mu_Skim",
+    "year": "2024",
+    "run": "Run3",
+    "era": "Run2024D",
+    "merge": 1,
+
+    "outDir": "/home/tiyang/public/SR_medium_muon_0127_threeBJet/",
+    "datasets": [
+        "Muon0",
+        "Muon1"
+    ],
+    "isData": 1,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/FourJet_NanoAOD/Run2024D_fourJet.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/threeBjet_2024.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}
+

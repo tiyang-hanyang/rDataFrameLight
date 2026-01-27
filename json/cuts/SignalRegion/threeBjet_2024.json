@@ -1,5 +1,5 @@
 [
     ["define", "BJetCond", "GoodJetCond && (Jet_btagUParTAK4B > 0.1272)"],
-    ["define", "nBJet", "Nonzero(BJet_pt).size()"],
+    ["define", "nBJet", "Nonzero(BJetCond).size()"],
     ["cut", "at least three bjet", "(nBJet>=3)"]
 ]
