@@ -139,6 +139,7 @@
     "Jet_btagEff_medium",
     "btag_weight",
     "Jet_pt_JEScorr",
+    "Jet_pt_JEC",
     "PassJetVeto",
     "JetIdTight",
     "looseJetCond",

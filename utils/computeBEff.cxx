@@ -283,11 +283,11 @@ int main(int argc, char** argv)
 
     // SampleControl samples("json/samples/RunIII2024Summer24NanoAODv15_passJVM.json");
     std::map<std::string, std::string> jsonPath = {
-        {"RunIII2024Summer24NanoAODv15", "/home/tiyang/public/rDataFrameLight_git/source/json/samples/SR_medium_muon/RunIII2024Summer24NanoAODv15_corrected_temp.json"},
-        {"Run3Summer23NanoAODv12", "/home/tiyang/public/rDataFrameLight_git/source/json/samples/SR_medium_muon/Run3Summer23NanoAODv12_corrected.json"},
-        {"Run3Summer23BPixNanoAODv12", "/home/tiyang/public/rDataFrameLight_git/source/json/samples/SR_medium_muon/Run3Summer23BPixNanoAODv12_corrected.json"},
-        {"Run3Summer22NanoAODv12", "/home/tiyang/public/rDataFrameLight_git/source/json/samples/SR_medium_muon/Run3Summer22NanoAODv12_corrected_temp.json"},
-        {"Run3Summer22EENanoAODv12", "/home/tiyang/public/rDataFrameLight_git/source/json/samples/SR_medium_muon/Run3Summer22EENanoAODv12_corrected_temp.json"},
+        {"RunIII2024Summer24NanoAODv15", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/FourJet_NanoAOD/RunIII2024Summer24NanoAODv15_fourJet_temp.json"},
+        {"Run3Summer23NanoAODv12", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/FourJet_NanoAOD/Run3Summer23NanoAODv12_fourJet_temp.json"},
+        {"Run3Summer23BPixNanoAODv12", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/FourJet_NanoAOD/Run3Summer23BPixNanoAODv12_fourJet_temp.json"},
+        {"Run3Summer22NanoAODv12", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/FourJet_NanoAOD/Run3Summer22NanoAODv12_fourJet_temp.json"},
+        {"Run3Summer22EENanoAODv12", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/FourJet_NanoAOD/Run3Summer22EENanoAODv12_fourJet_temp.json"},
     };
 
     SampleControl samples(jsonPath.at(era));

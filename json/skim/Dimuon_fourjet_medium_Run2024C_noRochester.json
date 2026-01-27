@@ -6,7 +6,7 @@
     "year": "2024",
     "run": "Run3",
     "era": "Run2024C",
-    "merge": 0,
+    "merge": 1,
 
     "outDir": "/home/tiyang/public/SR_medium_muon_0127_fourJet/",
     "datasets": [

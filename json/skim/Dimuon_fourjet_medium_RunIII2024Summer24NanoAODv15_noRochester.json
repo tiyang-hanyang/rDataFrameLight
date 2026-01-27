@@ -5,7 +5,7 @@
     "name": "RunIII2024Summer24NanoAODv15_Mu_Skim",
     "year": "2024",
     "era": "RunIII2024Summer24NanoAODv15",
-    "merge": 0,
+    "merge": 1,
     "outDir": "/home/tiyang/public/SR_medium_muon_0127_fourJet/",
     "datasets": [
         "DY2Mu",
