@@ -1,7 +1,7 @@
 {
     "dir": {
-        "Muon0": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/Run2024I/Muon0/",
-        "Muon1": "/home/tiyang/public/rDataFrameLight_git/SR_medium_muon/Run2024I/Muon1/"
+        "Muon0": "/home/tiyang/public/SR_medium_muon_0127/Run2024I/Muon0/",
+        "Muon1": "/home/tiyang/public/SR_medium_muon_0127/Run2024I/Muon1/"
     },
     "file": {
         "Muon0": [
