@@ -8,6 +8,8 @@
         "TTBB_DL": "/home/tiyang/public/SR_medium_muon_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15/TTBB_DL/",
         "TTBB_SL": "/home/tiyang/public/SR_medium_muon_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15/TTBB_SL/",
         "TTBB_4Q": "/home/tiyang/public/SR_medium_muon_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15/TTBB_4Q/",
+        "QCD_15_20_mu": "/home/tiyang/public/SR_medium_muon_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15/QCD_15_20_mu/",
+        "QCD_20_30_mu": "/home/tiyang/public/SR_medium_muon_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15/QCD_20_30_mu/",
         "QCD_30_50_mu": "/home/tiyang/public/SR_medium_muon_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15/QCD_30_50_mu/",
         "QCD_50_80_mu": "/home/tiyang/public/SR_medium_muon_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15/QCD_50_80_mu/",
         "QCD_80_120_mu": "/home/tiyang/public/SR_medium_muon_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15/QCD_80_120_mu/",
@@ -65,9 +67,13 @@
         "TTBB_4Q": [
             "TTBB_4Q_skimmed.root"
         ],
+        "QCD_15_20_mu": [],
+        "QCD_20_30_mu": [],
         "QCD_30_50_mu": [],
         "QCD_50_80_mu": [],
-        "QCD_80_120_mu": [],
+        "QCD_80_120_mu": [
+            "QCD_80_120_mu_skimmed.root"
+        ],
         "QCD_120_170_mu": [
             "QCD_120_170_mu_skimmed.root"
         ],

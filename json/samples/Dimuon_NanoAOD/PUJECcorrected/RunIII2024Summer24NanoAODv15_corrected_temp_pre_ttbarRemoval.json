@@ -69,8 +69,12 @@
         "TTBB_4Q": [
             "TTBB_4Q_skimmed.root"
         ],
-        "QCD_15_20_mu": [],
-        "QCD_20_30_mu": [],
+        "QCD_15_20_mu": [
+            "QCD_15_20_mu_skimmed.root"
+        ],
+        "QCD_20_30_mu": [
+            "QCD_20_30_mu_skimmed.root"
+        ],
         "QCD_30_50_mu": [
             "QCD_30_50_mu_skimmed.root"
         ],

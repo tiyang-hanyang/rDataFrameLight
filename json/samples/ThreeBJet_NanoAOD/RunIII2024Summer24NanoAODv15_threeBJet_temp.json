@@ -24,6 +24,7 @@
         "TZQB": "/home/tiyang/public/SR_medium_muon_0127_threeBJet/mc/RunIII2024Summer24NanoAODv15/TZQB/",
         "TTHBB": "/home/tiyang/public/SR_medium_muon_0127_threeBJet/mc/RunIII2024Summer24NanoAODv15/TTHBB/",
         "TTHnonBB": "/home/tiyang/public/SR_medium_muon_0127_threeBJet/mc/RunIII2024Summer24NanoAODv15/TTHnonBB/",
+        "QCD_80_120_mu": "/home/tiyang/public/SR_medium_muon_0127_threeBJet/mc/RunIII2024Summer24NanoAODv15/QCD_80_120_mu/",
         "QCD_120_170_mu": "/home/tiyang/public/SR_medium_muon_0127_threeBJet/mc/RunIII2024Summer24NanoAODv15/QCD_120_170_mu/",
         "QCD_170_300_mu": "/home/tiyang/public/SR_medium_muon_0127_threeBJet/mc/RunIII2024Summer24NanoAODv15/QCD_170_300_mu/",
         "QCD_300_470_mu": "/home/tiyang/public/SR_medium_muon_0127_threeBJet/mc/RunIII2024Summer24NanoAODv15/QCD_300_470_mu/",
@@ -106,6 +107,9 @@
         ],
         "TTHnonBB": [
             "TTHnonBB_RunIII2024Summer24NanoAODv15_Mu_Skim.root"
+        ],
+        "QCD_80_120_mu": [
+            "QCD_80_120_mu_RunIII2024Summer24NanoAODv15_Mu_Skim.root"
         ],
         "QCD_120_170_mu": [
             "QCD_120_170_mu_RunIII2024Summer24NanoAODv15_Mu_Skim.root"
