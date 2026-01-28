@@ -187,6 +187,12 @@ void prepareHist(rdfWS_utility::JsonObject jsonConfig, std::string variable, Sam
                 hists.push_back(componentHist);
             }
 
+            if (hists.size() == 0)
+            {
+                rdfWS_utility::messageWARN("collectHists", channel+" has no events survive the selection, skip...");
+                continue;
+            }
+
             // summing histogram, save, and release memory (only needed in case of merging)
             std::string histName = channel + "_" + variable + "_" + weightName;
             ROOT::DisableImplicitMT();
