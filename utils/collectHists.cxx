@@ -227,8 +227,23 @@ void prepareHist(rdfWS_utility::JsonObject jsonConfig, std::string variable, Sam
                 }
             }
 
+            std::vector<std::string> hasEventList;
+            for (auto tempF : filePaths)
+            {
+                std::unique_ptr<TFile> f_temp(TFile::Open(tempF.c_str(), "READ"));
+                if (!f_temp || f_temp->IsZombie())
+                {
+                    rdfWS_utility::messageWARN("collectHists", "Cannot open file " + tempF);
+                    continue;
+                }
+                if (f_temp->GetListOfKeys()->FindObject("Events"))
+                {
+                    hasEventList.push_back(tempF);
+                }
+            }
+
             std::string weightName = "one";
-            ROOT::RDataFrame rdfDS("Events", filePaths);
+            ROOT::RDataFrame rdfDS("Events", hasEventList);
             ROOT::RDF::RNode rndDS(rdfDS);
             rndDS = histCut.applyCut(rndDS);
             rndDS = rndDS.Define("one", "1");
