@@ -7,6 +7,7 @@
 
 #include "TLatex.h"
 #include "TLine.h"
+#include "TStyle.h"
 
 PlotControl::PlotControl(const std::string &name) : _controllerName(name)
 {
@@ -36,6 +37,9 @@ PlotControl::~PlotControl()
 // setup canvas and pad style, record the scale if do ratio plot
 void PlotControl::setHanyangCanvas(double xSize, double ySize, int doLog, int doRatio)
 {
+    gStyle->SetEndErrorSize(0);
+    gStyle->SetErrorX(0);
+
     if (this->_canvas != nullptr)
     {
         rdfWS_utility::messageERROR("PlotControl", "Internal canvas already exist");
@@ -133,8 +137,9 @@ void PlotControl::setHanyangHist(TH1D *hist, int color, int isData, const std::v
     {
         // data draw option is ep
         hist->SetMarkerStyle(20);
-        hist->SetMarkerSize(0.8);
+        hist->SetMarkerSize(1.2);
         hist->SetLineStyle(0);
+        hist->SetLineWidth(1);
     }
     else
     {
@@ -340,7 +345,7 @@ void PlotControl::drawNonStackedHists(
     }
     for (auto histName : dataHists)
     {
-        std::string drawOption = "ep";
+        std::string drawOption = "E0P";
         if (same)
         {
             drawOption += " SAME";
