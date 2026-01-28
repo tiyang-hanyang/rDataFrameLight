@@ -1,0 +1,14 @@
+{
+    "dir": {
+        "Muon0": "/home/tiyang/public/SameSign_CR_0127_fourJet/data/Run2024I/Muon0/",
+        "Muon1": "/home/tiyang/public/SameSign_CR_0127_fourJet/data/Run2024I/Muon1/"
+    },
+    "file": {
+        "Muon0": [
+            "Muon0_Run2024I_Mu_Skim.root"
+        ],
+        "Muon1": [
+            "Muon1_Run2024I_Mu_Skim.root"
+        ]
+    }
+}

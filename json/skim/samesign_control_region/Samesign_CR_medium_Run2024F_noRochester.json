@@ -1,0 +1,26 @@
+{
+    "jobType": "skim",
+    "commments": "For the S2 skimming of Run2024F.",
+
+    "name": "Run2024F_Mu_Skim",
+    "year": "2024",
+    "run": "Run3",
+    "era": "Run2024F",
+    "merge": 1,
+
+    "outDir": "/home/tiyang/public/SameSign_CR_0127_fourJet/",
+    "datasets": [
+        "Muon0",
+        "Muon1"
+    ],
+    "isData": 1,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/Run2024F_JEC_corrected.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/MET_filter.json",
+        "json/cuts/SignalRegion/SameSign.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}
+
