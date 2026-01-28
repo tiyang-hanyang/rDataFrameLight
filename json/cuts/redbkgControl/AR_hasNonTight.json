@@ -1,0 +1,3 @@
+[
+    ["cut", "not all tight", "onlyLeadingFake || onlySubleadingFake || bothFake"]
+]

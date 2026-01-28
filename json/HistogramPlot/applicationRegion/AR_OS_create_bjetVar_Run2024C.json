@@ -1,0 +1,39 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S1 Run2024C data jet variables creation",
+
+    "era": "Run2024C",
+    "outDir": "AR_OS",
+
+    "sampleConfig": "json/samples/applicationRegion/Run2024C_OS_SS_AR.json",
+
+    "varNames": [
+        "nBJet"
+    ],
+    "varConfig": "json/variables/variables.json",
+
+    "cutConfig": [
+        "json/cuts/redbkgControl/AR_hasNonTight.json",
+        "json/cuts/redbkgControl/AR_OS.json",
+        "json/cuts/HistPlot/signalRegionVariables/bjets_multiplicity_2024.json"
+    ],
+
+    "datasets": [
+        "Muon"
+    ],
+    "isData": {
+        "Muon":1
+    },
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

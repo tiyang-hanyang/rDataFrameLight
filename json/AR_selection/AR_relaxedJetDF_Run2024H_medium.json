@@ -1,0 +1,23 @@
+{
+    "jobType": "skim",
+    "commments": "For the AR skimming of Run2024H.",
+
+    "name": "Run2024H_Mu_Skim",
+    "year": "2024",
+    "era": "Run2024H",
+    "merge": 0,
+
+    "outDir": "/home/tiyang/public/AR_relaxedJetDF_0127/",
+    "datasets": [
+        "Muon0",
+        "Muon1"
+    ],
+    "isData": 1,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/rawNanoAOD/Run2024H.json",
+    "cutConfig": [
+        "json/cuts/redbkgControl/applicableRegion_medium_muon_relaxedJetDF.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

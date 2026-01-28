@@ -1,7 +1,7 @@
 {
     "dir": {
-        "Muon0": "/home/tiyang/public/AR_relaxedJetDF_0127/data/Run2024C/Muon0/",
-        "Muon1": "/home/tiyang/public/AR_relaxedJetDF_0127/data/Run2024C/Muon1/"
+        "Muon0": "/home/tiyang/public/AR_0127/data/Run2024C/Muon0/",
+        "Muon1": "/home/tiyang/public/AR_0127/data/Run2024C/Muon1/"
     },
     "file": {
         "Muon0": [

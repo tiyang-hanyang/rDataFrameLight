@@ -1,0 +1,3 @@
+[
+    ["cut", "same-sign requirements", "Muon_charge[leadingMuonIdx] != Muon_charge[subleadingMuonIdx]"]
+]

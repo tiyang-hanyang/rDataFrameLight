@@ -9,7 +9,7 @@
     "maxFiles": 20,
     "preliminary": 1,
 
-    "outDir": "/home/tiyang/public/AR_0127/",
+    "outDir": "/home/tiyang/public/AR_relaxedJetDF_0127/",
     "datasets": [
         "DY2Mu",
         "DY2Mu_low",
@@ -45,7 +45,7 @@
 
     "sampleConfig": "json/samples/rawNanoAOD/RunIII2024Summer24NanoAODv15.json",
     "cutConfig": [
-        "json/cuts/redbkgControl/applicableRegion_medium_muon.json"
+        "json/cuts/redbkgControl/applicableRegion_medium_muon_relaxedJetDF.json"
     ],
     "branchConfig": "json/branches/MuonMetricBranchNew.json"
 }

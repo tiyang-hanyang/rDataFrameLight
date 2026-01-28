@@ -1,0 +1,34 @@
+[
+    ["cut", "dimuon trigger", "(HLT_IsoMu24 || HLT_IsoMu24_eta2p1 || HLT_IsoMu27 || HLT_Mu50 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8 || HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8 || HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8 || HLT_TripleMu_5_3_3_Mass3p8_DZ || HLT_TripleMu_10_5_5_DZ || HLT_TripleMu_12_10_5)"],
+    ["define", "METFilters", "Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter && Flag_BadPFMuonDzFilter && Flag_hfNoisyHitsFilter"],
+    ["cut", "MET filter", "METFilters"],
+    ["cut", "has PV", "(PV_npvsGood>0)"],
+
+    ["define", "GoodJetCond", "(Jet_pt > 30.0) && (abs(Jet_eta)<2.5) && (Jet_neHEF<0.99) && (Jet_neEmEF<0.90) && (Jet_nConstituents>1) && (Jet_muEF<0.80) && (Jet_chHEF>0.01) && (Jet_chMultiplicity>0) && (Jet_chEmEF<0.80) && (Jet_neEmEF + Jet_chEmEF < 0.90)"],
+    ["define", "nGoodJet", "Nonzero(GoodJetCond).size()"],
+    ["define", "Muon_jetIdxGood", "ensureMuonJetGood(Muon_jetIdx, GoodJetCond)"],
+    ["define", "Muon_jetPt", "getMuonMatchJetPt(Muon_jetIdxGood, Jet_pt)"],
+    ["define", "Muon_jetDR", "getMuonMatchJetDR(Muon_jetIdxGood, Jet_eta, Jet_phi, Muon_eta, Muon_phi)"],
+    ["define", "Muon_conePt", "(Muon_jetDR<0.4)*0.9*Muon_jetPt + (Muon_jetDR>0.4)*Muon_pt/(1+Muon_miniPFRelIso_all)"],
+
+    ["define", "isBaseMuon", "(Muon_conePt>15.0) && (abs(Muon_eta)<2.4) && (abs(Muon_dxy)<0.05) && (abs(Muon_dz)<0.1) && (abs(Muon_sip3d)<8) && Muon_mediumId"],
+    ["define", "passMVA", "(Muon_promptMVA>0.64 && Muon_jetDF<0.2480)"],    
+    ["define", "Muon_jetDF_threshold_high", "(Muon_conePt>45.0) && (Muon_jetDF<0.0485)"],
+    ["define", "Muon_jetDF_threshold_medium", "(Muon_conePt<45.0) && (Muon_conePt>20.0) && (Muon_jetDF<(45-Muon_conePt)*0.00798+0.0485)"],
+    ["define", "Muon_jetDF_threshold_low", "(Muon_conePt<20.0) && (Muon_jetDF<0.2480)"],
+    ["define", "Muon_jetDF_failMVA", "(Muon_jetDF_threshold_high || Muon_jetDF_threshold_medium || Muon_jetDF_threshold_low)"],
+    ["define", "failMVA1", "(Muon_promptMVA<0.64 && Muon_jetDF_failMVA && (Muon_jetDR<0.4) && Muon_jetRelIso < 0.5)"],
+    ["define", "failMVA2", "(Muon_promptMVA<0.64 && Muon_jetDF_failMVA && (Muon_jetDR>0.4) && Muon_pfRelIso04_all < 0.5)"],
+    ["define", "isFakeableMuon", "isBaseMuon && (passMVA || failMVA1 || failMVA2)"],
+
+    ["define", "leadingMuonIdx", "Nonzero(isFakeableMuon)[0]"],
+    ["define", "subleadingMuonIdx", "Nonzero(isFakeableMuon)[1]"],
+    ["define", "nFakeableMuon", "ROOT::VecOps::Sum(isFakeableMuon)"],
+    ["define", "MuonPresel", "(nFakeableMuon == 2) && (Muon_pt[leadingMuonIdx]>20) && (Muon_pt[leadingMuonIdx]>15)"],
+    ["cut", "two fakeable muon", "MuonPresel"],
+
+    ["define", "tightCond", "isFakeableMuon && (Muon_promptMVA>0.64 && Muon_jetDF<0.2480)"],
+    ["define", "onlyLeadingFake", "tightCond[leadingMuonIdx] && (!tightCond[subleadingMuonIdx])"],
+    ["define", "onlySubleadingFake", "(!tightCond[leadingMuonIdx]) && tightCond[subleadingMuonIdx]"],
+    ["define", "bothFake", "(!tightCond[leadingMuonIdx]) && (!tightCond[subleadingMuonIdx])"]
+]
