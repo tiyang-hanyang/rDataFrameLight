@@ -42,7 +42,6 @@
         "DY",
         "ttbar",
         "TTH",
-        "QCD",
         "TW",
         "TTBB",
         "TTZ",
@@ -108,7 +107,6 @@
         "DY",
         "ttbar",
         "TTH",
-        "QCD",
         "TW",
         "TTBB",
         "TTZ",
@@ -123,10 +121,9 @@
         "%1.0f fb^{-1} (13.6 TeV)"
     ],
     "texts": [
-        "Same-sign CR",
+        "2 same-sign muons",
         "full triggers",
-        "post PU correction",
-        "After JEC and JVM"
+        "post PU, JEC, JVM correction"
     ],
 
     "varConfig": "json/variables/variables.json",

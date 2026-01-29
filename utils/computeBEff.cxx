@@ -283,7 +283,7 @@ int main(int argc, char** argv)
         "TTZ_high",
     };
 
-    if (era == "RunIII2024Summer24NanoAODv15")
+    if (era.find("RunIII2024Summer24NanoAODv15") != std::string::npos)
     {
         allProcesses.push_back("DY2Mu");
         allProcesses.push_back("DY2Mu_low");
@@ -310,6 +310,8 @@ int main(int argc, char** argv)
         {"Run3Summer23BPixNanoAODv12", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/FourJet_NanoAOD/Run3Summer23BPixNanoAODv12_fourJet_temp.json"},
         {"Run3Summer22NanoAODv12", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/FourJet_NanoAOD/Run3Summer22NanoAODv12_fourJet_temp.json"},
         {"Run3Summer22EENanoAODv12", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/FourJet_NanoAOD/Run3Summer22EENanoAODv12_fourJet_temp.json"},
+
+        {"RunIII2024Summer24NanoAODv15_SSCR", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/SameSign_CR/RunIII2024Summer24NanoAODv15_SSCR.json"},
     };
 
     SampleControl samples(jsonPath.at(era));

@@ -1,5 +1,4 @@
 [
-    ["cut", "at least two b-jet", "nBJet>1"],
     ["define", "subleadingBJetIdx", "Nonzero(BJetCond)[1]"],
     ["define", "subleadingBJet_pt", "Jet_pt[subleadingBJetIdx]"],
     ["define", "subleadingBJet_eta", "Jet_eta[subleadingBJetIdx]"],

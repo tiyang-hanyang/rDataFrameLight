@@ -114,8 +114,7 @@
     "texts": [
         "Exactly 2 muons",
         "full triggers",
-        "post PU correction",
-        "After JEC and JVM"
+        "PU, JEC, JVM corrected"
     ],
 
     "varConfig": "json/variables/variables.json",

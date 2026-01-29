@@ -25,7 +25,8 @@
         "diMuon_mass",
         "diMuon_deltaEta",
         "diMuon_dphi",
-        "diMuon_dR"
+        "diMuon_dR",
+        "yield"
     ],
     "needCrop": {
         "diMuon_mass":1
@@ -125,8 +126,7 @@
     "texts": [
         "Exactly 2 muons",
         "full triggers",
-        "post PU correction",
-        "After JEC and JVM"
+        "PU, JEC, JVM corrected"
     ],
 
     "varConfig": "json/variables/variables.json",

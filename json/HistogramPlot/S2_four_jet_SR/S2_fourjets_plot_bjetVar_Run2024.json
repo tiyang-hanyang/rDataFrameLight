@@ -113,13 +113,12 @@
         "%1.0f fb^{-1} (13.6 TeV)"
     ],
     "texts": [
-        "Exactly 2 muons",
-        "#geq 4 jets",
-        "single and di-muon triggers",
-        "PU, JEC, JVM, btag corrected"
+        "Exactly 2 muons, #geq 4 jets",
+        "full triggers",
+        "PU, JEC, JVM, b-tag corrected"
     ],
 
-    "varConfig": "json/variables/MetricMuonVariables.json",
+    "varConfig": "json/variables/variables.json",
     "lumiConfig": "json/Lumi/Run3.json",
     "systConfig": "json/syst/Run3_XSonly.json"
 }

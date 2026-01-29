@@ -110,7 +110,7 @@
     },
 
     "MCweight": [
-        "genWeight", "PUWeight", "btag_weight"
+        "genWeight", "PUWeight"
     ],
 
     "lumiConfig": "json/Lumi/Run3.json"

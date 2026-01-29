@@ -138,6 +138,7 @@
     "Jet_UParTB_SF_medium",
     "Jet_btagEff_medium",
     "btag_weight",
+    "BJetCond",
     "Jet_pt_JEScorr",
     "Jet_pt_JEC",
     "PassJetVeto",

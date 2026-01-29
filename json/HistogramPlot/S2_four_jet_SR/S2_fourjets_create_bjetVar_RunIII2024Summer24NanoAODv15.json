@@ -5,7 +5,7 @@
     "era": "RunIII2024Summer24NanoAODv15",
     "outDir": "S2_fourJet",
 
-    "sampleConfig": "json/samples/FourJet_NanoAOD/RunIII2024Summer24NanoAODv15_fourJet_temp.json",
+    "sampleConfig": "json/samples/FourJet_NanoAOD/BTVCorrected/RunIII2024Summer24NanoAODv15_fourJet_btag_corrected_temp.json",
 
     "varNames": [
         "nBJet"
@@ -13,7 +13,7 @@
     "varConfig": "json/variables/variables.json",
 
     "cutConfig": [
-        "json/cuts/HistPlot/signalRegionVariables/bjet_multiplicity_2024.json"
+        "json/cuts/HistPlot/signalRegionVariables/bjets_multiplicity_2024.json"
     ],
 
     "datasets": [

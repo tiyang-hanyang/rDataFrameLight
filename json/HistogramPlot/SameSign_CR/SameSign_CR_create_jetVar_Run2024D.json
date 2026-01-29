@@ -1,0 +1,38 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S1 then directly same-sign selected Run2024D jet muon variables creation",
+
+    "era": "Run2024D",
+    "outDir": "SameSign_CR",
+
+    "sampleConfig": "json/samples/SameSign_CR/Run2024D_SSCR.json",
+
+    "varNames": [
+        "nGoodJet"
+    ],
+    "varConfig": "json/variables/variables.json",
+
+    "cutConfig": [
+        "json/cuts/SignalRegion/MET_filter.json",
+        "json/cuts/HistPlot/signalRegionVariables/jets_multiplicity.json"
+    ],
+
+    "datasets": [
+        "Muon"
+    ],
+    "isData": {
+        "Muon":1
+    },
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

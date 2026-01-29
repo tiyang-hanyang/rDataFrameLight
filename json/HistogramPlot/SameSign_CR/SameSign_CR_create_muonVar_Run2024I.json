@@ -23,6 +23,7 @@
     "varConfig": "json/variables/variables.json",
 
     "cutConfig": [
+        "json/cuts/SignalRegion/MET_filter.json",
         "json/cuts/HistPlot/signalRegionVariables/muons_kinematics.json"
     ],
 

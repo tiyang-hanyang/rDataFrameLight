@@ -1,0 +1,125 @@
+{
+    "jobType": "plot",
+    "comments": "S3 full 2024 dimuon corretion",
+    "inDir": "S3_threeBJet",
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+    "outDir": "S3_threeBJet_plot",
+    "name": "S3_threeBJet_DataMC_plot",
+
+    "era": [
+        "Run2024C", "Run2024D", "Run2024E", "Run2024F", "Run2024G", "Run2024H", "Run2024I"
+    ],
+    "mc_era": [
+        "RunIII2024Summer24NanoAODv15"
+    ],
+
+    "varNames": [
+        "leadingBJet_pt",
+        "leadingBJet_eta", 
+        "leadingBJet_phi",
+        "subleadingBJet_pt",
+        "subleadingBJet_eta", 
+        "subleadingBJet_phi"
+    ],
+    "needCrop": {
+    },
+    "cropedRange": {
+    },
+
+    "histXSize": 700,
+    "histYSize": 800,
+
+    "datasets": [
+        "Muon",
+        "DY",
+        "ttbar",
+        "TTH",
+        "QCD",
+        "TW",
+        "TTBB",
+        "TTZ",
+        "VV",
+        "VVV"
+    ],
+    "colorMapping": {
+        "Muon": 1,
+        "DY": 416,
+        "VV": 880,
+        "ttbar": 4,
+        "TW": 400,
+        "TTH": 432,
+        "QCD": 616,
+        "TTBB": 800,
+        "TTW": 2,
+        "TTZ": 920,
+        "WJets": 28,
+        "VVV": 46,
+        "TTTT": 12
+    },
+    "datasetLabel": {
+        "DY": "DY",
+        "WJets": "W+Jets",
+        "ttbar": "t#bar{t}",
+        "TW": "t/#bar{t}+W",
+        "TTH": "t#bar{t}+H",
+        "QCD": "QCD",
+        "VV": "diboson",
+        "VVV": "triboson",
+        "TTBB": "t#bar{t}b#bar{b}",
+        "TTZ": "t#bar{t}+Z"
+    },
+    "needMerge": {
+    },
+    "isData": {
+        "Muon": 1,
+        "DY": 0,
+        "WJets": 0,
+        "ttbar": 0,
+        "TW": 0,
+        "TTH": 0,
+        "QCD": 0,
+        "VV": 0,
+        "TTBB": 0,
+        "TTW": 0,
+        "TTZ": 0,
+        "VVV": 0,
+        "TTTT": 0
+    },
+    "isSignal": [
+    ],
+
+    "doLogPlot": 1,
+    "doRatioPlot": 1,
+    "doNormPlot": 0,
+    
+    "numerator": [
+        "Muon"
+    ],
+    "stackOrder": [
+        "DY",
+        "ttbar",
+        "TTH",
+        "QCD",
+        "TW",
+        "TTBB",
+        "TTZ",
+        "VV",
+        "VVV"
+    ],
+    "reOrder": 1,
+
+    "header": [
+        "Preliminary",
+        "%1.0f fb^{-1} (13.6 TeV)"
+    ],
+    "texts": [
+        "2 muons, #geq 4 jets, #geq 3 b-tag",
+        "full triggers",
+        "PU, JEC, JVM, -btag corrected"
+    ],
+
+    "varConfig": "json/variables/variables.json",
+    "lumiConfig": "json/Lumi/Run3.json",
+    "systConfig": "json/syst/Run3_XSonly.json"
+}

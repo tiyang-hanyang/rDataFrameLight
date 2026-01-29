@@ -16,6 +16,7 @@ void Btag_init(const std::string& era)
     // hard coding the path of the file here (as just macro)
     std::map<std::string, std::string> corrFile = {
         {"RunIII2024Summer24NanoAODv15", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/BTV/2024_Summer24/btagging_preliminary.json"},
+        {"RunIII2024Summer24NanoAODv15_SSCR", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/BTV/2024_Summer24/btagging_preliminary.json"},
         {"Run3Summer23NanoAODv12", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/BTV/2023_Summer23/btagging.json"},
         {"Run3Summer23BPixNanoAODv12", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/BTV/2023_Summer23BPix/btagging.json"},
         {"Run3Summer22NanoAODv12", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/BTV/2022_Summer22/btagging.json"},
@@ -29,7 +30,8 @@ void Btag_init(const std::string& era)
         {"Run3Summer22EENanoAODv12", "particleNet_shape"},
         {"Run3Summer23NanoAODv12", "particleNet_shape"},
         {"Run3Summer23BPixNanoAODv12", "particleNet_shape"},
-        {"RunIII2024Summer24NanoAODv15", "UParTAK4_kinfit"}
+        {"RunIII2024Summer24NanoAODv15", "UParTAK4_kinfit"},
+        {"RunIII2024Summer24NanoAODv15_SSCR", "UParTAK4_kinfit"}
     };
     auto it = correctionTab.find(era);
     if (it == correctionTab.end()) {
@@ -42,6 +44,10 @@ void reload_eff(const std::string& era, const std::string& channel)
 {
     // change to the channel final for loading the corresponding efficiency factors
     std::string btagEffDir = "/home/tiyang/public/rDataFrameLight_update/source/json/samples/FourJet_NanoAOD/btag_efficiency_"+era+"/";
+    if (era == "RunIII2024Summer24NanoAODv15_SSCR")
+    {
+        btagEffDir = "/home/tiyang/public/rDataFrameLight_update/source/json/samples/SameSign_CR/btag_eff_RunIII2024Summer24NanoAODv15_SSCR/";
+    }
     BTagCorr_cseteff = correction::CorrectionSet::from_file(btagEffDir+"/"+channel+"_btag_eff.json");
     BTagCorr_ceff =  BTagCorr_cseteff->at("UParTAK4_eff_values");
 }

@@ -1,0 +1,150 @@
+{
+    "dir": {
+        "DY2Mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/DY2Mu/",
+        "DY2Mu_low": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/DY2Mu_low/",
+        "ttbarDL": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/ttbarDL/",
+        "ttbarSL": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/ttbarSL/",
+        "ttbar4Q": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/ttbar4Q/",
+        "TTBB_DL": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/TTBB_DL/",
+        "TTBB_SL": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/TTBB_SL/",
+        "TTBB_4Q": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/TTBB_4Q/",
+        "QCD_15_20_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_15_20_mu/",
+        "QCD_20_30_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_20_30_mu/",
+        "QCD_30_50_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_30_50_mu/",
+        "QCD_50_80_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_50_80_mu/",
+        "QCD_80_120_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_80_120_mu/",
+        "QCD_120_170_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_120_170_mu/",
+        "QCD_170_300_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_170_300_mu/",
+        "QCD_300_470_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_300_470_mu/",
+        "QCD_470_600_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_470_600_mu/",
+        "QCD_600_800_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_600_800_mu/",
+        "QCD_800_1000_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_800_1000_mu/",
+        "QCD_1000_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/QCD_1000_mu/",
+        "TTHBB": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/TTHBB/",
+        "TTHnonBB": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/TTHnonBB/",
+        "TWm2L": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/TWm2L/",
+        "TbarWp2L": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/TbarWp2L/",
+        "TZQB": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/TZQB/",
+        "WW2L2Nu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/WW2L2Nu/",
+        "WZ2L2Q": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/WZ2L2Q/",
+        "ZZ2L2Q": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/ZZ2L2Q/",
+        "ZZ2L2Nu": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/ZZ2L2Nu/",
+        "WZ3l": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/WZ3l/",
+        "ZZ4l": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/ZZ4l/",
+        "WWW": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/WWW/",
+        "WWZ": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/WWZ/",
+        "WZZ": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/WZZ/",
+        "ZZZ": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/ZZZ/",
+        "WJet_1J": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/WJet_1J/",
+        "WJet_2J": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/WJet_2J/",
+        "WJet_3J": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/WJet_3J/",
+        "WJet_4J": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/WJet_4J/",
+        "TTZ_low": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/TTZ_low/",
+        "TTZ_high": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/RunIII2024Summer24NanoAODv15_SSCR/TTZ_high/"
+    },
+    "file": {
+        "DY2Mu": [
+            "DY2Mu_skimmed.root"
+        ],
+        "DY2Mu_low": [
+            "DY2Mu_low_skimmed.root"
+        ],
+        "ttbarDL": [
+            "ttbarDL_skimmed.root"
+        ],
+        "ttbarSL": [
+            "ttbarSL_skimmed.root"
+        ],
+        "ttbar4Q": [
+            "ttbar4Q_skimmed.root"
+        ],
+        "TTBB_DL": [
+            "TTBB_DL_skimmed.root"
+        ],
+        "TTBB_SL": [
+            "TTBB_SL_skimmed.root"
+        ],
+        "TTBB_4Q": [
+            "TTBB_4Q_skimmed.root"
+        ],
+        "QCD_15_20_mu": [],
+        "QCD_20_30_mu": [],
+        "QCD_30_50_mu": [],
+        "QCD_50_80_mu": [],
+        "QCD_80_120_mu": [],
+        "QCD_120_170_mu": [],
+        "QCD_170_300_mu": [
+            "QCD_170_300_mu_skimmed.root"
+        ],
+        "QCD_300_470_mu": [],
+        "QCD_470_600_mu": [],
+        "QCD_600_800_mu": [],
+        "QCD_800_1000_mu": [
+            "QCD_800_1000_mu_skimmed.root"
+        ],
+        "QCD_1000_mu": [],
+        "TTHBB": [
+            "TTHBB_skimmed.root"
+        ],
+        "TTHnonBB": [
+            "TTHnonBB_skimmed.root"
+        ],
+        "TWm2L": [
+            "TWm2L_skimmed.root"
+        ],
+        "TbarWp2L": [
+            "TbarWp2L_skimmed.root"
+        ],
+        "TZQB": [
+            "TZQB_skimmed.root"
+        ],
+        "WW2L2Nu": [
+            "WW2L2Nu_skimmed.root"
+        ],
+        "WZ2L2Q": [
+            "WZ2L2Q_skimmed.root"
+        ],
+        "ZZ2L2Q": [
+            "ZZ2L2Q_skimmed.root"
+        ],
+        "ZZ2L2Nu": [
+            "ZZ2L2Nu_skimmed.root"
+        ],
+        "WZ3l": [
+            "WZ3l_skimmed.root"
+        ],
+        "ZZ4l": [
+            "ZZ4l_skimmed.root"
+        ],
+        "WWW": [
+            "WWW_skimmed.root"
+        ],
+        "WWZ": [
+            "WWZ_skimmed.root"
+        ],
+        "WZZ": [
+            "WZZ_skimmed.root"
+        ],
+        "ZZZ": [
+            "ZZZ_skimmed.root"
+        ],
+        "WJet_1J": [
+            "WJet_1J_skimmed.root"
+        ],
+        "WJet_2J": [
+            "WJet_2J_skimmed.root"
+        ],
+        "WJet_3J": [
+            "WJet_3J_skimmed.root"
+        ],
+        "WJet_4J": [
+            "WJet_4J_skimmed.root"
+        ],
+        "TTZ_low": [
+            "TTZ_low_skimmed.root"
+        ],
+        "TTZ_high": [
+            "TTZ_high_skimmed.root"
+        ]
+    }
+}

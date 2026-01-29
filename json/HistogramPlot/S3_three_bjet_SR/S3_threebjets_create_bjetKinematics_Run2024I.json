@@ -1,0 +1,42 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S2 Run2024I data jet variables creation",
+
+    "era": "Run2024I",
+    "outDir": "S3_threeBJet",
+
+    "varNames": [
+        "leadingBJet_pt",
+        "leadingBJet_eta", 
+        "leadingBJet_phi",
+        "subleadingBJet_pt",
+        "subleadingBJet_eta", 
+        "subleadingBJet_phi"
+    ],
+
+    "datasets": [
+        "Muon"
+    ],
+    "isData": {
+        "Muon":1
+    },
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight"
+    ],
+
+    "sampleConfig": "json/samples/ThreeBJet_NanoAOD/Run2024I_threeBJet.json",
+    "varConfig": "json/variables/variables.json",
+    "cutConfig": [
+        "json/cuts/HistPlot/signalRegionVariables/leading_bjet_kinematics.json",
+        "json/cuts/HistPlot/signalRegionVariables/subleading_bjet_kinematics.json"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

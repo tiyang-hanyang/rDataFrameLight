@@ -6,39 +6,14 @@
     "year": "2024",
     "era": "RunIII2024Summer24NanoAODv15",
     "merge": 0,
-    "maxFiles": 20,
+    "maxFiles": 40,
     "preliminary": 1,
 
     "outDir": "/home/tiyang/public/AR_0127/",
     "datasets": [
-        "DY2Mu",
-        "DY2Mu_low",
-
         "ttbarDL",
         "ttbarSL",
-        "ttbar4Q",
-
-        "TTBB_DL",
-        "TTBB_SL",
-        "TTBB_4Q",
-        
-        "QCD_15_20_mu",
-        "QCD_20_30_mu",
-        "QCD_30_50_mu",
-        "QCD_50_80_mu",
-        "QCD_80_120_mu",
-        "QCD_120_170_mu",
-        "QCD_170_300_mu",
-        "QCD_300_470_mu",
-        "QCD_470_600_mu",
-        "QCD_600_800_mu",
-        "QCD_800_1000_mu",
-        "QCD_1000_mu",
-
-        "WJet_1J",
-        "WJet_2J",
-        "WJet_3J",
-        "WJet_4J"
+        "ttbar4Q"
     ],
     "isData": 0,
     "mcWeight": "genWeight",

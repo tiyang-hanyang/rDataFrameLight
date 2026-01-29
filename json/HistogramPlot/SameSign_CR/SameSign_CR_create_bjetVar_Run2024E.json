@@ -1,0 +1,35 @@
+{
+    "jobType": "collectingHists",
+    "comments": "SSCR Run2024E data jet variables creation",
+
+    "era": "Run2024E",
+    "outDir": "SameSign_CR",
+
+    "varNames": [
+        "nBJet"
+    ],
+
+    "datasets": [
+        "Muon"
+    ],
+    "isData": {
+        "Muon":1
+    },
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight"
+    ],
+
+    "sampleConfig": "json/samples/SameSign_CR/Run2024E_SSCR.json",
+    "varConfig": "json/variables/variables.json",
+    "cutConfig": [
+        "json/cuts/HistPlot/signalRegionVariables/bjets_multiplicity_2024.json"
+    ],
+    "lumiConfig": "json/Lumi/Run3.json"
+}

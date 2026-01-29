@@ -1,6 +1,4 @@
 [
-    ["define", "nGoodJet", "Nonzero(GoodJetCond).size()"],
-    ["cut", "at least one jet", "nGoodJet>0"],
     ["define", "leadingJetIdx", "Nonzero(GoodJetCond)[0]"],
     ["define", "leadingJet_pt", "Jet_pt_JEC[leadingJetIdx]"],
     ["define", "leadingJet_eta", "Jet_eta[leadingJetIdx]"],
