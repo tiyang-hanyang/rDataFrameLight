@@ -1,0 +1,3 @@
+[
+    ["cut", "miniIsolation", "(leadingMuonMiniIso<0.4) && (subleadingMuonMiniIso<0.4)"]
+]

@@ -1,0 +1,37 @@
+{
+    "jobType": "collectingHists",
+    "comments": "veto miniIso Run2024C data jet variables creation",
+
+    "era": "Run2024C",
+    "outDir": "special_veto_miniIso",
+
+    "varNames": [
+        "nBJet"
+    ],
+
+    "datasets": [
+        "Muon"
+    ],
+    "isData": {
+        "Muon":1
+    },
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight"
+    ],
+
+    "sampleConfig":  "json/samples/special_relax_miniisolation/Run2024C_special_relax_miniIso_corr.json",
+    "varConfig": "json/variables/variables.json",
+    "cutConfig": [
+        "json/cuts/redbkgControl/veto_miniisolation.json",
+        "json/cuts/redbkgControl/AR_SS.json",
+        "json/cuts/redbkgControl/atLeast_2bjets.json"
+    ],
+    "lumiConfig": "json/Lumi/Run3.json"
+}

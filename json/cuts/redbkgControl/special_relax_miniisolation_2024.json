@@ -1,0 +1,17 @@
+[
+    ["cut", "dimuon trigger", "(HLT_IsoMu24 || HLT_IsoMu24_eta2p1 || HLT_IsoMu27 || HLT_Mu50 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8 || HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8 || HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8 || HLT_TripleMu_5_3_3_Mass3p8_DZ || HLT_TripleMu_10_5_5_DZ || HLT_TripleMu_12_10_5)"],
+    ["cut", "has PV", "(PV_npvsGood>0)"],
+
+    ["define", "isGoodMuon_mva", "(Muon_pt>15.0) && (abs(Muon_eta)<2.4) && Muon_mediumId"],
+    ["define", "nGoodMuon_mva", "ROOT::VecOps::Sum(isGoodMuon_mva)"],
+    ["define", "MuonPresel", "(nGoodMuon_mva ==2)"],
+    ["cut", "Muon presel", "MuonPresel"],
+    ["define", "leadingMuonIdx", "Nonzero(isGoodMuon_mva)[0]"],
+    ["define", "subleadingMuonIdx", "Nonzero(isGoodMuon_mva)[1]"],
+
+    ["define", "leadingMuonMiniIso", "Muon_miniPFRelIso_all[leadingMuonIdx]"],
+    ["define", "subleadingMuonMiniIso", "Muon_miniPFRelIso_all[subleadingMuonIdx]"],
+
+    ["define", "leadingMuon_pt", "Muon_pt[leadingMuonIdx]"],
+    ["cut", "trigger turn-on avoid", "(leadingMuon_pt>20)"]
+]

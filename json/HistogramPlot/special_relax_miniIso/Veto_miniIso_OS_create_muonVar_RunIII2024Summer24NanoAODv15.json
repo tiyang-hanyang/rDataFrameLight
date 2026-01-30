@@ -1,0 +1,122 @@
+{
+    "jobType": "collectingHists",
+    "comments": "veto miniIso 2024 mc jet variables creation",
+
+    "era": "RunIII2024Summer24NanoAODv15",
+    "outDir": "special_veto_miniIso_OS",
+
+    "varNames": [
+        "leadingMuon_pt",
+        "leadingMuon_eta",
+        "leadingMuon_phi",
+        "subleadingMuon_pt",
+        "subleadingMuon_eta",
+        "subleadingMuon_phi",
+        "diMuon_mass",
+        "diMuon_deltaEta",
+        "diMuon_dphi",
+        "diMuon_dR",
+        "yield"
+    ],
+
+    "datasets": [
+        "DY",
+        "WJets",
+        "ttbar",
+        "TTH",
+        "QCD",
+        "TW",
+        "VV",
+        "TTBB",
+        "TTZ",
+        "VVV"
+    ],
+    "isData": {
+        "DY":0,
+        "WJets":0,
+        "ttbar": 0,
+        "TTH": 0,
+        "QCD": 0,
+        "TW": 0,
+        "VV": 0,
+        "TTBB": 0,
+        "TTZ": 0,
+        "VVV": 0
+    },
+    "needMerge": {
+        "TTBB": [
+            "TTBB_DL",
+            "TTBB_SL",
+            "TTBB_4Q"
+        ],
+        "DY": [
+            "DY2Mu",
+            "DY2Mu_low"
+        ],
+        "WJets": [
+            "WJet_1J",
+            "WJet_2J",
+            "WJet_3J",
+            "WJet_4J"
+        ],
+        "ttbar":[
+            "ttbarDL",
+            "ttbarSL",
+            "ttbar4Q"
+        ],
+        "TTH": [
+            "TTHBB",
+            "TTHnonBB"
+        ],
+        "TW": [
+            "TWm2L",
+            "TbarWp2L"
+        ],
+        "QCD": [
+            "QCD_15_20_mu",
+            "QCD_20_30_mu",
+            "QCD_30_50_mu",
+            "QCD_50_80_mu",
+            "QCD_80_120_mu",
+            "QCD_120_170_mu",
+            "QCD_170_300_mu",
+            "QCD_300_470_mu",
+            "QCD_470_600_mu",
+            "QCD_600_800_mu",
+            "QCD_800_1000_mu",
+            "QCD_1000_mu"
+        ],
+        "VV": [
+            "WW2L2Nu", 
+            "WZ2L2Q",
+            "ZZ2L2Nu",
+            "ZZ2L2Q",
+            "WZ3l",
+            "ZZ4l" 
+        ],
+        "TTZ": [
+            "TTZ_high",
+            "TTZ_low"
+        ],
+        "VVV": [
+            "WWW",
+            "WWZ",
+            "WZZ",
+            "ZZZ"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight", "PUWeight"
+    ],
+
+    "sampleConfig": "json/samples/special_relax_miniisolation/RunIII2024Summer24NanoAODv15_special_relax_miniIso_corr_postTTbar.json",
+    "varConfig": "json/variables/variables.json",
+    "cutConfig": [
+        "json/cuts/redbkgControl/veto_miniisolation.json",
+        "json/cuts/redbkgControl/AR_OS.json",
+        "json/cuts/redbkgControl/atLeast_2bjets.json",
+        "json/cuts/HistPlot/signalRegionVariables/muons_kinematics.json"
+    ],
+    "lumiConfig": "json/Lumi/Run3.json"
+}

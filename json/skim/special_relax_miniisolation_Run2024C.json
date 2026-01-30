@@ -1,0 +1,23 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run2024C.",
+
+    "name": "Run2024C_Mu_Skim",
+    "year": "2024",
+    "era": "Run2024C",
+    "isData": 1,
+    "merge": 0,
+
+    "outDir": "/home/tiyang/public/AR_special_relax_miniIsolation_0128/",
+    "datasets": [
+        "Muon0",
+        "Muon1"
+    ],
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/rawNanoAOD/Run2024C.json",
+    "cutConfig": [
+        "json/cuts/redbkgControl/special_relax_miniisolation_2024.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

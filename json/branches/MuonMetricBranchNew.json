@@ -79,6 +79,9 @@
     "Muon_pt_Rcorr_resolup",
     "Muon_pt_Rcorr_resoldn",
 
+    "Muon_genPartFlav",
+    "Muon_genPartIdx",
+
     "isGoodMuon_25",
     "isGoodMuon_15",
     "nGoodMuon_25",
@@ -87,6 +90,9 @@
     "nGoodMuon_mva",
     "leadingMuonIdx",
     "subleadingMuonIdx",
+
+    "leadingMuonMiniIso",
+    "subleadingMuonMiniIso",
 
     "MET_phi",
     "MET_pt",
