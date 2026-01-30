@@ -117,3 +117,11 @@ std::map<std::string, std::string>  SampleControl::getAllDirs()
 {
     return this->_dirMaps;
 }
+
+std::vector<std::string> SampleControl::getAllChannels()
+{
+    std::vector<std::string> allChannels;
+    allChannels.reserve(this->_dirMaps.size());
+    for (const auto &kv : this->_dirMaps) allChannels.push_back(kv.first);
+    return allChannels;
+}

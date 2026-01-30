@@ -18,6 +18,7 @@ class SampleControl
         std::vector<std::string> getFiles(std::string type);
         std::vector<std::string> getMergedFiles(const std::vector<std::string>& types);
         std::map<std::string, std::string> getAllDirs();
+        std::vector<std::string> getAllChannels();
 };
 
 
