@@ -56,6 +56,10 @@ class RunIII2024Summer24NanoAODv15_job(GeneralJob):
             "WZ3l",
             "ZZ4l",
 
+            "WW",
+            "WZ",
+            "ZZ",
+
             # VVV
             "WWW",
             "WWZ",

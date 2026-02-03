@@ -1,0 +1,14 @@
+{
+    "dir": {
+        "TTW": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/Run3Summer23BPixNanoAODv12_SSCR/TTW/",
+        "TTTT": "/home/tiyang/public/SameSign_CR_0127_fourJet_btag_corrected/Run3Summer23BPixNanoAODv12_SSCR/TTTT/"
+    },
+    "file": {
+        "TTW": [
+            "TTW_skimmed.root"
+        ],
+        "TTTT": [
+            "TTTT_skimmed.root"
+        ]
+    }
+}

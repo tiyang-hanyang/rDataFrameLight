@@ -1,0 +1,24 @@
+{
+    "jobType": "skim",
+    "commments": "For the S2 skimming of Run3Summer23BPixNanoAODv12.",
+
+    "name": "Run3Summer23BPixNanoAODv12_Mu_Skim",
+    "year": "2024",
+    "era": "Run3Summer23BPixNanoAODv12",
+    "merge": 1,
+    "outDir": "/home/tiyang/public/SameSign_CR_0127_fourJet/",
+    "datasets": [
+        "TTW",
+        "TTTT"
+    ],
+    "isData": 0,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/Run3Summer23BPixNanoAODv12_corrected_temp.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/MET_filter.json",
+        "json/cuts/SignalRegion/SameSign.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}
+

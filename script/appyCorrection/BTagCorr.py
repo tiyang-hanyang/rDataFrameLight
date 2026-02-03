@@ -32,7 +32,7 @@ def processing(rdf, recordedModules, branchArray, era="RunIII2024Summer24NanoAOD
             rdf = rdf.Define("btag_weight", "compute_total_weight_2024(Jet_UParTB_SF_medium, Jet_btagEff_medium, Jet_btagUParTAK4B, GoodJetCond)")
         elif era=="Run3Summer23NanoAODv12":
             rdf = rdf.Define("btag_weight", "compute_total_weight_2023(Jet_UParTB_SF_medium, Jet_btagEff_medium, Jet_btagPNetB, GoodJetCond)")
-        elif era=="Run3Summer23BPixNanoAODv12":
+        elif "Run3Summer23BPixNanoAODv12" in era:
             rdf = rdf.Define("btag_weight", "compute_total_weight_2023BPix(Jet_UParTB_SF_medium, Jet_btagEff_medium, Jet_btagPNetB, GoodJetCond)")
         elif era=="Run3Summer22NanoAODv12":
             rdf = rdf.Define("btag_weight", "compute_total_weight_2022(Jet_UParTB_SF_medium, Jet_btagEff_medium, Jet_btagPNetB, GoodJetCond)")

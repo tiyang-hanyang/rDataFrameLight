@@ -54,7 +54,7 @@ void getEff(const std::string& era, const std::vector<std::string>& samplePath, 
         rndBtag = rndBtag.Define("BJet_pt", "Jet_pt_JEC[GoodJetCond && (Jet_btagUParTAK4B > 0.1272)]").Define("BJet_hadronFlavour", "Jet_hadronFlavour[GoodJetCond && (Jet_btagUParTAK4B > 0.1272)]").Define("totalWeight","genWeight*PUWeight");
     else if (era == "Run3Summer23NanoAODv12") 
         rndBtag = rndBtag.Define("BJet_pt", "Jet_pt_JEC[GoodJetCond && (Jet_btagPNetB > 0.1917)]").Define("BJet_hadronFlavour", "Jet_hadronFlavour[GoodJetCond && (Jet_btagPNetB > 0.1917)]").Define("totalWeight","genWeight*PUWeight");
-    else if (era == "Run3Summer23BPixNanoAODv12")
+    else if (era.find("Run3Summer23BPixNanoAODv12") != std::string::npos)
     {
         rndBtag = rndBtag.Define("BJet_pt", "Jet_pt_JEC[GoodJetCond && (Jet_btagPNetB > 0.1919)]").Define("BJet_hadronFlavour", "Jet_hadronFlavour[GoodJetCond && (Jet_btagPNetB > 0.1919)]").Define("totalWeight","genWeight*PUWeight");
     }
@@ -263,6 +263,10 @@ int main(int argc, char** argv)
         "WZ3l",
         "ZZ4l",
 
+        "WW",
+        "WZ",
+        "ZZ",
+
         "WWW",
         "WWZ",
         "WZZ",
@@ -312,6 +316,7 @@ int main(int argc, char** argv)
         {"Run3Summer22EENanoAODv12", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/FourJet_NanoAOD/Run3Summer22EENanoAODv12_fourJet_temp.json"},
 
         {"RunIII2024Summer24NanoAODv15_SSCR", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/SameSign_CR/RunIII2024Summer24NanoAODv15_SSCR.json"},
+        {"Run3Summer23BPixNanoAODv12_SSCR", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/SameSign_CR/Run3Summer23BPixNanoAODv12_SSCR.json"},
     };
 
     SampleControl samples(jsonPath.at(era));

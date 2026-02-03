@@ -19,6 +19,7 @@ void Btag_init(const std::string& era)
         {"RunIII2024Summer24NanoAODv15_SSCR", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/BTV/2024_Summer24/btagging_preliminary.json"},
         {"Run3Summer23NanoAODv12", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/BTV/2023_Summer23/btagging.json"},
         {"Run3Summer23BPixNanoAODv12", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/BTV/2023_Summer23BPix/btagging.json"},
+        {"Run3Summer23BPixNanoAODv12_SSCR", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/BTV/2023_Summer23BPix/btagging.json"},
         {"Run3Summer22NanoAODv12", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/BTV/2022_Summer22/btagging.json"},
         {"Run3Summer22EENanoAODv12", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/BTV/2022_Summer22EE/btagging.json"},
     };
@@ -30,6 +31,7 @@ void Btag_init(const std::string& era)
         {"Run3Summer22EENanoAODv12", "particleNet_shape"},
         {"Run3Summer23NanoAODv12", "particleNet_shape"},
         {"Run3Summer23BPixNanoAODv12", "particleNet_shape"},
+        {"Run3Summer23BPixNanoAODv12_SSCR", "particleNet_shape"},
         {"RunIII2024Summer24NanoAODv15", "UParTAK4_kinfit"},
         {"RunIII2024Summer24NanoAODv15_SSCR", "UParTAK4_kinfit"}
     };
@@ -47,6 +49,10 @@ void reload_eff(const std::string& era, const std::string& channel)
     if (era == "RunIII2024Summer24NanoAODv15_SSCR")
     {
         btagEffDir = "/home/tiyang/public/rDataFrameLight_update/source/json/samples/SameSign_CR/btag_eff_RunIII2024Summer24NanoAODv15_SSCR/";
+    }
+    if (era == "Run3Summer23BPixNanoAODv12_SSCR")
+    {
+        btagEffDir = "/home/tiyang/public/rDataFrameLight_update/source/json/samples/SameSign_CR/btag_eff_Run3Summer23BPixNanoAODv12_SSCR/";
     }
     BTagCorr_cseteff = correction::CorrectionSet::from_file(btagEffDir+"/"+channel+"_btag_eff.json");
     BTagCorr_ceff =  BTagCorr_cseteff->at("UParTAK4_eff_values");

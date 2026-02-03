@@ -41,6 +41,7 @@
         "Muon",
         "DY",
         "ttbar",
+        "QCD",
         "TTH",
         "TW",
         "TTBB",
@@ -106,6 +107,7 @@
     "stackOrder": [
         "DY",
         "ttbar",
+        "QCD",
         "TTH",
         "TW",
         "TTBB",

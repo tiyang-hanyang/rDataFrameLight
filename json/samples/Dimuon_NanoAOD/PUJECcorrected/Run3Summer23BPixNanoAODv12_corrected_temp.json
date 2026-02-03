@@ -1,0 +1,14 @@
+{
+    "dir": {
+        "TTW": "/home/tiyang/public/SR_medium_muon_0127/Run3Summer23BPixNanoAODv12/TTW/",
+        "TTTT": "/home/tiyang/public/SR_medium_muon_0127/Run3Summer23BPixNanoAODv12/TTTT/"
+    },
+    "file": {
+        "TTW": [
+            "TTW_skimmed.root"
+        ],
+        "TTTT": [
+            "TTTT_skimmed.root"
+        ]
+    }
+}

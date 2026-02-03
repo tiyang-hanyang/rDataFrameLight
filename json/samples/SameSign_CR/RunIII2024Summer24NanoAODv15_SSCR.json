@@ -22,6 +22,9 @@
         "ZZ2L2Nu": "/home/tiyang/public/SameSign_CR_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/ZZ2L2Nu/",
         "WZ3l": "/home/tiyang/public/SameSign_CR_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/WZ3l/",
         "ZZ4l": "/home/tiyang/public/SameSign_CR_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/ZZ4l/",
+        "WW": "/home/tiyang/public/SameSign_CR_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/WW/",
+        "WZ": "/home/tiyang/public/SameSign_CR_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/WZ/",
+        "ZZ": "/home/tiyang/public/SameSign_CR_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/ZZ/",
         "TTHBB": "/home/tiyang/public/SameSign_CR_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/TTHBB/",
         "TTHnonBB": "/home/tiyang/public/SameSign_CR_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/TTHnonBB/",
         "QCD_15_20_mu": "/home/tiyang/public/SameSign_CR_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/QCD_15_20_mu/",
@@ -108,6 +111,15 @@
         ],
         "ZZ4l": [
             "ZZ4l_RunIII2024Summer24NanoAODv15_Mu_Skim.root"
+        ],
+        "WW": [
+            "WW_RunIII2024Summer24NanoAODv15_Mu_Skim.root"
+        ],
+        "WZ": [
+            "WZ_RunIII2024Summer24NanoAODv15_Mu_Skim.root"
+        ],
+        "ZZ": [
+            "ZZ_RunIII2024Summer24NanoAODv15_Mu_Skim.root"
         ],
         "TTHBB": [
             "TTHBB_RunIII2024Summer24NanoAODv15_Mu_Skim.root"

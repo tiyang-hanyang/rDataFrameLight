@@ -1,0 +1,14 @@
+{
+    "dir": {
+        "TTW": "/home/tiyang/public/SameSign_CR_0127_fourJet/mc/Run3Summer23BPixNanoAODv12/TTW/",
+        "TTTT": "/home/tiyang/public/SameSign_CR_0127_fourJet/mc/Run3Summer23BPixNanoAODv12/TTTT/"
+    },
+    "file": {
+        "TTW": [
+            "TTW_Run3Summer23BPixNanoAODv12_Mu_Skim.root"
+        ],
+        "TTTT": [
+            "TTTT_Run3Summer23BPixNanoAODv12_Mu_Skim.root"
+        ]
+    }
+}

@@ -42,7 +42,10 @@
         "WJet_3J": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/WJet_3J/",
         "WJet_4J": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/WJet_4J/",
         "TTZ_low": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/TTZ_low/",
-        "TTZ_high": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/TTZ_high/"
+        "TTZ_high": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/TTZ_high/",
+        "WW": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/WW/",
+        "WZ": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/WZ/",
+        "ZZ": "/home/tiyang/public/SR_medium_muon_0127/RunIII2024Summer24NanoAODv15/ZZ/"
     },
     "file": {
         "DY2Mu": [
@@ -173,6 +176,15 @@
         ],
         "TTZ_high": [
             "TTZ_high_skimmed.root"
+        ],
+        "WW": [
+            "WW_skimmed.root"
+        ],
+        "WZ": [
+            "WZ_skimmed.root"
+        ],
+        "ZZ": [
+            "ZZ_skimmed.root"
         ]
     }
 }

@@ -1,0 +1,25 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run3Summer23BPixNanoAODv12", 
+
+    "name": "Run3Summer23BPixNanoAODv12_Mu_Skim",
+    "year": "2024",
+    "era": "Run3Summer23BPixNanoAODv12",
+
+    "preliminary": 1,
+    "merge": 0,
+    "maxFiles": 96,
+    "isData": 0,
+
+    "outDir": "/data2/common/skimmed_NanoAOD/skim_0126_medium_dimuon/",
+    "datasets": [
+        "TTW",
+        "TTTT"
+    ],
+
+    "sampleConfig": "json/samples/rawNanoAOD/Run3Summer23BPixNanoAODv12.json",
+    "cutConfig": [
+        "json/cuts/Dimuon_skim/Dimuon_skim_2023BPix.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

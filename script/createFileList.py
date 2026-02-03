@@ -194,6 +194,10 @@ def saveFiles(outName, fileDir):
         "WZ3l",
         "ZZ4l",
 
+        "WW",
+        "WZ",
+        "ZZ",
+
         "WWW",
         "WWZ",
         "WZZ",

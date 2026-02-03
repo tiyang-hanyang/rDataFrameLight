@@ -40,7 +40,10 @@
         "TTBB_SL": "/home/tiyang/public/SR_medium_muon_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/TTBB_SL/",
         "TTBB_4Q": "/home/tiyang/public/SR_medium_muon_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/TTBB_4Q/",
         "TTZ_low": "/home/tiyang/public/SR_medium_muon_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/TTZ_low/",
-        "TTZ_high": "/home/tiyang/public/SR_medium_muon_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/TTZ_high/"
+        "TTZ_high": "/home/tiyang/public/SR_medium_muon_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/TTZ_high/",
+        "WW": "/home/tiyang/public/SR_medium_muon_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/WW/",
+        "WZ": "/home/tiyang/public/SR_medium_muon_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/WZ/",
+        "ZZ": "/home/tiyang/public/SR_medium_muon_0127_fourJet/mc/RunIII2024Summer24NanoAODv15/ZZ/"
     },
     "file": {
         "DY2Mu": [
@@ -165,6 +168,15 @@
         ],
         "TTZ_high": [
             "TTZ_high_RunIII2024Summer24NanoAODv15_Mu_Skim.root"
+        ],
+        "WW": [
+            "WW_RunIII2024Summer24NanoAODv15_Mu_Skim.root"
+        ],
+        "WZ": [
+            "WZ_RunIII2024Summer24NanoAODv15_Mu_Skim.root"
+        ],
+        "ZZ": [
+            "ZZ_RunIII2024Summer24NanoAODv15_Mu_Skim.root"
         ]
     }
 }
