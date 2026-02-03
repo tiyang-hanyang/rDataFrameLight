@@ -57,6 +57,11 @@ class CutControl
         // core function, if _applyLambda not initialized, it will be initialized according to _steps
         // will warn if _step is empty
         ROOT::RDF::RNode applyCut(ROOT::RDF::RNode origRDF);
+        // apply define-only steps (skip "cut") with optional filtering/hook
+        ROOT::RDF::RNode applyDefineOnly(
+            ROOT::RDF::RNode origRDF,
+            const std::function<bool(const std::string&)> &shouldDefine,
+            const std::function<void(const std::string&)> &onDefined);
 
         // for parsing captured variables for TLorentzVector components
         std::vector<std::string> extractTLVComp(const std::string& TLVComp) const;

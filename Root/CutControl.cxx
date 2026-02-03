@@ -106,6 +106,89 @@ namespace {
                 }
                 return Muon_jetIdxGood;
             }
+            int hadronFlavorFromPdg(int pdgId)
+            {
+                int apid = pdgId < 0 ? -pdgId : pdgId;
+                int hundreds = (apid / 100) % 10;
+                int thousands = (apid / 1000) % 10;
+                if (hundreds == 5 || thousands == 5) return 5;
+                if (hundreds == 4 || thousands == 4) return 4;
+                return 0;
+            }
+            int classifyOriginFromGen(int gpIdx,
+                                      const ROOT::VecOps::RVec<int>& GenPart_pdgId,
+                                      const ROOT::VecOps::RVec<int>& GenPart_genPartIdxMother)
+            {
+                if (gpIdx < 0) return 0;
+                const int n = GenPart_pdgId.size();
+                int idx = gpIdx;
+                int maxDepth = 100;
+                int steps = 0;
+                int hasC = 0;
+                while (idx >= 0 && idx < n && steps < maxDepth) {
+                    int flav = hadronFlavorFromPdg(GenPart_pdgId[idx]);
+                    if (flav == 5) return 5;
+                    if (flav == 4) hasC = 1;
+                    idx = GenPart_genPartIdxMother[idx];
+                    steps++;
+                }
+                if (hasC) return 4;
+                return 3;
+            }
+            int classifyOriginFromGenWithStatus(int gpIdx,
+                                                const ROOT::VecOps::RVec<int>& GenPart_pdgId,
+                                                const ROOT::VecOps::RVec<int>& GenPart_genPartIdxMother,
+                                                const ROOT::VecOps::RVec<int>& GenPart_statusFlags)
+            {
+                if (gpIdx < 0) return 0;
+                const int n = GenPart_pdgId.size();
+                if (gpIdx >= n) return 0;
+
+                int status = GenPart_statusFlags[gpIdx];
+                int isPrompt = (status >> 0) & 1;
+                int isPromptTau = ((status >> 5) & 1) || ((status >> 3) & 1);
+                if (isPromptTau) return 15;
+                if (isPrompt) return 1;
+
+                int idx = gpIdx;
+                int maxDepth = 100;
+                int steps = 0;
+                int hasC = 0;
+                while (idx >= 0 && idx < n && steps < maxDepth) {
+                    int flav = hadronFlavorFromPdg(GenPart_pdgId[idx]);
+                    if (flav == 5) return 5;
+                    if (flav == 4) hasC = 1;
+                    idx = GenPart_genPartIdxMother[idx];
+                    steps++;
+                }
+                if (hasC) return 4;
+                return 3;
+            }
+            ROOT::VecOps::RVec<int> getOriginFlagsFromGenIdx(
+                const ROOT::VecOps::RVec<int>& lepGenIdx,
+                const ROOT::VecOps::RVec<int>& GenPart_pdgId,
+                const ROOT::VecOps::RVec<int>& GenPart_genPartIdxMother)
+            {
+                ROOT::VecOps::RVec<int> out;
+                out.reserve(lepGenIdx.size());
+                for (auto idx : lepGenIdx) {
+                    out.push_back(classifyOriginFromGen(idx, GenPart_pdgId, GenPart_genPartIdxMother));
+                }
+                return out;
+            }
+            ROOT::VecOps::RVec<int> getOriginFlagsFromGenIdx(
+                const ROOT::VecOps::RVec<int>& lepGenIdx,
+                const ROOT::VecOps::RVec<int>& GenPart_pdgId,
+                const ROOT::VecOps::RVec<int>& GenPart_genPartIdxMother,
+                const ROOT::VecOps::RVec<int>& GenPart_statusFlags)
+            {
+                ROOT::VecOps::RVec<int> out;
+                out.reserve(lepGenIdx.size());
+                for (auto idx : lepGenIdx) {
+                    out.push_back(classifyOriginFromGenWithStatus(idx, GenPart_pdgId, GenPart_genPartIdxMother, GenPart_statusFlags));
+                }
+                return out;
+            }
         )");
         done = true;
     }
@@ -236,6 +319,78 @@ ROOT::RDF::RNode CutControl::applyCut(ROOT::RDF::RNode origRDF)
     }
 
     return this->_applyLambda.value()(origRDF);
+}
+
+ROOT::RDF::RNode CutControl::applyDefineOnly(
+    ROOT::RDF::RNode origRDF,
+    const std::function<bool(const std::string&)> &shouldDefine,
+    const std::function<void(const std::string&)> &onDefined)
+{
+    DeclareHelpersToCling();
+
+    for (const auto &step : this->_steps)
+    {
+        std::string operation = std::get<0>(step);
+        if (operation == "cut")
+            continue;
+
+        std::string name = std::get<1>(step);
+        if (shouldDefine && !shouldDefine(name))
+            continue;
+
+        if (operation == "define")
+        {
+            origRDF = origRDF.Define(name, std::get<2>(step));
+        }
+        else if (operation == "TLVPtEtaPhiM")
+        {
+            auto capturedVar = (this->extractTLVComp)(std::get<2>(step));
+            origRDF = origRDF.Define(name, [](float pt, float eta, float phi, float m)
+                                     {
+                TLorentzVector p4;
+                p4.SetPtEtaPhiM(pt, eta, phi, m);
+                return p4; }, capturedVar);
+        }
+        else if (operation == "TLVPtEtaPhiM_corr")
+        {
+            auto capturedVar = (this->extractTLVComp)(std::get<2>(step));
+            origRDF = origRDF.Define(name, [](double pt, float eta, float phi, float m)
+                                     {
+                TLorentzVector p4;
+                p4.SetPtEtaPhiM(pt, eta, phi, m);
+                return p4; }, capturedVar);
+        }
+        else if (operation == "TLVPtEtaPhiE")
+        {
+            auto capturedVar = this->extractTLVComp(std::get<2>(step));
+            origRDF = origRDF.Define(name, [](float pt, float eta, float phi, float e)
+                                     {
+                TLorentzVector p4;
+                p4.SetPtEtaPhiE(pt, eta, phi, e);
+                return p4; }, capturedVar);
+        }
+        else if (operation == "defineDR")
+        {
+            auto capturedVar = this->extractTLVComp(std::get<2>(step));
+            origRDF = origRDF.Define(name, [](float eta1, float eta2, float phi1, float phi2)
+                                     {
+                auto deta2 = pow(eta1-eta2, 2.0);
+                auto dphi = abs(phi1-phi2);
+                if (dphi > 3.1416) dphi = 6.2832 - dphi;
+                auto dphi2 = pow(dphi, 2.0);
+                auto dr = pow(deta2+dphi2, 0.5);
+                return dr; }, capturedVar);
+        }
+        else
+        {
+            throw std::runtime_error("[CutControl] Operation type of the step not defined: " + operation + ". Must one of define, cut, TLVPtEtaPhiM and TLVPtEtaPhiE! Please check your json file");
+        }
+
+        if (onDefined)
+            onDefined(name);
+    }
+
+    return origRDF;
 }
 
 std::vector<std::string> CutControl::extractTLVComp(const std::string &TLVComp) const

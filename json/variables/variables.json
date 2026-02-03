@@ -619,5 +619,13 @@
         "min": "0.0",
         "max": "1.0",
         "binLabels": []
+    },
+
+    "leadingMuon_nonPromptType": {
+        "label": "leading Muon corrected source",
+        "nBins": "6",
+        "min": "0.0",
+        "max": "6.0",
+        "binLabels": []
     }
 }

@@ -7,7 +7,7 @@
 #SBATCH --time=02:00:00
 #SBATCH --mem=1G
 #SBATCH --cpus-per-task=1
-#SBATCH --array=0-999%50
+#SBATCH --array=0-631%50
 #SBATCH --output=/home/tiyang/public/br_complete/logs/%x_%A_%a.out
 #SBATCH --error=/home/tiyang/public/br_complete/logs/%x_%A_%a.err
 
@@ -17,7 +17,7 @@ echo "Using proxy at: $X509_USER_PROXY"
 /opt/ohpc/pub/voms/voms-proxy-info --all
 
 
-line=$(sed -n "$((SLURM_ARRAY_TASK_ID+1))p" "/home/tiyang/public/br_complete/jobs.txt")
+line=$(sed -n "$((SLURM_ARRAY_TASK_ID+1))p" "/home/tiyang/public/br_complete/jobs_4.txt")
 skim=$(echo "$line" | awk '{print $1}')
 raw=$(echo "$line" | awk '{print $2}')
 out=$(echo "$line" | awk '{print $3}')
