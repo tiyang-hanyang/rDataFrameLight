@@ -35,10 +35,15 @@ std::map<std::string, std::string> getSource(const std::vector<std::string> &ski
     return rawMap;
 }
 
-std::map<std::string, std::string> getTarget(std::vector<std::string> skimmedFilePaths, const std::string& channel)
+std::map<std::string, std::string> getTarget(std::vector<std::string> skimmedFilePaths,
+                                             const std::string& channel,
+                                             const std::string& outBase)
 {
     std::map<std::string, std::string> outMap;
-    std::filesystem::create_directory("/home/tiyang/public/br_complete/");
+    if (!outBase.empty())
+    {
+        std::filesystem::create_directories(outBase);
+    }
     for (const auto &path : skimmedFilePaths)
     {
         if (path.find(channel) == std::string::npos)
@@ -48,7 +53,7 @@ std::map<std::string, std::string> getTarget(std::vector<std::string> skimmedFil
         }
         std::string folder = path.substr(path.find(channel));
         folder = folder.substr(0, folder.rfind("/"));
-        std::string toGen = "/home/tiyang/public/br_complete/"+folder;
+        std::string toGen = outBase + "/" + folder;
         if (!std::filesystem::exists(toGen))
         {
             std::filesystem::create_directories(toGen);
@@ -63,7 +68,10 @@ std::map<std::string, std::string> getTarget(std::vector<std::string> skimmedFil
 static bool appendJobs(std::ofstream &ofs,
                        const std::map<std::string, std::string> &rawFileMap,
                        const std::map<std::string, std::string> &targetFileMap,
-                       const std::string &branchJson)
+                       const std::string &branchJson,
+                       const std::string &cutConfig,
+                       std::size_t &written,
+                       std::size_t batchLimit)
 {
     for (const auto &kv : rawFileMap)
     {
@@ -76,7 +84,23 @@ static bool appendJobs(std::ofstream &ofs,
             continue;
         }
         const auto &outFile = it->second;
-        ofs << skimmedFile << " " << rawFile << " " << outFile << " " << branchJson << "\n";
+        const std::string branchAbs = std::filesystem::absolute(branchJson).string();
+        const std::string cutAbs = cutConfig.empty() ? std::string() : std::filesystem::absolute(cutConfig).string();
+        const std::string skimAbs = std::filesystem::absolute(skimmedFile).string();
+        const std::string rawAbs = std::filesystem::absolute(rawFile).string();
+        const std::string outAbs = std::filesystem::absolute(outFile).string();
+
+        if (cutConfig.empty())
+        {
+            ofs << skimAbs << " " << rawAbs << " " << outAbs << " " << branchAbs << "\n";
+        }
+        else
+        {
+            ofs << skimAbs << " " << rawAbs << " " << outAbs << " " << branchAbs << " " << cutAbs << "\n";
+        }
+        ++written;
+        if (batchLimit > 0 && written >= batchLimit)
+            return true;
     }
     return true;
 }
@@ -89,7 +113,9 @@ int main(int argc, char *argv[])
 
     // branches
     std::string branchJson = "/home/tiyang/public/rDataFrameLight_update/source/json/branches/MuonMetricBranchNew.json";
-    std::string jobOut = "/home/tiyang/public/br_complete/jobs.txt";
+    std::string jobOutBase = "/home/tiyang/public/br_complete/jobs";
+    std::string cutConfig = "";
+    std::size_t batchLimit = 1500;
 
     for (int i = 1; i < argc; ++i)
     {
@@ -108,7 +134,15 @@ int main(int argc, char *argv[])
         }
         else if (arg == "--jobOut" && i + 1 < argc)
         {
-            jobOut = argv[++i];
+            jobOutBase = argv[++i];
+        }
+        else if (arg == "--cutConfig" && i + 1 < argc)
+        {
+            cutConfig = argv[++i];
+        }
+        else if (arg == "--batchLimit" && i + 1 < argc)
+        {
+            batchLimit = static_cast<std::size_t>(std::stoul(argv[++i]));
         }
         else
         {
@@ -121,29 +155,49 @@ int main(int argc, char *argv[])
     SampleControl skimmedSamplesArg(skimmedJson);
     SampleControl rawSamplesArg(rawJson);
 
-    // generate folder for jobOut.
-    const std::filesystem::path outPath(jobOut);
-    if (!outPath.parent_path().empty() && !std::filesystem::exists(outPath.parent_path()))
+    const std::filesystem::path jobOutPath(jobOutBase);
+    const std::string outBase = jobOutPath.parent_path().string();
+    if (!outBase.empty() && !std::filesystem::exists(outBase))
     {
-        std::filesystem::create_directories(outPath.parent_path());
-    }
-
-    std::ofstream ofs(jobOut);
-    if (!ofs.is_open())
-    {
-        rdfWS_utility::messageERROR("completeBranches", "Failed to open job file: " + jobOut);
-        return 1;
+        std::filesystem::create_directories(outBase);
     }
 
     auto allChannels = skimmedSamplesArg.getAllChannels();
+    std::size_t batchIndex = 0;
+    std::size_t writtenInBatch = 0;
+    std::ofstream ofs;
+    auto openBatch = [&]() -> bool {
+        if (ofs.is_open())
+            ofs.close();
+        const std::string jobOut = jobOutBase + "_" + std::to_string(batchIndex) + ".txt";
+        ofs.open(jobOut);
+        if (!ofs.is_open())
+        {
+            rdfWS_utility::messageERROR("completeBranches", "Failed to open job file: " + jobOut);
+            return false;
+        }
+        return true;
+    };
+    if (!openBatch())
+        return 1;
+
     for (const auto &channel : allChannels)
     {
         auto skimmedFilePaths = skimmedSamplesArg.getFiles(channel);
         auto rawFilePaths = rawSamplesArg.getFiles(channel);
         auto rawFileMap = getSource(skimmedFilePaths, rawFilePaths);
-        auto targetFileMap = getTarget(skimmedFilePaths, channel);
-        if (!appendJobs(ofs, rawFileMap, targetFileMap, branchJson))
-            return 1;
+        auto targetFileMap = getTarget(skimmedFilePaths, channel, outBase);
+        while (true)
+        {
+            if (!appendJobs(ofs, rawFileMap, targetFileMap, branchJson, cutConfig, writtenInBatch, batchLimit))
+                return 1;
+            if (batchLimit == 0 || writtenInBatch < batchLimit)
+                break;
+            ++batchIndex;
+            writtenInBatch = 0;
+            if (!openBatch())
+                return 1;
+        }
     }
     return 0;
 }

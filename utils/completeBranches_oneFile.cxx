@@ -12,8 +12,8 @@
 #include <TH1.h>
 
 #include "SampleControl.h"
+#include "CutControl.h"
 #include "Utility.h"
-
 
 struct EvtKey
 {
@@ -40,6 +40,7 @@ struct EvtKeyHash
 bool process(const std::string &skimFile,
              const std::string &rawFile,
              const std::string &branchJson,
+             const std::vector<std::string> &cutConfigs,
              const std::string &outFriend)
 {
     const std::filesystem::path outPath(outFriend);
@@ -63,6 +64,32 @@ bool process(const std::string &skimFile,
         }
     }
 
+    // preload genWeightSum from skim file (required)
+    TFile fskim(skimFile.c_str(), "READ");
+    if (!fskim.IsOpen())
+    {
+        rdfWS_utility::messageWARN("completeBranches_oneFile", "Failed to open skim file: " + skimFile);
+        return false;
+    }
+    auto *h = dynamic_cast<TH1 *>(fskim.Get("genWeightSum"));
+    if (!h)
+    {
+        rdfWS_utility::messageERROR("completeBranches_oneFile", "genWeightSum not found in skim file: " + skimFile);
+        return false;
+    }
+    TH1 *hClone = dynamic_cast<TH1 *>(h->Clone("genWeightSum"));
+    hClone->SetDirectory(nullptr);
+    TTree *skimEvents = dynamic_cast<TTree *>(fskim.Get("Events"));
+    fskim.Close();
+
+    // If skim has no Events tree, copy the whole file and return
+    if (!skimEvents)
+    {
+        std::filesystem::copy_file(skimFile, outFriend, std::filesystem::copy_options::overwrite_existing);
+        delete hClone;
+        return true;
+    }
+
     rdfWS_utility::JsonObject branchObj(rdfWS_utility::readJson("completeBranches", branchJson), "Branch Config");
     auto branches = branchObj.get<std::vector<std::string>>();
     if (std::find(branches.begin(), branches.end(), "genWeightSum") == branches.end())
@@ -72,6 +99,8 @@ bool process(const std::string &skimFile,
 
     // 1) build key set from skim (only run/lumi/event)
     ROOT::RDataFrame dskim("Events", skimFile);
+    auto skimCols = dskim.GetColumnNames();
+    std::unordered_set<std::string> skimColSet(skimCols.begin(), skimCols.end());
     auto runs = dskim.Take<unsigned int>("run");
     auto lumis = dskim.Take<unsigned int>("luminosityBlock");
     auto evts = dskim.Take<ULong64_t>("event");
@@ -89,46 +118,71 @@ bool process(const std::string &skimFile,
 
     std::vector<std::string> savedBr;
     std::vector<std::string> fileBr = draw.GetColumnNames();
+    std::unordered_set<std::string> fileBrSet(fileBr.begin(), fileBr.end());
+    std::unordered_set<std::string> savedSet;
+    std::unordered_set<std::string> branchSet(branches.begin(), branches.end());
     for (const auto &brName : branches)
     {
-        if (std::find(fileBr.begin(), fileBr.end(), brName) == fileBr.end())
+        if (fileBrSet.find(brName) == fileBrSet.end())
             continue;
         savedBr.push_back(brName);
+        savedSet.insert(brName);
     }
 
-    auto df = draw.Filter([pkeys](unsigned int r, unsigned int l, ULong64_t e){ return pkeys->find(EvtKey{r, l, e}) != pkeys->end(); }, {"run", "luminosityBlock", "event"});
+    ROOT::RDF::RNode df = draw.Filter([pkeys](unsigned int r, unsigned int l, ULong64_t e){ return pkeys->find(EvtKey{r, l, e}) != pkeys->end(); }, {"run", "luminosityBlock", "event"});
+
+    // apply define-only steps from cutConfig (skip cuts)
+    if (!cutConfigs.empty())
+    {
+        std::unordered_set<std::string> available = fileBrSet;
+        CutControl defCtrl;
+        bool hasCtrl = false;
+        for (const auto &cfg : cutConfigs)
+        {
+            CutControl cfgCtrl(cfg);
+            defCtrl = hasCtrl ? (defCtrl + cfgCtrl) : cfgCtrl;
+            hasCtrl = true;
+        }
+        auto shouldDefine = [&](const std::string &name) -> bool {
+            if (available.find(name) != available.end())
+                return false;
+            return true;
+        };
+        auto onDefined = [&](const std::string &name) {
+            available.insert(name);
+            if (branchSet.find(name) != branchSet.end() &&
+                savedSet.find(name) == savedSet.end())
+            {
+                savedBr.push_back(name);
+                savedSet.insert(name);
+            }
+        };
+        if (hasCtrl)
+            df = defCtrl.applyDefineOnly(df, shouldDefine, onDefined);
+    }
+
     df.Snapshot("Events", outFriend, savedBr);
 
-    // copy genWeightSum histogram from skim file (outside Events tree)
+    // copy genWeightSum histogram into output file
     {
-        TFile fskim(skimFile.c_str(), "READ");
-        if (!fskim.IsOpen())
-        {
-            rdfWS_utility::messageWARN("completeBranches_oneFile", "Failed to open skim file for genWeightSum: " + skimFile);
-            return false;
-        }
-        auto *h = dynamic_cast<TH1*>(fskim.Get("genWeightSum"));
-        if (!h)
-        {
-            rdfWS_utility::messageERROR("completeBranches_oneFile", "genWeightSum not found in skim file: " + skimFile);
-            std::filesystem::remove(outFriend);
-            return false;
-        }
         TFile fout(outFriend.c_str(), "UPDATE");
         if (!fout.IsOpen())
         {
             rdfWS_utility::messageWARN("completeBranches_oneFile", "Failed to open output file for genWeightSum: " + outFriend);
+            delete hClone;
             return false;
         }
-        h->SetDirectory(&fout);
-        h->Write("genWeightSum", TObject::kOverwrite);
+        hClone->SetDirectory(&fout);
+        hClone->Write("genWeightSum", TObject::kOverwrite);
     }
+    delete hClone;
     return true;
 }
 
 int main(int argc, char *argv[])
 {
     std::string skimmedFile, rawFile, branchConfig, outFile;
+    std::vector<std::string> cutConfigList;
     for (int i = 1; i < argc; ++i)
     {
         const std::string arg = argv[i];
@@ -159,6 +213,15 @@ int main(int argc, char *argv[])
             }
             branchConfig = argv[++i];
         }
+        else if (arg == "--cutConfig")
+        {
+            if (i + 1 >= argc)
+            {
+                rdfWS_utility::messageERROR("completeBranches_oneFile", "Missing value for --cutConfig");
+                return 1;
+            }
+            cutConfigList.emplace_back(argv[++i]);
+        }
         else if (arg == "--outFile")
         {
             if (i + 1 >= argc)
@@ -180,11 +243,11 @@ int main(int argc, char *argv[])
     {
         rdfWS_utility::messageERROR(
             "completeBranches_oneFile",
-            "Input template wrong. Example: \"completeBranches_oneFile --skimmed <skimmed file> --rawFile <raw file> --branches <branch json> --outFile <output file>\"");
+            "Input template wrong. Example: \"completeBranches_oneFile --skimmed <skimmed file> --rawFile <raw file> --branches <branch json> --cutConfig <cut json> [--cutConfig <cut json> ...] --outFile <output file>\"");
         return 1;
     }
 
-    if (!process(skimmedFile, rawFile, branchConfig, outFile))
+    if (!process(skimmedFile, rawFile, branchConfig, cutConfigList, outFile))
         return 1;
     return 0;
 }
