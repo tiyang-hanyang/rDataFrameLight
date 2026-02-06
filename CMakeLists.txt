@@ -39,6 +39,9 @@ add_executable(appendArray utils/appendArray.cxx)
 add_executable(computeBEff utils/computeBEff.cxx)
 add_executable(completeBranches utils/completeBranches.cxx)
 add_executable(completeBranches_oneFile utils/completeBranches_oneFile.cxx)
+add_executable(skimSamples_slurm utils/skimSamples_slurm.cxx)
+add_executable(skimSamples_oneFile utils/skimSamples_oneFile.cxx)
+
 
 # Link against ROOT libraries
 target_link_libraries(skimSamples projectlib ${ROOT_LIBRARIES})
@@ -48,6 +51,8 @@ target_link_libraries(appendArray projectlib ${ROOT_LIBRARIES})
 target_link_libraries(computeBEff projectlib ${ROOT_LIBRARIES})
 target_link_libraries(completeBranches projectlib ${ROOT_LIBRARIES})
 target_link_libraries(completeBranches_oneFile projectlib ${ROOT_LIBRARIES})
+target_link_libraries(skimSamples_slurm projectlib ${ROOT_LIBRARIES})
+target_link_libraries(skimSamples_oneFile projectlib ${ROOT_LIBRARIES})
 
 # for simple install
 file(WRITE ${CMAKE_BINARY_DIR}/setup.sh
