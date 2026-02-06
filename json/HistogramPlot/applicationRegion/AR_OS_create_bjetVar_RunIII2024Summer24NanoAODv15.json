@@ -5,7 +5,8 @@
     "era": "RunIII2024Summer24NanoAODv15",
     "outDir": "AR_OS",
 
-    "sampleConfig": "json/samples/applicationRegion/RunIII2024Summer24NanoAODv15_OS_SS_AR.json",
+    "sampleConfigi_backup": "json/samples/applicationRegion/RunIII2024Summer24NanoAODv15_fullFakeableSel.json",
+    "sampleConfig": "json/samples/applicationRegion/BTVcorrected/RunIII2024Summer24NanoAODv15_btag_corr.json",
 
     "varNames": [
         "nBJet"
@@ -25,7 +26,8 @@
         "WJets",
         "TTBB",
         "DY",
-        "QCD"
+        "QCD",
+        "VV"
     ],
     "isData": {
         "ttbarDL": 0,
@@ -34,7 +36,8 @@
         "DY": 0,
         "WJets": 0,
         "TTBB": 0,
-        "QCD": 0
+        "QCD": 0,
+        "VV": 0
     },
     "needMerge": {
         "DY": [
@@ -65,11 +68,16 @@
             "QCD_600_800_mu",
             "QCD_800_1000_mu",
             "QCD_1000_mu"
+        ],
+        "VV": [
+            "WW",
+            "WZ",
+            "ZZ"
         ]
     },
 
     "MCweight": [
-        "genWeight"
+        "genWeight", "PUWeight", "btag_weight"
     ],
 
     "lumiConfig": "json/Lumi/Run3.json"

@@ -317,6 +317,8 @@ int main(int argc, char** argv)
 
         {"RunIII2024Summer24NanoAODv15_SSCR", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/SameSign_CR/RunIII2024Summer24NanoAODv15_SSCR.json"},
         {"Run3Summer23BPixNanoAODv12_SSCR", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/SameSign_CR/Run3Summer23BPixNanoAODv12_SSCR.json"},
+
+        {"RunIII2024Summer24NanoAODv15_AR", "/home/tiyang/public/rDataFrameLight_update/source/json/samples/applicationRegion/RunIII2024Summer24NanoAODv15_fullFakeableSel.json"},
     };
 
     SampleControl samples(jsonPath.at(era));

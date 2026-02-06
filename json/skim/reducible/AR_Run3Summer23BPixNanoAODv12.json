@@ -1,0 +1,27 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run3Summer23BPixNanoAODv12 (for ttW to used for 2024).",
+
+    "name": "Run3Summer23BPixNanoAODv12_Mu_Skim",
+
+    "year": "2024",
+    "era": "Run3Summer23BPixNanoAODv12",
+    "merge": 0,
+    "maxFiles": 250,
+    "preliminary": 1,
+
+    "outDir": "/home/tiyang/public/AR_0204/",
+    "datasets": [
+        "TTW",
+        "TTTT"
+    ],
+
+    "isData": 0,
+    "mcWeight": "genWeight",
+    
+    "cutConfig": [
+        "json/cuts/redbkgControl/applicableRegion_rough_2023BPix.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json",
+    "sampleConfig": "json/samples/rawNanoAOD/Run3Summer23BPixNanoAODv12.json"
+}

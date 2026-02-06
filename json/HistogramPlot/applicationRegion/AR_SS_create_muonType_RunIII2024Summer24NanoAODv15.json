@@ -5,20 +5,17 @@
     "era": "RunIII2024Summer24NanoAODv15",
     "outDir": "AR_SS",
 
-    "sampleConfigi_backup": "json/samples/applicationRegion/RunIII2024Summer24NanoAODv15_fullFakeableSel.json",
-    "sampleConfig": "json/samples/applicationRegion/BTVcorrected/RunIII2024Summer24NanoAODv15_btag_corr.json",
-
-
+    "sampleConfig": "json/samples/applicationRegion/RunIII2024Summer24NanoAODv15_fullFakeableSel.json",
 
     "varNames": [
-        "nBJet"
+        "leadingMuon_nonPromptType"
     ],
     "varConfig": "json/variables/variables.json",
 
     "cutConfig": [
         "json/cuts/redbkgControl/AR_hasNonTight.json",
         "json/cuts/redbkgControl/AR_SS.json",
-        "json/cuts/HistPlot/signalRegionVariables/bjets_multiplicity_2024.json"
+        "json/cuts/HistPlot/controlRegionVariables/muon_nonPromptType.json"
     ],
 
     "datasets": [
@@ -28,8 +25,7 @@
         "WJets",
         "TTBB",
         "DY",
-        "QCD",
-        "VV"
+        "QCD"
     ],
     "isData": {
         "ttbarDL": 0,
@@ -38,8 +34,7 @@
         "DY": 0,
         "WJets": 0,
         "TTBB": 0,
-        "QCD": 0,
-        "VV": 0
+        "QCD": 0
     },
     "needMerge": {
         "DY": [
@@ -70,16 +65,11 @@
             "QCD_600_800_mu",
             "QCD_800_1000_mu",
             "QCD_1000_mu"
-        ],
-        "VV": [
-            "WW",
-            "WZ",
-            "ZZ"
         ]
     },
 
     "MCweight": [
-        "genWeight", "PUWeight", "btag_weight"
+        "genWeight"
     ],
 
     "lumiConfig": "json/Lumi/Run3.json"

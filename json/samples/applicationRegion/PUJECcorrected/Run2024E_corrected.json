@@ -1,0 +1,14 @@
+{
+    "dir": {
+        "Muon0": "/home/tiyang/public/AR_0204_corr/Run2024E/Muon0/",
+        "Muon1": "/home/tiyang/public/AR_0204_corr/Run2024E/Muon1/"
+    },
+    "file": {
+        "Muon0": [
+            "Muon0_skimmed.root"
+        ],
+        "Muon1": [
+            "Muon1_skimmed.root"
+        ]
+    }
+}

@@ -210,6 +210,11 @@ def processMergeDS(era, dataset, filePaths, commonOutDir, procedures, recordedMo
         fileTest = ROOT.TFile(fin, "read")
         if not "Events" in fileTest.GetListOfKeys():
             continue
+        tempTree = fileTest.Get("Events")
+        if not tempTree:
+            continue
+        if tempTree.GetEntries() == 0:
+            continue
         ch1.Add(fin)
         samples += 1
     if samples == 0:

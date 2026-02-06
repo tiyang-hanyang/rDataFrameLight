@@ -1,11 +1,11 @@
 {
     "jobType": "collectingHists",
-    "comments": "S1 Run2024C data jet variables creation",
+    "comments": "S1 Run2024E data jet variables creation",
 
-    "era": "Run2024C",
+    "era": "Run2024E",
     "outDir": "AR_OS",
 
-    "sampleConfig": "json/samples/applicationRegion/Run2024C_fullFakeableSel.json",
+    "sampleConfig": "json/samples/applicationRegion/Run2024E_fullFakeableSel.json",
 
     "varNames": [
         "nBJet"

@@ -5,7 +5,7 @@
     "era": "Run2024C",
     "outDir": "AR_SS",
 
-    "sampleConfig": "json/samples/applicationRegion/Run2024C_OS_SS_AR.json",
+    "sampleConfig": "json/samples/applicationRegion/Run2024C_fullFakeableSel.json",
 
     "varNames": [
         "nBJet"

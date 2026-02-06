@@ -1,11 +1,11 @@
 {
     "jobType": "collectingHists",
-    "comments": "S1 Run2024C data jet variables creation",
+    "comments": "S1 Run2024I data jet variables creation",
 
-    "era": "Run2024C",
-    "outDir": "AR_OS",
+    "era": "Run2024I",
+    "outDir": "AR_SS",
 
-    "sampleConfig": "json/samples/applicationRegion/Run2024C_fullFakeableSel.json",
+    "sampleConfig": "json/samples/applicationRegion/Run2024I_fullFakeableSel.json",
 
     "varNames": [
         "nBJet"
@@ -14,7 +14,7 @@
 
     "cutConfig": [
         "json/cuts/redbkgControl/AR_hasNonTight.json",
-        "json/cuts/redbkgControl/AR_OS.json",
+        "json/cuts/redbkgControl/AR_SS.json",
         "json/cuts/HistPlot/signalRegionVariables/bjets_multiplicity_2024.json"
     ],
 

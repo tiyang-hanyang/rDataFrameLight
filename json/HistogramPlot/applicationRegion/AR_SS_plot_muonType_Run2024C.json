@@ -1,0 +1,96 @@
+{
+    "jobType": "plot",
+    "comments": "AR comparison visualization",
+
+    "inDir": "AR_SS",
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+    "outDir": "AR_SS_plot",
+    "name": "AR_SS_MC_plot",
+
+    "era": [
+        "Run2024C", "Run2024D", "Run2024E", "Run2024F", "Run2024G","Run2024H", "Run2024I"
+    ],
+    "mc_era": [
+        "RunIII2024Summer24NanoAODv15"
+    ],
+
+    "varNames": [
+        "leadingMuon_nonPromptType"
+    ],
+    "needCrop": {
+        "nBJet": 1
+    },
+    "cropedRange": {
+        "nBJet": [0.0, 4.0]
+    },
+
+    "histXSize": 700,
+    "histYSize": 800,
+
+    "datasets": [
+        "ttbarDL",
+        "ttbarSL",
+        "ttbar4Q",
+        "TTBB",
+        "QCD"
+    ],
+    "colorMapping": {
+        "Muon": 1,
+        "DY": 416,
+        "WJets": 28,
+        "TTBB": 800,
+        "ttbarDL": 4,
+        "ttbarSL": 400,
+        "ttbar4Q": 880,
+        "QCD": 616
+    },
+    "datasetLabel": {
+        "Muon": "Data",
+        "DY": "DY",
+        "TTBB": "TTBB",
+        "WJets": "W+Jets",
+        "ttbarDL": "t#bar{t} DL",
+        "ttbarSL": "t#bar{t} SL",
+        "ttbar4Q": "t#bar{t} 4Q",
+        "QCD": "QCD"
+    },
+    "needMerge": {
+    },
+    "isData": {
+        "Muon": 1,
+        "DY": 0,
+        "WJets": 0,
+        "TTBB": 0,
+        "ttbarDL": 0,
+        "ttbarSL": 0,
+        "ttbar4Q": 0,
+        "QCD": 0
+    },
+    "isSignal": [
+    ],
+
+    "doLogPlot": 0,
+    "doRatioPlot": 0,
+    "doNormPlot": 1,
+
+    "numerator": [
+    ],
+    "stackOrder": [
+    ],
+    "reOrder": 1,
+
+    "header": [
+        "Preliminary",
+        "%1.0f fb^{-1} (13.6 TeV)"
+    ],
+    "texts": [
+        "AR SS",
+        "signal triggers",
+        "JEC, JVM corr"
+    ],
+
+    "varConfig": "json/variables/variables.json",
+    "lumiConfig": "json/Lumi/Run3.json",
+    "systConfig": "json/syst/Run3_XSonly.json"
+}

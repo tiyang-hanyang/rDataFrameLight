@@ -1,0 +1,31 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of RunIII2024Summer24NanoAODv15 (mc corresponding to Run2024).",
+
+    "name": "RunIII2024Summer24NanoAODv15_Mu_Skim",
+
+    "year": "2024",
+    "era": "RunIII2024Summer24NanoAODv15",
+    "merge": 0,
+    "maxFiles": 250,
+    "preliminary": 1,
+
+    "outDir": "/home/tiyang/public/AR_0204/",
+    "datasets": [
+        "ttbarDL",
+        "ttbarSL",
+        "ttbar4Q",
+        "TTBB_DL",
+        "TTBB_SL",
+        "TTBB_4Q"
+    ],
+
+    "isData": 0,
+    "mcWeight": "genWeight",
+    
+    "cutConfig": [
+        "json/cuts/redbkgControl/applicableRegion_rough.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json",
+    "sampleConfig": "json/samples/rawNanoAOD/RunIII2024Summer24NanoAODv15.json"
+}

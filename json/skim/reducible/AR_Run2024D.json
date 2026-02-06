@@ -1,0 +1,26 @@
+{
+    "jobType": "skim",
+    "commments": "For the rough skimming AR of Run2024D, need further fakeable definition after JEC",
+
+    "name": "Run2024D_Mu_Skim",
+    "year": "2024",
+    "run": "Run3",
+    "era": "Run2024D",
+    "merge": 0,
+
+    "XSConfig": "",
+    "outDir": "/home/tiyang/public/AR_0204/",
+    "datasets": [
+        "Muon0",
+        "Muon1"
+    ],
+    "isData": 1,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/rawNanoAOD/Run2024D.json",
+    "cutConfig": [
+        "json/cuts/redbkgControl/applicableRegion_rough.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}
+
