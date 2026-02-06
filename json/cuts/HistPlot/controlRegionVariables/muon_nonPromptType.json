@@ -1,0 +1,5 @@
+[
+    ["define", "Muon_nonPromptType", "getOriginFlagsFromGenIdx(Muon_genPartIdx, GenPart_pdgId, GenPart_genPartIdxMother, GenPart_statusFlags)"],
+
+    ["define", "leadingMuon_nonPromptType", "Muon_nonPromptType[leadingMuonIdx]"]
+]

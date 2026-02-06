@@ -95,12 +95,9 @@
             "QCD_1000_mu"
         ],
         "VV": [
-            "WW2L2Nu", 
-            "WZ2L2Q",
-            "ZZ2L2Nu",
-            "ZZ2L2Q",
-            "WZ3l",
-            "ZZ4l" 
+            "WW", 
+            "WZ",
+            "ZZ"
         ],
         "TTZ": [
             "TTZ_high",

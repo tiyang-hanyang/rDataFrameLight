@@ -5,7 +5,7 @@
     "era": "RunIII2024Summer24NanoAODv15",
     "outDir": "SameSign_CR",
 
-    "sampleConfig": "json/samples/SameSign_CR/BTVCorrected/RunIII2024Summer24NanoAODv15_SSCR_btag_corr.json",
+    "sampleConfig": "json/samples/SameSign_CR/BTVCorrected/Run3Summer23BPixNanoAODv12_SSCR_btag_corr.json",
 
     "varNames": [
         "nBJet"
@@ -13,36 +13,16 @@
     "varConfig": "json/variables/variables.json",
 
     "cutConfig": [
-        "json/cuts/HistPlot/signalRegionVariables/bjets_multiplicity_2024.json"
+        "json/cuts/HistPlot/signalRegionVariables/bjets_multiplicity_2023BPix.json"
     ],
 
     "datasets": [
-        "DY",
-        "WJets",
-        "ttbar",
-        "TTH",
-        "QCD",
-        "TW",
-        "VV2l",
-        "WZ3l",
-        "ZZ4l",
-        "TTBB",
-        "TTZ",
-        "VVV"
+        "TTW",
+        "TTTT"
     ],
     "isData": {
-        "DY":0,
-        "WJets":0,
-        "ttbar": 0,
-        "TTH": 0,
-        "QCD": 0,
-        "TW": 0,
-        "VV2l": 0,
-        "WZ3l": 0,
-        "ZZ4l": 0,
-        "TTBB": 0,
-        "TTZ": 0,
-        "VVV": 0
+        "TTW": 0,
+        "TTTT": 0
     },
     "needMerge": {
         "TTBB": [
@@ -87,11 +67,10 @@
             "QCD_800_1000_mu",
             "QCD_1000_mu"
         ],
-        "VV2l": [
-            "WW2L2Nu",
-            "WZ2L2Q",
-            "ZZ2L2Nu",
-            "ZZ2L2Q"
+        "VV": [
+            "WW", 
+            "WZ",
+            "ZZ"
         ],
         "TTZ": [
             "TTZ_high",

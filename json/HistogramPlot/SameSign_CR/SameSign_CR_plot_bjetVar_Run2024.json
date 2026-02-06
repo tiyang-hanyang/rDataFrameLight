@@ -36,14 +36,20 @@
         "TW",
         "TTBB",
         "TTZ",
-        "VV",
+        "VV2l",
+        "WZ3l",
+        "ZZ4l",
         "WJets",
-        "VVV"
+        "VVV",
+        "TTW",
+        "TTTT"
     ],
     "colorMapping": {
         "Muon": 1,
         "DY": 416,
-        "VV": 880,
+        "VV2l": 880,
+        "WZ3l": 862,
+        "ZZ4l": 870,
         "ttbar": 4,
         "TW": 400,
         "TTH": 432,
@@ -62,10 +68,14 @@
         "TW": "t/#bar{t}+W",
         "TTH": "t#bar{t}+H",
         "QCD": "QCD",
-        "VV": "diboson",
+        "VV2l": "VV 2l",
+        "WZ3l": "WZ3l",
+        "ZZ4l": "ZZ4l",
         "VVV": "triboson",
         "TTBB": "t#bar{t}b#bar{b}",
-        "TTZ": "t#bar{t}+Z"
+        "TTZ": "t#bar{t}+Z",
+        "TTW": "t#bar{t}+W",
+        "TTTT": "4t"
     },
     "needMerge": {
     },
@@ -77,7 +87,9 @@
         "TW": 0,
         "TTH": 0,
         "QCD": 0,
-        "VV": 0,
+        "VV2l": 0,
+        "WZ3l": 0,
+        "ZZ4l": 0,
         "TTBB": 0,
         "TTW": 0,
         "TTZ": 0,
@@ -102,9 +114,13 @@
         "TW",
         "TTBB",
         "TTZ",
-        "VV",
+        "VV2l",
+        "WZ3l",
+        "ZZ4l",
         "WJets",
-        "VVV"
+        "VVV",
+        "TTW",
+        "TTTT"
     ],
     "reOrder": 1,
 
@@ -115,7 +131,8 @@
     "texts": [
         "same-sign 2 muons",
         "full triggers",
-        "PU, JEC, JVM, btag corrected"
+        "PU, JEC, JVM, btag corrected",
+        "TTW TTTT from 2023BPix"
     ],
 
     "varConfig": "json/variables/variables.json",
