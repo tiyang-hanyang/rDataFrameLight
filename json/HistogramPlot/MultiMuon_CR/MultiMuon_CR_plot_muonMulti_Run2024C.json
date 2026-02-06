@@ -1,0 +1,108 @@
+{
+    "jobType": "plot",
+    "comments": "WZ CR 2024",
+
+    "inDir": "MultiMuon_CR",
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+    "outDir": "MultiMuon_CR_plot",
+    "name": "MultiMuon_CR_DataMC_plot",
+
+    "era": [
+        "Run2024C"
+    ],
+    "mc_era": [
+        "RunIII2024Summer24NanoAODv15"
+    ],
+
+    "varNames": [
+        "nGoodMuon_mva"
+    ],
+    "needCrop": {
+        "diMuon_mass":1
+    },
+    "cropedRange": {
+        "diMuon_mass":[40.0, 200.0]
+    },
+
+    "histXSize": 700,
+    "histYSize": 800,
+
+    "datasets": [
+        "Muon",
+        "DY",
+        "ttbar",
+        "QCD",
+        "WZ3l",
+        "ZZ4l"
+    ],
+    "colorMapping": {
+        "Muon": 1,
+        "DY": 416,
+        "WZ3l": 880,
+        "ttbar": 4,
+        "TW": 400,
+        "TTH": 432,
+        "QCD": 616,
+        "TTBB": 800,
+        "TTW": 2,
+        "TTZ": 920,
+        "WJets": 28,
+        "ZZ4l": 46,
+        "TTTT": 12
+    },
+    "datasetLabel": {
+        "DY": "DY",
+        "WJets": "W+Jets",
+        "ttbar": "t#bar{t}",
+        "TW": "t/#bar{t}+W",
+        "TTH": "t#bar{t}+H",
+        "QCD": "QCD",
+        "WZ3l": "WZ3l",
+        "ZZ4l": "ZZ4l",
+        "TTBB": "t#bar{t}b#bar{b}",
+        "TTZ": "t#bar{t}+Z"
+    },
+    "needMerge": {
+    },
+    "isData": {
+        "Muon": 1,
+        "DY": 0,
+        "ttbar": 0,
+        "WZ3l": 0,
+        "ZZ4l": 0,
+        "QCD": 0
+    },
+    "isSignal": [
+    ],
+
+    "doLogPlot": 1,
+    "doRatioPlot": 1,
+    "doNormPlot": 0,
+
+    "numerator": [
+        "Muon"
+    ],
+    "stackOrder": [
+        "DY",
+        "ttbar",
+        "WZ3l",
+        "QCD",
+        "ZZ4l"
+    ],
+    "reOrder": 1,
+
+    "header": [
+        "Preliminary",
+        "%1.0f fb^{-1} (13.6 TeV)"
+    ],
+    "texts": [
+        ">2 muons",
+        "full triggers",
+        "PU, JEC, JVM corrected"
+    ],
+
+    "varConfig": "json/variables/variables.json",
+    "lumiConfig": "json/Lumi/Run3.json",
+    "systConfig": "json/syst/Run3_XSonly.json"
+}

@@ -1,0 +1,58 @@
+{
+    "dir": {
+        "DY2Mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/DY2Mu/",
+        "DY2Mu_low": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/DY2Mu_low/",
+        "ttbarDL": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/ttbarDL/",
+        "ttbarSL": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/ttbarSL/",
+        "ttbar4Q": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/ttbar4Q/",
+        "QCD_15_20_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_15_20_mu/",
+        "QCD_20_30_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_20_30_mu/",
+        "QCD_30_50_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_30_50_mu/",
+        "QCD_50_80_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_50_80_mu/",
+        "QCD_80_120_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_80_120_mu/",
+        "QCD_120_170_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_120_170_mu/",
+        "QCD_170_300_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_170_300_mu/",
+        "QCD_300_470_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_300_470_mu/",
+        "QCD_470_600_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_470_600_mu/",
+        "QCD_600_800_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_600_800_mu/",
+        "QCD_800_1000_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_800_1000_mu/",
+        "QCD_1000_mu": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/QCD_1000_mu/",
+        "WZ3l": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/WZ3l/",
+        "ZZ4l": "/home/tiyang/public/MultiMuon_CR_0203/RunIII2024Summer24NanoAODv15/ZZ4l/"
+    },
+    "file": {
+        "DY2Mu": [
+            "DY2Mu_skimmed.root"
+        ],
+        "DY2Mu_low": [
+            "DY2Mu_low_skimmed.root"
+        ],
+        "ttbarDL": [
+            "ttbarDL_skimmed.root"
+        ],
+        "ttbarSL": [
+            "ttbarSL_skimmed.root"
+        ],
+        "ttbar4Q": [],
+        "QCD_15_20_mu": [],
+        "QCD_20_30_mu": [],
+        "QCD_30_50_mu": [],
+        "QCD_50_80_mu": [],
+        "QCD_80_120_mu": [],
+        "QCD_120_170_mu": [],
+        "QCD_170_300_mu": [],
+        "QCD_300_470_mu": [],
+        "QCD_470_600_mu": [],
+        "QCD_600_800_mu": [],
+        "QCD_800_1000_mu": [],
+        "QCD_1000_mu": [
+            "QCD_1000_mu_skimmed.root"
+        ],
+        "WZ3l": [
+            "WZ3l_skimmed.root"
+        ],
+        "ZZ4l": [
+            "ZZ4l_skimmed.root"
+        ]
+    }
+}
