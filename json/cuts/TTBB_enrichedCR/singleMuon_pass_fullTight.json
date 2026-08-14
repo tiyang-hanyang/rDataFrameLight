@@ -1,0 +1,26 @@
+[
+    ["define", "leading_antiIso", "(Muon_miniPFRelIso_all[leadingMuonIdx]>0.4)"],
+    ["define", "subleading_antiIso", "(Muon_miniPFRelIso_all[subleadingMuonIdx]>0.4)"],
+    ["define", "leading_tight", "(Muon_miniPFRelIso_all[leadingMuonIdx]<0.4) && (Muon_promptMVA[leadingMuonIdx]>0.64) && (abs(Muon_dxy[leadingMuonIdx])<0.05) && (abs(Muon_dz[leadingMuonIdx])<0.1) && (abs(Muon_sip3d[leadingMuonIdx])<8)  && (Muon_jetDF[leadingMuonIdx]<0.2480)"],
+    ["define", "subleading_tight", "(Muon_miniPFRelIso_all[subleadingMuonIdx]<0.4) && (Muon_promptMVA[subleadingMuonIdx]>0.64) && (abs(Muon_dxy[subleadingMuonIdx])<0.05) && (abs(Muon_dz[subleadingMuonIdx])<0.1) && (abs(Muon_sip3d[subleadingMuonIdx])<8)  && (Muon_jetDF[subleadingMuonIdx]<0.2480)"],
+    ["define", "onlyLeadingTight", "leading_tight && subleading_antiIso"],
+    ["define", "onlySubleadingTight", "subleading_tight && leading_antiIso"],
+    ["cut", "", "onlyLeadingTight || onlySubleadingTight"],
+    ["define", "antiIsoMuonIdx", "onlyLeadingTight ? subleadingMuonIdx : leadingMuonIdx"],
+    ["define", "tightMuonIdx", "onlyLeadingTight ? leadingMuonIdx : subleadingMuonIdx"],
+
+    ["define", "antiIsoMuon_pt", "Muon_pt_Rcorr[antiIsoMuonIdx]"],
+    ["define", "tightMuon_pt", "Muon_pt_Rcorr[tightMuonIdx]"],
+    ["define", "antiIsoMuon_miniIso", "Muon_miniPFRelIso_all[antiIsoMuonIdx]"],
+    ["define", "tightMuon_miniIso", "Muon_miniPFRelIso_all[tightMuonIdx]"],
+
+    
+    ["define", "antiIsoMuon_eta_2bin", "abs(Muon_eta[antiIsoMuonIdx])"],
+    ["define", "tightMuon_eta_2bin", "abs(Muon_eta[tightMuonIdx])"],
+
+    ["define", "antiIsoMuon_pt_withIso", "Muon_pt_Rcorr[antiIsoMuonIdx] * (1+Muon_pfRelIso04_all[antiIsoMuonIdx])"],
+    ["define", "tightMuon_pt_withIso", "Muon_pt_Rcorr[tightMuonIdx] *  (1+Muon_pfRelIso04_all[tightMuonIdx])"],
+
+    ["define", "antiIsoMuon_jetRelIso", "Muon_jetRelIso[antiIsoMuonIdx]"],
+    ["define", "tightMuon_jetRelIso", "Muon_jetRelIso[tightMuonIdx]"]
+]

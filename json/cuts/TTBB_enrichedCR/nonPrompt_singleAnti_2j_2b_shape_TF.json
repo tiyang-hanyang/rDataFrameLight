@@ -1,0 +1,5 @@
+[
+    ["define", "TF_antiIso_muon_shape", "(antiIsoMuon_pt<20) *  0.00928066+ (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) *  0.01286550+ (antiIsoMuon_pt>30) * 0.01470431"],
+    ["define", "TF_antiIso_muon_shape_TF_up", "(antiIsoMuon_pt<20) * (0.00928066 + 0.00183167) + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * (0.01286550 + 0.00245345) + (antiIsoMuon_pt>30) * (0.01470431 + 0.00322543)"],
+    ["define", "TF_antiIso_muon_shape_TF_down", "(antiIsoMuon_pt<20) * (0.00928066 - 0.00183167) + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * (0.01286550 - 0.00245345) + (antiIsoMuon_pt>30) * (0.01470431 - 0.00322543)"]
+]

@@ -1,18 +1,31 @@
 [
-    ["cut", "pass JVM selection", "(JVMweight>0)"],
+    ["cut", "", "JVMweight>0"],
     ["define", "leadingMuon_pt", "Muon_pt[leadingMuonIdx]"],
     ["define", "leadingMuon_eta", "Muon_eta[leadingMuonIdx]"],
     ["define", "leadingMuon_phi", "Muon_phi[leadingMuonIdx]"],
     ["define", "leadingMuon_mass", "Muon_mass[leadingMuonIdx]"],
+    ["define", "leadingMuon_jetRelIso", "Muon_jetRelIso[leadingMuonIdx]"],
+    ["define", "leadingMuon_jetDF", "Muon_jetDF[leadingMuonIdx]"],
+    ["define", "leadingMuonMVA", "Muon_promptMVA[leadingMuonIdx]"],
     ["TLVPtEtaPhiM", "leadingMuonP4", "leadingMuon_pt,leadingMuon_eta,leadingMuon_phi,leadingMuon_mass"],
 
     ["define", "subleadingMuon_pt", "Muon_pt[subleadingMuonIdx]"],
     ["define", "subleadingMuon_eta", "Muon_eta[subleadingMuonIdx]"],
     ["define", "subleadingMuon_phi", "Muon_phi[subleadingMuonIdx]"],
     ["define", "subleadingMuon_mass", "Muon_mass[subleadingMuonIdx]"],
+    ["define", "subleadingMuon_jetRelIso", "Muon_jetRelIso[subleadingMuonIdx]"],
+    ["define", "subleadingMuon_jetDF", "Muon_jetDF[subleadingMuonIdx]"],
+    ["define", "subleadingMuonMVA", "Muon_promptMVA[subleadingMuonIdx]"],
     ["TLVPtEtaPhiM", "subleadingMuonP4", "subleadingMuon_pt,subleadingMuon_eta,subleadingMuon_phi,subleadingMuon_mass"],
 
     ["define", "diMuonP4", "leadingMuonP4+subleadingMuonP4"],
+    ["define", "diMuon_pt", "diMuonP4.Pt()"],
+
+    ["define", "zeroFloat", "0.0f"],
+    ["TLVPtEtaPhiM", "pseudoMETP4", "PuppiMET_pt,zeroFloat,PuppiMET_phi,zeroFloat"],
+    ["define", "diMuon_MET_P4", "diMuonP4+pseudoMETP4"],
+    ["define", "diMuon_MET_pt", "diMuon_MET_P4.Pt()"],
+
     ["define", "diMuon_mass", "diMuonP4.M()"],
     ["define", "diMuon_dphi_raw", "abs(leadingMuon_phi-subleadingMuon_phi)"],
     ["define", "diMuon_dphi_counter", "(6.2832-diMuon_dphi_raw)"],

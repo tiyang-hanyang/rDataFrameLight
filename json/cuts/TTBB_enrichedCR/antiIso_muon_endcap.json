@@ -1,0 +1,3 @@
+[
+    ["cut", "", "abs(Muon_eta[antiIsoMuonIdx])>=1.2"]
+]

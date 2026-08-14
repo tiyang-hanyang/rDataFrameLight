@@ -1,0 +1,7 @@
+[
+    ["redefine", "GoodJetCond", "(Jet_pt_JEC > 30.0) &&  (Jet_rawFactor<0.9) && JetIdTight && (Jet_drFromMuon>0.4)"],
+    ["define", "BJetCond", "GoodJetCond && (Jet_btagUParTAK4B > 0.1272)"],
+    ["cut", "ensure only unique 4j", "Nonzero(GoodJetCond).size()>3"],
+    ["define", "nBJet", "Nonzero(BJetCond).size()"],
+    ["cut", "", "nBJet==0"]
+]

@@ -1,0 +1,6 @@
+[
+    ["redefine", "GoodJetCond", "(Jet_pt_JEC > 30.0) &&  (Jet_rawFactor<0.9) && JetIdTight && (Jet_drFromMuon>0.4)"],
+    ["cut", "pass JVM necessary", "(JVMweight>0)"],
+    ["cut", "at least 3 good jets", "Nonzero(GoodJetCond).size()>=3"],
+    ["cut", "at most 4 good jets", "Nonzero(GoodJetCond).size()<=4"]
+]

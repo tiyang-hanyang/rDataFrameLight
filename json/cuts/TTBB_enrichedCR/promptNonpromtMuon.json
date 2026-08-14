@@ -1,0 +1,24 @@
+[
+    ["define", "leading_prompt", "Muon_genPartFlav[leadingMuonIdx]==1"],
+    ["define", "subleading_prompt", "Muon_genPartFlav[subleadingMuonIdx]==1"],
+
+    ["define", "onlyLeadingPrompt", "leading_prompt && !subleading_prompt"],
+    ["define", "onlySubleadingPrompt", "!leading_prompt && subleading_prompt"],
+
+    ["cut", "", "onlyLeadingPrompt || onlySubleadingPrompt"],
+
+    ["define", "promptMuonIdx", "onlyLeadingPrompt ? leadingMuonIdx : subleadingMuonIdx"],
+    ["define", "nonpromptMuonIdx", "onlyLeadingPrompt ? subleadingMuonIdx : leadingMuonIdx"],
+
+    ["define", "promptMuon_pt", "Muon_pt_Rcorr[promptMuonIdx]"],
+    ["define", "nonpromptMuon_pt", "Muon_pt_Rcorr[nonpromptMuonIdx]"],
+
+    ["define", "promptMuon_miniIso", "Muon_miniPFRelIso_all[promptMuonIdx]"],
+    ["define", "nonpromptMuon_miniIso", "Muon_miniPFRelIso_all[nonpromptMuonIdx]"],
+    
+    ["define", "promptMuon_pt_withIso", "promptMuon_pt *  (1+Muon_pfRelIso04_all[promptMuonIdx])"],
+    ["define", "nonpromptMuon_pt_withIso", "nonpromptMuon_pt * (1+Muon_pfRelIso04_all[nonpromptMuonIdx])"],
+ 
+    ["define", "promptMuon_jetRelIso", "Muon_jetRelIso[promptMuonIdx]"],
+    ["define", "nonpromptMuon_jetRelIso", "Muon_jetRelIso[nonpromptMuonIdx]"]
+]

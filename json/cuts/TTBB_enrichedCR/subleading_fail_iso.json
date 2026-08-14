@@ -1,0 +1,3 @@
+[
+    ["cut", "miniIsolation", "(Muon_miniPFRelIso_all[subleadingMuonIdx]>0.4)"]
+]

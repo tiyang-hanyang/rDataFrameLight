@@ -1,0 +1,3 @@
+[
+    ["define", "emu_prompt", "2*(Electron_genPartFlav[leadingElectronIdx]!=1) + (Muon_genPartFlav[leadingMuonIdx]!=1)"]
+]

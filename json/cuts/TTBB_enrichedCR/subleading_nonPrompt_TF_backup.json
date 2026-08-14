@@ -1,0 +1,3 @@
+[
+    ["define", "TF_subleadingMuon", "(subleadingMuon_pt < 30) * 0.02016776435876782 + (subleadingMuon_pt>30 && subleadingMuon_pt<50) * 0.06709106914128415 + (subleadingMuon_pt>50 && subleadingMuon_pt<100) * 0.006752851395886012 + (subleadingMuon_pt>100) * 0.013999183008367262"]
+]

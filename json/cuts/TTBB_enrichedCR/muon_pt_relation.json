@@ -1,0 +1,10 @@
+[
+    ["cut", "make sure exist gen", "Muon_genPartIdx[leadingMuonIdx]>=0"],
+    ["define", "muon_reco_over_gen", "Muon_pt_Rcorr[leadingMuonIdx] / GenPart_pt[Muon_genPartIdx[leadingMuonIdx]]"],
+    ["define", "AssoJetPt", "(Muon_jetIdx[leadingMuonIdx]==-1)? -1.0f : Jet_pt_JEC[Muon_jetIdx[leadingMuonIdx]]"],
+    ["define", "leadingMuon_genJetIdx", "(Muon_jetIdx[leadingMuonIdx]==-1)? -1 : Jet_genJetIdx[Muon_jetIdx[leadingMuonIdx]]"],
+    ["define", "AssoJetGenPt", "(leadingMuon_genJetIdx==-1) ? -1.0f : GenJet_pt[leadingMuon_genJetIdx]"],
+    ["define", "jet_reco_over_gen", "(leadingMuon_genJetIdx==-1) ? -1.0f : AssoJetPt/AssoJetGenPt"],
+    ["define", "muon_over_jet", "Muon_pt_Rcorr[leadingMuonIdx]/AssoJetPt"],
+    ["define", "muon_gen_over_jet", "GenPart_pt[Muon_genPartIdx[leadingMuonIdx]]/AssoJetPt"]
+]

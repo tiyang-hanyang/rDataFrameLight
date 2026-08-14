@@ -1,0 +1,3 @@
+[
+    ["define", "Dimuon_sign", "Muon_charge[leadingMuonIdx] * Muon_charge[subleadingMuonIdx]"]
+]

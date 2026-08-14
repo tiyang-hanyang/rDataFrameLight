@@ -1,0 +1,14 @@
+[
+    ["define", "TF_antiIso_muon_shape_1b", "(antiIsoMuon_pt<20) * 0.00448548 + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * 0.00624994 + (antiIsoMuon_pt>30) * 0.00670153"],
+    ["define", "TF_antiIso_muon_shape_1b_TF_up", "(antiIsoMuon_pt<20) * (0.00448548 + 0.00035278) + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * (0.00624994 + 0.00043376) + (antiIsoMuon_pt>30) * (0.00670153 + 0.00053663)"],
+    ["define", "TF_antiIso_muon_shape_1b_TF_down", "(antiIsoMuon_pt<20) * (0.00448548 - 0.00035278) + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * (0.00624994 - 0.00043376) + (antiIsoMuon_pt>30) * (0.00670153 - 0.00053663)"],
+
+    ["define", "TF_antiIso_muon_shape_2b", "(antiIsoMuon_pt<20) *  0.00928066+ (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) *  0.01286550+ (antiIsoMuon_pt>30) * 0.01470431"],
+    ["define", "TF_antiIso_muon_shape_2b_TF_up", "(antiIsoMuon_pt<20) * (0.00928066 + 0.00183167) + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * (0.01286550 + 0.00245345) + (antiIsoMuon_pt>30) * (0.01470431 + 0.00322543)"],
+    ["define", "TF_antiIso_muon_shape_2b_TF_down", "(antiIsoMuon_pt<20) * (0.00928066 - 0.00183167) + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * (0.01286550 - 0.00245345) + (antiIsoMuon_pt>30) * (0.01470431 - 0.00322543)"],
+
+    ["define", "TF_antiIso_muon_shape", "(nBJet==1) * TF_antiIso_muon_shape_1b + (nBJet>1) * TF_antiIso_muon_shape_2b"],
+    ["define", "TF_antiIso_muon_shape_TF_up", "(nBJet==1) * TF_antiIso_muon_shape_1b_TF_up + (nBJet>1) * TF_antiIso_muon_shape_2b_TF_up"],
+    ["define", "TF_antiIso_muon_shape_TF_down", "(nBJet==1) * TF_antiIso_muon_shape_1b_TF_down + (nBJet>1) * TF_antiIso_muon_shape_2b_TF_down"]
+
+]

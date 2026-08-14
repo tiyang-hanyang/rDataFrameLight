@@ -1,0 +1,3 @@
+[
+    ["define", "Dimuon_prompt", "2*(Muon_genPartFlav[leadingMuonIdx]==1) + (Muon_genPartFlav[subleadingMuonIdx]==1)"]
+]

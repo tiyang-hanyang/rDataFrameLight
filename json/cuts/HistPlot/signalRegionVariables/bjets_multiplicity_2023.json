@@ -1,3 +1,5 @@
 [
+    ["redefine", "GoodJetCond", "(Jet_pt_JEC > 30.0) && (abs(Jet_eta)<2.5) && (Jet_rawFactor<0.9) && JetIdTight && (Jet_drFromMuon>0.4)"],
+    ["cut", "nominal 4j", "Nonzero(GoodJetCond).size()>3"],
     ["define", "nBJet", "Nonzero(GoodJetCond && (Jet_btagPNetB > 0.1997)).size()"]
 ]

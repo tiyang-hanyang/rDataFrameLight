@@ -1,0 +1,3 @@
+[
+   ["define", "optimize_score", "Signal_score_TTHH/(0.2 * Signal_score_tt_b + 0.8 * Signal_score_ttX_like + 1e-6)"]
+]

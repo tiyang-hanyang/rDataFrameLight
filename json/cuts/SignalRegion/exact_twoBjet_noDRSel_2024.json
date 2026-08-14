@@ -1,0 +1,6 @@
+[
+    ["redefine", "GoodJetCond", "(Jet_pt_JEC > 30.0) &&  (Jet_rawFactor<0.9) && Jet_passJetIdTight"],
+    ["define", "BJetCond", "GoodJetCond && (Jet_btagUParTAK4B > 0.1272)"],
+    ["define", "nBJet", "Nonzero(BJetCond).size()"],
+    ["cut", "at least three bjet", "(nBJet==2)"]
+]

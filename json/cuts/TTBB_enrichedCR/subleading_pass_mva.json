@@ -1,0 +1,3 @@
+[
+    ["cut", "miniIsolation", "(Muon_promptMVA[subleadingMuonIdx]>0.64)"]
+]

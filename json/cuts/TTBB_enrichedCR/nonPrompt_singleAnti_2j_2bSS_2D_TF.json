@@ -1,0 +1,13 @@
+[
+    ["define", "TF_antiIso_muon_shape_barrel", "(antiIsoMuon_pt<20) * 0.00692881 + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * 0.00730214 + (antiIsoMuon_pt>30) * 0.01352831"],
+    ["define", "TF_antiIso_muon_shape_barrel_TF_up", "(antiIsoMuon_pt<20) * (0.00692881 + 0.00200767) + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * (0.00730214 + 0.00269406) + (antiIsoMuon_pt>30) * (0.01352831 + 0.00493189)"],
+    ["define", "TF_antiIso_muon_shape_barrel_TF_down", "(antiIsoMuon_pt<20) * (0.00692881 - 0.00200767) + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * (0.00730214 - 0.00269406) + (antiIsoMuon_pt>30) * (0.01352831 - 0.00493189)"],
+
+    ["define", "TF_antiIso_muon_shape_endcap", "(antiIsoMuon_pt<20) * 0.01402537 + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * 0.02406072 + (antiIsoMuon_pt>30) * 0.03031271"],
+    ["define", "TF_antiIso_muon_shape_endcap_TF_up", "(antiIsoMuon_pt<20) * (0.01402537 + 0.00395502) + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * (0.02406072 + 0.00584013) + (antiIsoMuon_pt>30) * (0.03031271 + 0.01030543)"],
+    ["define", "TF_antiIso_muon_shape_endcap_TF_down", "(antiIsoMuon_pt<20) * (0.01402537 - 0.00395502) + (antiIsoMuon_pt > 20 && antiIsoMuon_pt<30) * (0.02406072 - 0.00584013) + (antiIsoMuon_pt>30) * (0.03031271 - 0.01030543)"],
+
+    ["define", "TF_antiIso_muon_shape", "TF_antiIso_muon_shape_barrel * (antiIsoMuon_eta_2bin<1.2) + TF_antiIso_muon_shape_endcap * (antiIsoMuon_eta_2bin>=1.2 && antiIsoMuon_eta_2bin<=2.4)"],
+    ["define", "TF_antiIso_muon_shape_TF_up", "TF_antiIso_muon_shape_barrel_TF_up * (antiIsoMuon_eta_2bin<1.2) + TF_antiIso_muon_shape_endcap_TF_up * (antiIsoMuon_eta_2bin>=1.2 && antiIsoMuon_eta_2bin<=2.4)"],
+    ["define", "TF_antiIso_muon_shape_TF_down", "TF_antiIso_muon_shape_barrel_TF_down * (antiIsoMuon_eta_2bin<1.2) + TF_antiIso_muon_shape_endcap_TF_down * (antiIsoMuon_eta_2bin>=1.2 && antiIsoMuon_eta_2bin<=2.4)"]
+]

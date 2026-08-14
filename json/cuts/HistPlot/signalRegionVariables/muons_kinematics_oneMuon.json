@@ -1,0 +1,11 @@
+[
+    ["cut", "", "JVMweight>0"],
+    ["define", "leadingMuon_pt", "Muon_pt_Rcorr[leadingMuonIdx]"],
+    ["define", "leadingMuon_eta", "Muon_eta[leadingMuonIdx]"],
+    ["define", "leadingMuon_phi", "Muon_phi[leadingMuonIdx]"],
+    ["define", "leadingMuon_mass", "Muon_mass[leadingMuonIdx]"],
+    ["define", "leadingMuon_jetRelIso", "Muon_jetRelIso[leadingMuonIdx]"],
+    ["define", "leadingMuon_jetDF", "Muon_jetDF[leadingMuonIdx]"],
+    ["define", "leadingMuonMVA", "Muon_promptMVA[leadingMuonIdx]"],
+    ["define", "yield", "1.0"]
+]

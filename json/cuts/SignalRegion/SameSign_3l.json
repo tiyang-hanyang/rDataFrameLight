@@ -1,0 +1,7 @@
+[
+    ["define", "leadingMuon_charge", "Muon_charge[leadingMuonIdx]"],
+    ["define", "subleadingMuon_charge", "Muon_charge[subleadingMuonIdx]"],
+    ["define", "thirdMuon_idx", "Nonzero(isGoodMuon_mva)[2]"],
+    ["define", "thirdMuon_charge", "Muon_charge[thirdMuon_idx]"],
+    ["cut", "require same sign Muon", "(leadingMuon_charge==subleadingMuon_charge && leadingMuon_charge==thirdMuon_charge)"]
+]

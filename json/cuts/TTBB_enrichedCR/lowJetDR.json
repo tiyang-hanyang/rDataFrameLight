@@ -1,0 +1,4 @@
+[
+    ["define", "leadingMuon_jetDR", "Muon_jetDR[leadingMuonIdx]"],
+    ["cut", "low jetDR", "leadingMuon_jetDR<=0.4"]
+]

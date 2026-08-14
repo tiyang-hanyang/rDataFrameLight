@@ -1,0 +1,6 @@
+[
+    ["cut", "keep exisitence", "Muon_jetIdx[antiIsoMuonIdx]>=0"],
+    ["define", "antiIsoMuon_jetRelIsoPt", "Muon_pt_Rcorr[antiIsoMuonIdx] * (1 + antiIsoMuon_jetRelIso)"],
+    ["define", "Muon_jetDR", "getMuonMatchJetDR(Muon_jetIdx, Jet_eta, Jet_phi, Muon_eta, Muon_phi)"],
+    ["define", "antiIsoMuon_jetDR", "Muon_jetDR[antiIsoMuonIdx]"]
+]

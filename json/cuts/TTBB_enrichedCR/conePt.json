@@ -1,0 +1,8 @@
+[
+    ["define", "Muon_jetIdxGood", "ensureMuonJetGood(Muon_jetIdx, Jet_mediumPtTight)"],
+    ["define", "Muon_jetPt", "getMuonMatchJetPt(Muon_jetIdxGood, Jet_pt_JEC)"],
+    ["define", "Muon_jetDR", "getMuonMatchJetDR(Muon_jetIdxGood, Jet_eta, Jet_phi, Muon_eta, Muon_phi)"],
+    ["define", "Muon_conePt", "(Muon_jetDR<=0.4)*0.9*Muon_jetPt + (Muon_jetDR>0.4)*Muon_pt_Rcorr*(1+Muon_miniPFRelIso_all)"],
+    ["define", "leadingMuon_conePt", "Muon_conePt[leadingMuonIdx]"],
+    ["define", "leadingMuon_conePt_forTF", "Muon_conePt[leadingMuonIdx]"]
+]
