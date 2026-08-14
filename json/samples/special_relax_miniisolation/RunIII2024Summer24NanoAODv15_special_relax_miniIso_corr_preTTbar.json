@@ -1,82 +1,57 @@
 {
     "dir": {
-        "DY2Mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/DY2Mu/",
-        "DY2Mu_low": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/DY2Mu_low/",
-        "ttbarDL": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/ttbarDL/",
-        "ttbarSL": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/ttbarSL/",
-        "ttbar4Q": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/ttbar4Q/",
-        "TTBB_DL": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TTBB_DL/",
-        "TTBB_SL": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TTBB_SL/",
-        "TTBB_4Q": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TTBB_4Q/",
-        "QCD_15_20_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_15_20_mu/",
-        "QCD_20_30_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_20_30_mu/",
-        "QCD_30_50_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_30_50_mu/",
-        "QCD_50_80_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_50_80_mu/",
-        "QCD_80_120_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_80_120_mu/",
-        "QCD_120_170_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_120_170_mu/",
-        "QCD_170_300_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_170_300_mu/",
-        "QCD_300_470_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_300_470_mu/",
-        "QCD_470_600_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_470_600_mu/",
-        "QCD_600_800_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_600_800_mu/",
-        "QCD_800_1000_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_800_1000_mu/",
-        "QCD_1000_mu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/QCD_1000_mu/",
-        "TTHBB": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TTHBB/",
-        "TTHnonBB": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TTHnonBB/",
-        "TWm2L": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TWm2L/",
-        "TbarWp2L": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TbarWp2L/",
-        "TWm1L": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TWm1L/",
-        "TbarWp1L": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TbarWp1L/",
-        "TZQB": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TZQB/",
-        "WW2L2Nu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/WW2L2Nu/",
-        "WZ2L2Q": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/WZ2L2Q/",
-        "ZZ2L2Q": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/ZZ2L2Q/",
-        "ZZ2L2Nu": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/ZZ2L2Nu/",
-        "WZ3l": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/WZ3l/",
-        "ZZ4l": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/ZZ4l/",
-        "WWW": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/WWW/",
-        "WWZ": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/WWZ/",
-        "WZZ": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/WZZ/",
-        "ZZZ": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/ZZZ/",
-        "WJet_1J": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/WJet_1J/",
-        "WJet_2J": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/WJet_2J/",
-        "WJet_3J": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/WJet_3J/",
-        "WJet_4J": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/WJet_4J/",
-        "TTZ_low": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TTZ_low/",
-        "TTZ_high": "/home/tiyang/public/AR_special_relax_miniIsolation_0128_corr/RunIII2024Summer24NanoAODv15/TTZ_high/"
+        "QCD_30_50_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_30_50_mu/",
+        "TTZ_high": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TTZ_high/",
+        "QCD_50_80_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_50_80_mu/",
+        "QCD_80_120_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_80_120_mu/",
+        "QCD_120_170_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_120_170_mu/",
+        "QCD_170_300_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_170_300_mu/",
+        "QCD_300_470_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_300_470_mu/",
+        "QCD_470_600_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_470_600_mu/",
+        "QCD_600_800_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_600_800_mu/",
+        "QCD_800_1000_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_800_1000_mu/",
+        "QCD_1000_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_1000_mu/",
+        "TTHBB": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TTHBB/",
+        "TTHnonBB": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TTHnonBB/",
+        "TWm2L": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TWm2L/",
+        "TbarWp2L": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TbarWp2L/",
+        "TWm1L": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TWm1L/",
+        "TbarWp1L": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TbarWp1L/",
+        "TZQB": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TZQB/",
+        "WW2L2Nu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/WW2L2Nu/",
+        "WZ2L2Q": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/WZ2L2Q/",
+        "ZZ2L2Q": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/ZZ2L2Q/",
+        "ZZ2L2Nu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/ZZ2L2Nu/",
+        "WZ3l": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/WZ3l/",
+        "DY2Mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/DY2Mu/",
+        "ZZ4l": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/ZZ4l/",
+        "DY2Mu_low": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/DY2Mu_low/",
+        "WWW": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/WWW/",
+        "ttbarDL": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/ttbarDL/",
+        "WWZ": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/WWZ/",
+        "ttbarSL": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/ttbarSL/",
+        "WZZ": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/WZZ/",
+        "ttbar4Q": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/ttbar4Q/",
+        "ZZZ": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/ZZZ/",
+        "TTBB_DL": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TTBB_DL/",
+        "WJet_1J": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/WJet_1J/",
+        "TTBB_SL": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TTBB_SL/",
+        "WJet_2J": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/WJet_2J/",
+        "TTBB_4Q": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TTBB_4Q/",
+        "WJet_3J": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/WJet_3J/",
+        "QCD_15_20_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_15_20_mu/",
+        "WJet_4J": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/WJet_4J/",
+        "QCD_20_30_mu": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/QCD_20_30_mu/",
+        "TTZ_low": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TTZ_low/",
+        "TTW": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TTW/",
+        "TTTT": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD_corr/RunIII2024Summer24NanoAODv15/TTTT/"
     },
     "file": {
-        "DY2Mu": [
-            "DY2Mu_skimmed.root"
-        ],
-        "DY2Mu_low": [
-            "DY2Mu_low_skimmed.root"
-        ],
-        "ttbarDL": [
-            "ttbarDL_skimmed.root"
-        ],
-        "ttbarSL": [
-            "ttbarSL_skimmed.root"
-        ],
-        "ttbar4Q": [
-            "ttbar4Q_skimmed.root"
-        ],
-        "TTBB_DL": [
-            "TTBB_DL_skimmed.root"
-        ],
-        "TTBB_SL": [
-            "TTBB_SL_skimmed.root"
-        ],
-        "TTBB_4Q": [
-            "TTBB_4Q_skimmed.root"
-        ],
-        "QCD_15_20_mu": [
-            "QCD_15_20_mu_skimmed.root"
-        ],
-        "QCD_20_30_mu": [
-            "QCD_20_30_mu_skimmed.root"
-        ],
         "QCD_30_50_mu": [
             "QCD_30_50_mu_skimmed.root"
+        ],
+        "TTZ_high": [
+            "TTZ_high_skimmed.root"
         ],
         "QCD_50_80_mu": [
             "QCD_50_80_mu_skimmed.root"
@@ -141,38 +116,71 @@
         "WZ3l": [
             "WZ3l_skimmed.root"
         ],
+        "DY2Mu": [
+            "DY2Mu_skimmed.root"
+        ],
         "ZZ4l": [
             "ZZ4l_skimmed.root"
+        ],
+        "DY2Mu_low": [
+            "DY2Mu_low_skimmed.root"
         ],
         "WWW": [
             "WWW_skimmed.root"
         ],
+        "ttbarDL": [
+            "ttbarDL_skimmed.root"
+        ],
         "WWZ": [
             "WWZ_skimmed.root"
+        ],
+        "ttbarSL": [
+            "ttbarSL_skimmed.root"
         ],
         "WZZ": [
             "WZZ_skimmed.root"
         ],
+        "ttbar4Q": [
+            "ttbar4Q_skimmed.root"
+        ],
         "ZZZ": [
             "ZZZ_skimmed.root"
+        ],
+        "TTBB_DL": [
+            "TTBB_DL_skimmed.root"
         ],
         "WJet_1J": [
             "WJet_1J_skimmed.root"
         ],
+        "TTBB_SL": [
+            "TTBB_SL_skimmed.root"
+        ],
         "WJet_2J": [
             "WJet_2J_skimmed.root"
+        ],
+        "TTBB_4Q": [
+            "TTBB_4Q_skimmed.root"
         ],
         "WJet_3J": [
             "WJet_3J_skimmed.root"
         ],
+        "QCD_15_20_mu": [
+            "QCD_15_20_mu_skimmed.root"
+        ],
         "WJet_4J": [
             "WJet_4J_skimmed.root"
+        ],
+        "QCD_20_30_mu": [
+            "QCD_20_30_mu_skimmed.root"
         ],
         "TTZ_low": [
             "TTZ_low_skimmed.root"
         ],
-        "TTZ_high": [
-            "TTZ_high_skimmed.root"
+        "TTW": [
+            "TTW_skimmed.root"
+        ],
+        "TTTT": [
+            "TTTT_skimmed.root"
         ]
     }
 }
