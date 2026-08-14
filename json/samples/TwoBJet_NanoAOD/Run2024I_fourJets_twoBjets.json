@@ -1,0 +1,14 @@
+{
+    "dir": {
+        "Muon0": "/data1/users/tiyang/SR_S3_dimuon_4jets_2bjets_0810/data/Run2024I/Muon0/",
+        "Muon1": "/data1/users/tiyang/SR_S3_dimuon_4jets_2bjets_0810/data/Run2024I/Muon1/"
+    },
+    "file": {
+        "Muon0": [
+            "Muon0_Run2024I_Mu_Skim.root"
+        ],
+        "Muon1": [
+            "Muon1_Run2024I_Mu_Skim.root"
+        ]
+    }
+}
