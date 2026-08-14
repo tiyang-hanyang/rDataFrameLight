@@ -1,0 +1,35 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S1 Run2024C data muon variables creation",
+
+    "era": "Run2024C",
+    "outDir": "S4_dimuon_2b_0811_optimize_score",
+    "isData": 1,
+
+    "sampleConfig": "json/samples/SameSign_twoBjets_Aug10/Run2024C_postDNN.json",
+
+    "varNames": [
+        "optimize_score"
+    ],
+    "varConfig": "json/variables/variables.json",
+
+    "cutConfig": [
+        "json/cuts/HistPlot/signalRegionVariables/optimize_score.json"
+    ],
+
+    "datasets": [
+        "Muon"
+    ],
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

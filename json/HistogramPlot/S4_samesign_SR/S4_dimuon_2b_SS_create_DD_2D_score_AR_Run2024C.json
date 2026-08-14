@@ -1,0 +1,47 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S1 Run2024C data muon variables creation",
+
+    "era": "Run2024C",
+    "outDir": "AR_dimuon_2b_0811_score_DD_2D",
+    "isDD": 1,
+
+    "sampleConfig": "json/samples/special_relax_miniisolation/Run2024C_special_relax_miniIso_twoJets_allCorr_fourJets_twoBjets_sameSign_DNN_Aug10.json",
+
+    "varNames": [
+        "Signal_score_TTHH",
+        "Signal_score_tt_b",
+        "Signal_score_ttX_like"
+    ],
+    "varConfig": "json/variables/variables.json",
+
+    "cutConfig": [
+        "json/cuts/TTBB_enrichedCR/singleMuon_pass_fullTight.json",
+	"json/cuts/TTBB_enrichedCR/nonPrompt_singleAnti_2j_2bSS_2D_TF.json"
+    ],
+
+
+    "datasets": [
+        "nonprompt_shapeTF"
+    ],
+    "needMerge": {
+        "nonprompt_shapeTF": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+
+    "DDweight": [
+        "TF_antiIso_muon_shape"
+    ],
+
+    "weightSyst": {
+        "TF": "TF_antiIso_muon_shape"
+    },
+
+    "MCweight": [
+        "genWeight"
+    ],
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

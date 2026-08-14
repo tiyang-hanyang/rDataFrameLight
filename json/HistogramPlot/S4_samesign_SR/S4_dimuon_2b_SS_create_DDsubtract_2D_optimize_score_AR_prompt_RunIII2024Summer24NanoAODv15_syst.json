@@ -1,0 +1,74 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S1 2024 mc muon variables creation",
+
+    "era": "RunIII2024Summer24NanoAODv15",
+    "outDir": "AR_dimuon_2b_0811_optimize_score_DDsubtract_2D",
+
+    "sampleConfig": "json/samples/special_relax_miniisolation/RunIII2024Summer24NanoAODv15_special_relax_miniIso_twoJet_allCorr_fourJets_twoBjets_sameSign_DNN_Aug10.json",
+
+    "varNames": [
+        "optimize_score"
+    ],
+    "varConfig": "json/variables/variables.json",
+    "displayEqualWidthBins": true,
+
+    "cutConfig": [
+        "json/cuts/HistPlot/signalRegionVariables/optimize_score.json",
+        "json/cuts/TTBB_enrichedCR/leading_prompt.json",
+        "json/cuts/TTBB_enrichedCR/subleading_prompt.json",
+        "json/cuts/TTBB_enrichedCR/singleMuon_pass_fullTight.json",
+        "json/cuts/TTBB_enrichedCR/nonPrompt_singleAnti_2j_2bSS_2D_TF.json"
+    ],
+
+
+    "datasets": [
+        "nonprompt_shapeTF_subtract"
+    ],
+    "needMerge": {
+        "nonprompt_shapeTF_subtract": [
+            "TTBB_DL",
+            "TTBB_SL",
+            "ttbarDL",
+            "ttbarSL",
+            "TTHBB",
+            "TTHnonBB",
+            "TTWH",
+            "THQ",
+            "THW",
+            "TWm2L",
+            "TbarWp2L",
+            "TWm1L",
+            "TbarWp1L",
+            "TZQB",
+            "WW2L2Nu", 
+            "WZ2L2Q",
+            "ZZ2L2Nu",
+            "ZZ2L2Q",
+            "WZ3l",
+            "ZZ4l",
+            "TTWW",
+            "TTWZ",
+            "TTZZ",
+            "TTW",
+            "TTTT",
+            "TTZ_high",
+            "TTZ_low",
+            "WWW",
+            "WWZ",
+            "WZZ",
+            "ZZZ"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight", "PUWeight", "JVMweight", "MuonScale", "TriggerScale", "btag_weight", "TF_antiIso_muon_shape"
+    ],
+
+
+    "weightSyst": {
+        "TF": "TF_antiIso_muon_shape"
+    },
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

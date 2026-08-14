@@ -1,0 +1,136 @@
+{
+    "jobType": "plot",
+    "comments": "S4 full 2024 dimuon corretion",
+    "inDir": "S4_dimuon_2b_0811_optimize_score_prompt",
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+    "outDir": "S4_dimuon_2b_0811_optimize_score_plot",
+    "name": "S4_dimuon_2b_0811_optimize_score_MC_plot",
+
+    "era": [
+        "Run2024C", "Run2024D", "Run2024E", "Run2024F", "Run2024G", "Run2024H", "Run2024I"
+    ],
+    "mc_era": [
+        "RunIII2024Summer24NanoAODv15"
+    ],
+    "dd_era": [
+        "RunIII2024Summer24NanoAODv15"
+    ],
+
+    "varNames": [
+        "optimize_score"
+    ],
+    "needCrop": {
+    },
+    "cropedRange": {
+    },
+
+    "histXSize": 700,
+    "histYSize": 800,
+
+    "datasets": [
+        "ttbar",
+        "TTH",
+        "TV",
+        "TTBB",
+        "TTZ",
+        "VV",
+        "VVV",
+        "TTW",
+        "TTTT",
+        "TTVV",
+        "nonprompt_shapeTF_final",
+        "TTHH"
+    ],
+    "colorMapping": {
+        "nonprompt_shapeTF_final": 602
+    },
+    "datasetLabel": {
+        "nonprompt_shapeTF_final": "nonprompt DD"
+    },
+    "needMerge": {
+    },
+    "isData": {
+    },
+    "isDD": [
+        "nonprompt_shapeTF_final"
+    ],
+    "isSignal": [
+        "TTHH"
+    ],
+
+    "doLogPlot": 0,
+    "doRatioPlot": 0,
+    "doNormPlot": 0,
+    
+    "numerator": [
+    ],
+    "stackOrder": [
+        "ttbar",
+        "TTH",
+        "TV",
+        "TTBB",
+        "TTZ",
+        "VV",
+        "VVV",
+        "TTW",
+        "TTTT",
+	"TTVV",
+        "nonprompt_shapeTF_final"
+    ],
+    "reOrder": 1,
+
+    "header": [
+        "Preliminary",
+        "%1.0f fb^{-1} (13.6 TeV)"
+    ],
+    "texts": [
+        "SS2#mu, #geq 4j, #geq 2b",
+        "DNN score",
+        "PU, JME, MUO, BTV syst."
+    ],
+
+    "varConfig": "json/variables/variables.json",
+    "lumiConfig": "json/Lumi/Run3.json",
+    "systConfig": "json/syst/Run3_XSonly.json",
+
+    "DDWeight": "DDTotalWeight",
+
+    "DDweightSyst": {
+        "TF": ["TF_antiIso_muon_shape"]
+    },
+
+    "shiftSyst": {
+        "JES_NP_common": ["Jet_pt_JEC"],
+        "JES_NP_2024": ["Jet_pt_JEC"],
+        "JER_corr": ["Jet_pt_JEC"]
+    },
+
+    "weightSyst": {
+        "PUWeight": ["PUWeight"],
+        "BTV_UParT_WP_NP": ["btag_weight"]
+    },
+
+    "shiftWeightSyst": {
+        "JES_NP_common": ["JVMweight"],
+        "JES_NP_2024": ["JVMweight"],
+        "JER_corr": [
+            "JVMweight",
+            "JVMweight_JER_corr_up",
+            "JVMweight_JER_corr_down"
+        ]
+    },
+
+    "shiftExprSyst": {
+        "JES_NP_common": [
+            "nonprompt_shapeTF_final"
+        ],
+        "JES_NP_2024": [
+            "nonprompt_shapeTF_final"
+        ],
+        "JER_corr": [
+            "nonprompt_shapeTF_final"
+        ]
+    }
+
+}
