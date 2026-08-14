@@ -1,0 +1,25 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run2022G.",
+
+    "name": "Run2022G_JME_Skim",
+    "year": "2022",
+    "run": "Run3",
+    "era": "Run2022G",
+    "merge": 0,
+
+    "XSConfig": "",
+    "outDir": "/data1/users/tiyang/JMETrig_dimuon_0512/",
+    "datasets": [
+        "JetMET"
+    ],
+    "isData": 1,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/JME_trigger/raw_Run2022G.json",
+    "cutConfig": [
+        "json/cuts/Dimuon_skim/JME_Dimuon_skim_2022EE.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}
+

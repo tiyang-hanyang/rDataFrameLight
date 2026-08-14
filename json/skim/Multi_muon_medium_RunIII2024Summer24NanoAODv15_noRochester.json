@@ -8,7 +8,7 @@
 
     "preliminary": 1,
     "merge": 0,
-    "maxFiles": 96,
+    "maxFiles": -1,
     "isData": 0,
 
     "outDir": "/data2/common/skimmed_NanoAOD/skim_0203_medium_multi_muon/",
@@ -37,6 +37,37 @@
 
         "DY2Mu",
         "DY2Mu_low"
+    ],
+
+    "datasets": [
+        "TTW",
+	"TTZ_low",
+	"TTZ_high",
+	"TTTT",
+	"TTHnonBB",
+	"TTHW",
+	"TTWW",
+	"TTWZ",
+	"TTZZ"
+    ],
+
+    "datasets": [
+	"THQ",
+	"THW",
+        "TTBB_DL",
+	"TTBB_SL",
+	"TTBB_4Q"
+    ],
+
+    "datasets": [
+        "ttbarDL",
+	"ttbarSL",
+	"ttbar4Q",
+	"TTHBB"
+    ],
+    "datasets": [
+	"THQ",
+	"THW"
     ],
 
     "sampleConfig": "json/samples/rawNanoAOD/RunIII2024Summer24NanoAODv15.json",

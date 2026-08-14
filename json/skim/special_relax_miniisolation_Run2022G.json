@@ -1,0 +1,19 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run2022G.",
+    "name": "Run2022G_Mu_Skim",
+    "year": "2022",
+    "era": "Run2022G",
+    "isData": 1,
+    "merge": 0,
+    "outDir": "/home/tiyang/public/AR_special_relax_miniIsolation_0128/",
+    "datasets": [
+        "Muon"
+    ],
+    "mcWeight": "genWeight",
+    "sampleConfig": "json/samples/rawNanoAOD/Run2022G.json",
+    "cutConfig": [
+        "json/cuts/redbkgControl/special_relax_miniisolation_2023.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

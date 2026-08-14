@@ -1,0 +1,23 @@
+{
+    "jobType": "skim",
+    "commments": "For the S4 skimming of Run2024F.",
+    "name": "Run2024F_Mu_Skim",
+    "year": "2024",
+    "run": "Run3",
+    "era": "Run2024F",
+    "merge": 1,
+    "outDir": "/data1/users/tiyang/CR_relax_isolation_4jets_2bjets_SameSign_0810/",
+    "datasets": [
+        "Muon0",
+        "Muon1"
+    ],
+    "isData": 1,
+    "mcWeight": "genWeight",
+    "sampleConfig": "json/samples/special_relax_miniisolation/Run2024F_special_relax_miniIso_twoJets_muonCorr_Aug8.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/fourJets.json",
+        "json/cuts/SignalRegion/twoBjet_2024.json",
+        "json/cuts/SignalRegion/SameSign.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

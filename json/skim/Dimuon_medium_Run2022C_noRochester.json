@@ -1,0 +1,25 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run2022C.",
+
+    "name": "Run2022C_Mu_Skim",
+    "year": "2022",
+    "run": "Run3",
+    "era": "Run2022C",
+    "merge": 0,
+
+    "XSConfig": "",
+    "outDir": "/data2/common/skimmed_NanoAOD/skim_0126_medium_dimuon/",
+    "datasets": [
+        "Muon"
+    ],
+    "isData": 1,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/rawNanoAOD/Run2022C.json",
+    "cutConfig": [
+        "json/cuts/Dimuon_skim/Dimuon_skim_2022.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}
+

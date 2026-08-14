@@ -1,0 +1,23 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run2024H.",
+
+    "name": "Run2024H_Mu_Skim",
+    "year": "2024",
+    "era": "Run2024H",
+    "isData": 1,
+    "merge": 0,
+
+    "outDir": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIso/",
+    "datasets": [
+        "Muon0",
+        "Muon1"
+    ],
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/rawNanoAOD/Run2024H.json",
+    "cutConfig": [
+        "json/cuts/redbkgControl/special_relax_miniisolation_2024.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

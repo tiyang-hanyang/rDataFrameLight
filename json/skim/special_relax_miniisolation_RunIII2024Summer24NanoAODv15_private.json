@@ -1,0 +1,25 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of RunIII2024Summer24NanoAODv15",
+
+    "name": "RunIII2024Summer24NanoAODv15_Mu_Skim",
+    "year": "2024",
+    "era": "RunIII2024Summer24NanoAODv15",
+
+    "preliminary": 1,
+    "merge": 0,
+    "isData": 0,
+
+    "outDir": "/data2/common/skimmed_NanoAOD/skim_0128_relax_miniIsolation_ABCD/",
+    "datasets": [
+        "TTHH_DL_2B2W_batch1",
+        "TTHH_SL_2B2W_batch1"
+    ],
+
+    "mcWeight": "genWeight",
+    "sampleConfig": "json/samples/rawNanoAOD/private_mc_RunIII2024Summer24NanoAODv15.json",
+    "cutConfig": [
+        "json/cuts/redbkgControl/special_relax_miniisolation_2024.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

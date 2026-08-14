@@ -1,0 +1,71 @@
+{
+    "jobType": "skim",
+    "commments": "For the S2 skimming of RunIII2024Summer24NanoAODv15.",
+
+    "name": "RunIII2024Summer24NanoAODv15_Mu_Skim",
+    "year": "2024",
+    "era": "RunIII2024Summer24NanoAODv15",
+    "merge": 1,
+    "preliminary": 0,
+    "outDir": "/data1/users/tiyang/CR_3l_twoJets_0813/",
+    "datasets": [
+        "WZ3l",
+        "ZZ4l",
+
+        "TTHBB",
+        "TTHnonBB",
+	"TTWH",
+
+        "TTZ_low",
+        "TTZ_high",
+
+        "TTW",
+        "TTTT",
+
+        "TTWW",
+        "TTWZ",
+        "TTZZ"
+    ],
+
+    "isData": 0,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/MultiMuon_CR/PUJECcorrected/RunIII2024Summer24NanoAODv15_JECcorr_1bfid_muonAvoid.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/MET_filter.json",
+        "json/cuts/SignalRegion/twoJets.json"
+    ],
+
+    "shiftSyst": {
+        "CMS_scale_j_FlavorQCD": ["Jet_pt_JEC"],
+        "CMS_scale_j_RelativeBal": ["Jet_pt_JEC"],
+        "CMS_scale_j_HF": ["Jet_pt_JEC"],
+        "CMS_scale_j_BBEC1": ["Jet_pt_JEC"],
+        "CMS_scale_j_EC2": ["Jet_pt_JEC"],
+        "CMS_scale_j_Absolute": ["Jet_pt_JEC"],
+        "CMS_scale_j_Absolute_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_HF_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_EC2_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_RelativeSample_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_BBEC1_2024": ["Jet_pt_JEC"]
+    },
+    "skimSystSelection_relax": {
+        "type": "fourJetUpEnvelope",
+        "nJet": 4,
+        "jetPtThreshold": 30.0,
+        "goodJetExpr": "(Jet_pt_JEC_skimJMEUpEnvelope > 30.0) && (abs(Jet_eta) < 2.5) && (Jet_rawFactor < 0.9) && Jet_passJetIdTight",
+        "skipNominalFourJet": 1,
+        "skipSteps": ["nGoodJet_noDRSel", "at least four good jets"]
+    },
+
+    "skimSystSelection": {
+        "type": "fourJetUpEnvelope",
+        "nJet": 2,
+        "jetPtThreshold": 30.0,
+        "skipNominalFourJet": 1,
+        "skipSteps": ["nGoodJet", "at least four good jets"]
+    },
+
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}
+

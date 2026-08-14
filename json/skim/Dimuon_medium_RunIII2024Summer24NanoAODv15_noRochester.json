@@ -8,11 +8,11 @@
 
     "preliminary": 1,
     "merge": 0,
-    "maxFiles": 16,
+    "maxFiles": -1,
     "isData": 0,
 
     "outDir": "/data2/common/skimmed_NanoAOD/skim_0126_medium_dimuon/",
-    "datasets": [
+    "datasets_backup": [
         "DY2Mu",
         "DY2Mu_low",
 
@@ -63,9 +63,22 @@
         "QCD_1000_mu",
 
         "TTZ_low",
-        "TTZ_high"
+        "TTZ_high",
+        "TTW",
+        "TTTT"
     ],
 
+    "datasets": [
+        "WJet_HT40to100",
+        "WJet_HT100to400",
+        "WJet_HT400to800",
+        "WJet_HT800to1500",
+        "WJet_HT1500to2500",
+        "WJet_HT2500"
+    ],
+    "datasets": [
+        "WMu_Jets"
+    ],
     "sampleConfig": "json/samples/rawNanoAOD/RunIII2024Summer24NanoAODv15.json",
     "cutConfig": [
         "json/cuts/Dimuon_skim/Dimuon_skim_2024.json"

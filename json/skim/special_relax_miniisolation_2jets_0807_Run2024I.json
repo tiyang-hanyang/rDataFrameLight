@@ -1,0 +1,21 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run2024I.",
+    "name": "Run2024I_Mu_Skim",
+    "year": "2024",
+    "era": "Run2024I",
+    "isData": 1,
+    "merge": 0,
+    "outDir": "/data1/users/tiyang/CR_relax_miniIsolation_twoJets_0807/",
+    "datasets": [
+        "Muon0",
+        "Muon1"
+    ],
+    "mcWeight": "genWeight",
+    "sampleConfig": "json/samples/special_relax_miniisolation/Run2024I_special_relax_miniIso_JEScorr_June18.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/MET_filter.json",
+        "json/cuts/SignalRegion/twoJets.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

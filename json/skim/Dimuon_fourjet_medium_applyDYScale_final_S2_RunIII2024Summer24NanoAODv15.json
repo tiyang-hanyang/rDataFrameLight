@@ -1,0 +1,26 @@
+{
+    "jobType": "skim",
+    "commments": "For the S3 skimming of RunIII2024Summer24NanoAODv15",
+
+    "name": "RunIII2024Summer24NanoAODv15_Mu_Skim",
+    "year": "2024",
+    "era": "RunIII2024Summer24NanoAODv15",
+    "merge": 1,
+
+    "outDir": "/data1/users/tiyang/SR_S2_after_everything_scale_DY_0728/",
+    "datasets": [
+        "DY2Mu",
+        "DY2Mu_low",
+        "DY2Tau",
+        "DY2Tau_low"
+    ],
+    "isData": 0,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/FourJet_NanoAOD/BTVCorrected/RunIII2024Summer24NanoAODv15_muonCorr_1bfid_ttbar_overlap_removal_btag_corrected_July20.json",
+    "cutConfig": [
+        "json/cuts/HistPlot/DYScale.json"
+    ],
+
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

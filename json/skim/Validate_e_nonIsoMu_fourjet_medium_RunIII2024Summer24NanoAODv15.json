@@ -1,0 +1,88 @@
+{
+    "jobType": "skim",
+    "commments": "For the S2 skimming of RunIII2024Summer24NanoAODv15.",
+
+    "name": "RunIII2024Summer24NanoAODv15_Mu_Skim",
+    "year": "2024",
+    "era": "RunIII2024Summer24NanoAODv15",
+    "preliminary": 0,
+    "merge": 1,
+    "outDir": "/data1/users/tiyang/CR_e_nonIsoMu_fourjets_0804/",
+    "datasets": [
+        "ttbarDL",
+        "ttbarSL",
+        "ttbar4Q",
+        "TTBB_DL",
+        "TTBB_SL",
+        "TTBB_4Q",
+
+        "TWm2L",
+        "TbarWp2L",
+        "TWm1L",
+        "TbarWp1L",
+        "TZQB",
+
+        "TTHBB",
+        "TTHnonBB",
+	"TTWH",
+	"THQ",
+	"THW",
+
+	"TTWW",
+	"TTWZ",
+	"TTZZ",
+
+        "TTZ_low",
+        "TTZ_high",
+
+        "TTW",
+        "TTTT"
+    ],
+
+    "datasets": [
+        "THQ"
+    ],
+
+    "isData": 0,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/E_nonIsoMu_for_DD/RunIII2024Summer24NanoAODv15_JECcorr.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/MET_filter.json",
+        "json/cuts/SignalRegion/fourJets.json"
+    ],
+
+    "shiftSyst": {
+        "CMS_scale_j_FlavorQCD": ["Jet_pt_JEC"],
+        "CMS_scale_j_RelativeBal": ["Jet_pt_JEC"],
+        "CMS_scale_j_HF": ["Jet_pt_JEC"],
+        "CMS_scale_j_BBEC1": ["Jet_pt_JEC"],
+        "CMS_scale_j_EC2": ["Jet_pt_JEC"],
+        "CMS_scale_j_Absolute": ["Jet_pt_JEC"],
+        "CMS_scale_j_Absolute_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_HF_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_EC2_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_RelativeSample_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_BBEC1_2024": ["Jet_pt_JEC"]
+    },
+    "skimSystSelection_relax": {
+        "type": "fourJetUpEnvelope",
+        "nJet": 4,
+        "jetPtThreshold": 30.0,
+        "goodJetExpr": "(Jet_pt_JEC_skimJMEUpEnvelope > 30.0) && (abs(Jet_eta) < 2.5) && (Jet_rawFactor < 0.9) && Jet_passJetIdTight",
+        "skipNominalFourJet": 1,
+        "skipSteps": ["nGoodJet_noDRSel", "at least four good jets"]
+    },
+
+    "skimSystSelection": {
+        "type": "fourJetUpEnvelope",
+        "nJet": 4,
+        "jetPtThreshold": 30.0,
+	"goodJetExpr": "(Jet_pt_JEC_skimJMEUpEnvelope > 30.0) && (abs(Jet_eta) < 2.5) && (Jet_rawFactor < 0.9) && JetIdTight && (Jet_drFromMuon > 0.4)",
+        "skipNominalFourJet": 1,
+        "skipSteps": ["nGoodJet", "at least four good jets"]
+    },
+
+    "branchConfig": "json/branches/EMu_validation.json"
+}
+

@@ -1,0 +1,67 @@
+{
+    "jobType": "skim",
+    "commments": "For the S3 skimming of RunIII2024Summer24NanoAODv15",
+
+    "name": "RunIII2024Summer24NanoAODv15_Mu_Skim",
+    "year": "2024",
+    "era": "RunIII2024Summer24NanoAODv15",
+    "merge": 1,
+
+    "outDir": "/data1/users/tiyang/SR_S4_4jets_2bjets_sameSign_0810/",
+    "datasets": [
+        "DY2Mu",
+        "DY2Mu_low",
+
+        "ttbarDL",
+        "ttbarSL",
+        "ttbar4Q",
+        "TTBB_DL",
+        "TTBB_SL",
+        "TTBB_4Q",
+
+        "WW2L2Nu",
+        "WZ2L2Q",
+        "ZZ2L2Q",
+        "ZZ2L2Nu",
+        "WZ3l",
+        "ZZ4l",
+
+        "WWW",
+        "WWZ",
+        "WZZ",
+        "ZZZ",
+
+        "TWm2L",
+        "TbarWp2L",
+        "TWm1L",
+        "TbarWp1L",
+        "TZQB",
+
+        "TTHBB",
+        "TTHnonBB",
+        "THQ",
+        "THW",
+        "TTWH",
+
+        "TTZ_low",
+        "TTZ_high",
+
+        "TTW",
+        "TTTT",
+
+        "TTWW",
+        "TTWZ",
+        "TTZZ",
+
+        "TTHH_2B2W_DL", 
+        "TTHH_2B2W_SL"
+    ],
+    "isData": 0,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/TwoBJet_NanoAOD/RunIII2024Summer24NanoAODv15_fourJets_twoBjets.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/SameSign.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

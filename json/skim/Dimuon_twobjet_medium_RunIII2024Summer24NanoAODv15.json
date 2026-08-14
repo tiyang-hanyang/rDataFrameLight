@@ -1,0 +1,90 @@
+{
+    "jobType": "skim",
+    "commments": "For the S3 skimming of RunIII2024Summer24NanoAODv15",
+
+    "name": "RunIII2024Summer24NanoAODv15_Mu_Skim",
+    "year": "2024",
+    "era": "RunIII2024Summer24NanoAODv15",
+    "merge": 1,
+
+    "outDir": "/data1/users/tiyang/SR_S3_dimuon_4jets_2bjets_0810/",
+    "datasets": [
+        "ttbarDL",
+        "ttbarSL",
+        "ttbar4Q",
+        "TTBB_DL",
+        "TTBB_SL",
+        "TTBB_4Q",
+
+        "WW2L2Nu",
+        "WZ2L2Q",
+        "ZZ2L2Q",
+        "ZZ2L2Nu",
+        "WZ3l",
+        "ZZ4l",
+
+        "WWW",
+        "WWZ",
+        "WZZ",
+        "ZZZ",
+
+        "TWm2L",
+        "TbarWp2L",
+        "TWm1L",
+        "TbarWp1L",
+        "TZQB",
+
+        "TTHBB",
+        "TTHnonBB",
+	"THQ",
+	"THW",
+	"TTWH",
+
+        "TTZ_low",
+        "TTZ_high",
+
+        "TTW",
+        "TTTT",
+
+	"TTWW",
+	"TTWZ",
+	"TTZZ",
+
+        "TTHH_2B2W_DL", 
+	"TTHH_2B2W_SL",
+        "DY2Mu",
+        "DY2Mu_low"
+    ],
+    "isData": 0,
+    "mcWeight": "genWeight",
+
+    "sampleConfig": "json/samples/FourJet_NanoAOD/BTVCorrected/RunIII2024Summer24NanoAODv15_muonCorr_1bfid_ttbar_overlap_removal_btag_corrected_July20.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/twoBjet_2024.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json",
+
+    "shiftSyst": {
+        "CMS_scale_j_FlavorQCD": ["Jet_pt_JEC"],
+        "CMS_scale_j_RelativeBal": ["Jet_pt_JEC"],
+        "CMS_scale_j_HF": ["Jet_pt_JEC"],
+        "CMS_scale_j_BBEC1": ["Jet_pt_JEC"],
+        "CMS_scale_j_EC2": ["Jet_pt_JEC"],
+        "CMS_scale_j_Absolute": ["Jet_pt_JEC"],
+        "CMS_scale_j_Absolute_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_HF_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_EC2_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_RelativeSample_2024": ["Jet_pt_JEC"],
+        "CMS_scale_j_BBEC1_2024": ["Jet_pt_JEC"]
+    },
+
+    "skimSystSelection": {
+        "type": "bJetUpEnvelope",
+        "nJet": 2,
+        "jetPtThreshold": 30.0,
+        "btagBranch": "Jet_btagUParTAK4B",
+        "btagThreshold": 0.1272,
+        "requireJVMEnvelope": 0,
+        "skipNominalFourJet": 1
+    }
+}

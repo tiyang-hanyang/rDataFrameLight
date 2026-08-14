@@ -1,0 +1,33 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of Run3Summer23BPixNanoAODv12",
+
+    "name": "Run3Summer23BPixNanoAODv12_Mu_Skim",
+    "year": "2023",
+    "era": "Run3Summer23BPixNanoAODv12",
+
+    "preliminary": 1,
+    "merge": 0,
+    "maxFiles": -1,
+    "isData": 0,
+
+    "outDir": "/data1/users/tiyang/JMETrig_dimuon_0512/",
+
+    "datasets": [
+        "ttbarDL",
+        "ttbarSL",
+        "ttbar4Q"
+    ],
+    "datasets": [
+        "TTHH_2B2W_DL",
+        "TTHH_2B2W_SL"
+    ],
+
+
+    "sampleConfig": "json/samples/rawNanoAOD/Run3Summer23BPixNanoAODv12.json",
+
+    "cutConfig": [
+        "json/cuts/Dimuon_skim/JME_Dimuon_skim_2023BPix.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

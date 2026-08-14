@@ -1,0 +1,31 @@
+{
+    "jobType": "skim",
+    "commments": "For the preliminary skimming of RunIII2024Summer24NanoAODv15",
+
+    "name": "RunIII2024Summer24NanoAODv15_Mu_Skim",
+    "year": "2024",
+    "era": "RunIII2024Summer24NanoAODv15",
+
+    "preliminary": 1,
+    "merge": 0,
+    "maxFiles": 200,
+    "isData": 0,
+
+    "outDir": "/data1/users/tiyang/JMETrig_dimuon_0512/",
+
+    "datasets": [
+        "ttbarDL",
+        "ttbarSL",
+        "ttbar4Q"
+    ],
+
+    "datasets": ["DY2Mu", "DY2Mu_low"],
+
+
+    "sampleConfig": "json/samples/rawNanoAOD/RunIII2024Summer24NanoAODv15.json",
+
+    "cutConfig": [
+        "json/cuts/Dimuon_skim/JME_Dimuon_skim_2024.json"
+    ],
+    "branchConfig": "json/branches/MuonMetricBranchNew.json"
+}

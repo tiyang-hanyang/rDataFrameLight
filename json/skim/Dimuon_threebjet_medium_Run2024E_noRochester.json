@@ -8,7 +8,7 @@
     "era": "Run2024E",
     "merge": 1,
 
-    "outDir": "/home/tiyang/public/SR_medium_muon_0127_threeBJet/",
+    "outDir": "/data1/users/tiyang/SR_S3_threeBTag_0318/",
     "datasets": [
         "Muon0",
         "Muon1"
