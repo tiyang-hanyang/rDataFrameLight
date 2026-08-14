@@ -2,24 +2,21 @@
     "jobType": "collectingHists",
     "comments": "S1 2024 mc jet variables creation",
 
-    "era": "RunIII2024Summer24NanoAODv15",
-    "outDir": "S1_dimuon_jetVar_May21",
+    "era": "Run3Summer23BPixNanoAODv12",
+    "outDir": "S1_dimuon_preJEC_jetVar_May21",
 
-    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/RunIII2024Summer24NanoAODv15_corrected_syst_May21.json",
+    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/Run3Summer23BPixNanoAODv12_corrected_syst_May21.json",
 
     "varNames": [
         "nGoodJet",
         "leadingJet_pt"
     ],
-    "varNames": [
-        "nGoodJet"
-    ],
     "varConfig": "json/variables/variables.json",
 
     "cutConfig": [
         "json/cuts/SignalRegion/MET_filter.json",
-        "json/cuts/HistPlot/signalRegionVariables/jets_multiplicity.json",
-        "json/cuts/HistPlot/signalRegionVariables/leading_jet_kinematics.json"
+        "json/cuts/HistPlot/signalRegionVariables/preJEC_jets_multiplicity.json",
+        "json/cuts/HistPlot/signalRegionVariables/preJEC_leading_jet_kinematics.json"
     ],
 
     "datasets": [
@@ -32,38 +29,20 @@
         "TTTT",
         "QCD",
         "TV",
-        "TTHH",
-        "VV"
-    ],
-    "datasets": [
-        "DYTau"
+        "TTHH"
     ],
     "isData": [
     ],
 
     "needMerge": {
-        "DYTau": [
-            "DY2Tau",
-            "DY2Tau_low"
-        ],
-        "TTHH" :[
-            "TTHH_2B2W_SL",
-            "TTHH_2B2W_DL"
-        ],
         "TTBB": [
             "TTBB_DL",
             "TTBB_SL",
             "TTBB_4Q"
         ],
         "DY": [
-            "DY2Mu",
-            "DY2Mu_low"
-        ],
-        "WJets": [
-            "WJet_1J",
-            "WJet_2J",
-            "WJet_3J",
-            "WJet_4J"
+            "DY2L",
+            "DY2L_low"
         ],
         "ttbar":[
             "ttbarDL",
@@ -110,39 +89,17 @@
             "WWZ",
             "WZZ",
             "ZZZ"
-        ]
+        ],
+        "TTHH": ["TTHH_2B2W_DL", "TTHH_2B2W_SL"]
     },
 
     "MCweight": [
-        "genWeight", "PUWeight", "JVMweight"
+        "genWeight", "PUWeight"
     ],
 
     "weightSyst": {
         "PUWeight": ["PUWeight_up", "PUWeight_down"]
     },
-    "shiftSyst": {
-        "JES_NP_common": ["Jet_pt_JEC"],
-        "JES_NP_2024": ["Jet_pt_JEC"]
-    },
-
-    "shiftExprSyst": {
-        "JER_corr": {
-            "Jet_pt_JEC": [
-                "Jet_pt_JEC/Jet_JER_corr*Jet_JER_corr_up",
-                "Jet_pt_JEC/Jet_JER_corr*Jet_JER_corr_down"
-            ]
-        }
-    },
-    "shiftWeightSyst": {
-        "JES_NP_common": ["JVMweight"],
-        "JES_NP_2024": ["JVMweight"],
-        "JER_corr": [
-            "JVMweight",
-            "JVMweight_JER_corr_up",
-            "JVMweight_JER_corr_down"
-        ]
-    },
-
 
     "lumiConfig": "json/Lumi/Run3.json"
 }

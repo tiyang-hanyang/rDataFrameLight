@@ -3,16 +3,13 @@
     "comments": "S1 2024 mc jet variables creation",
 
     "era": "RunIII2024Summer24NanoAODv15",
-    "outDir": "S1_dimuon_jetVar_May21",
+    "outDir": "S1_dimuon_jetVar_ttbar_overlap_removal",
 
-    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/RunIII2024Summer24NanoAODv15_corrected_syst_May21.json",
+    "sampleConfig": "json/samples/Dimuon_NanoAOD/RunIII2024Summer24NanoAODv15_forCorr_ttbar_overlap_removal.json",
 
     "varNames": [
         "nGoodJet",
         "leadingJet_pt"
-    ],
-    "varNames": [
-        "nGoodJet"
     ],
     "varConfig": "json/variables/variables.json",
 
@@ -23,29 +20,12 @@
     ],
 
     "datasets": [
-        "DY",
-        "WJets",
-        "ttbar",
-        "TTH",
-        "TTW",
-        "TTZ",
-        "TTTT",
-        "QCD",
-        "TV",
-        "TTHH",
-        "VV"
-    ],
-    "datasets": [
-        "DYTau"
+        "ttbar_removal"
     ],
     "isData": [
     ],
 
     "needMerge": {
-        "DYTau": [
-            "DY2Tau",
-            "DY2Tau_low"
-        ],
         "TTHH" :[
             "TTHH_2B2W_SL",
             "TTHH_2B2W_DL"
@@ -65,7 +45,7 @@
             "WJet_3J",
             "WJet_4J"
         ],
-        "ttbar":[
+        "ttbar_removal":[
             "ttbarDL",
             "ttbarSL",
             "ttbar4Q"

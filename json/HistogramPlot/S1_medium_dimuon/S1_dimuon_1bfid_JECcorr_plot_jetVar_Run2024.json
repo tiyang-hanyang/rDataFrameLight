@@ -1,0 +1,166 @@
+{
+    "jobType": "plot",
+    "comments": "S1 full 2024 dimuon corretion",
+    "inDir": "S1_dimuon_1bfid_JECcorr_jetVar_July21",
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+    "outDir": "S1_dimuon_1bfid_JECcorr_jetVar_July21_plot",
+    "name": "S1_dimuon_1bfid_JECcorr_jetVar_July21_DataMC_plot",
+    "era": [
+        "Run2024C",
+        "Run2024D",
+        "Run2024E",
+        "Run2024F",
+        "Run2024G",
+        "Run2024H",
+        "Run2024I"
+    ],
+    "mc_era": [
+        "RunIII2024Summer24NanoAODv15"
+    ],
+    "varNames": [
+        "nGoodJet"
+    ],
+    "needCrop": [
+    ],
+    "cropedRange": {
+    },
+    "histXSize": 700,
+    "histYSize": 800,
+    "datasets": [
+        "Muon",
+	"DY",
+        "WJets",
+        "ttbar",
+        "TTBB",
+        "TTH",
+        "TTW",
+        "TTZ",
+        "TTTT",
+        "TTVV",
+        "QCD",
+        "TV",
+        "TTHH",
+        "VV",
+        "VVV"
+    ],
+
+    "needMerge": {},
+    "isData": [
+        "Muon"
+    ],
+    "isSignal": [
+        "TTHH"
+    ],
+    "doLogPlot": 0,
+    "doRatioPlot": 1,
+    "doNormPlot": 0,
+    "numerator": [
+        "Muon"
+    ],
+    "stackOrder": [
+        "DY",
+        "WJets",
+        "ttbar",
+        "TTBB",
+        "TTH",
+        "TTW",
+        "TTZ",
+        "TTTT",
+        "TTVV",
+        "QCD",
+        "TV",
+        "VV",
+        "VVV"
+    ],
+    "reOrder": 1,
+    "header": [
+        "Preliminary",
+        "%1.0f fb^{-1} (13.6 TeV)"
+    ],
+    "texts": [
+        "S1: 2#mu",
+	"t#bar{t} split at 1b fid.",
+        "2024",
+        "PU, JEC corr. +syst."
+    ],
+    "varConfig": "json/variables/variables.json",
+    "lumiConfig": "json/Lumi/Run3.json",
+    "globalSystConfig": "json/syst/Run3_XSonly.json",
+    "weightSyst": {
+        "PUWeight": [
+            "PUWeight_up",
+            "PUWeight_down"
+        ]
+    },
+    "shiftSyst": {
+        "JES_NP_common": [
+            "Jet_pt_JEC"
+        ],
+        "JES_NP_2024": [
+            "Jet_pt_JEC"
+        ]
+    },
+    "shiftExprSyst": {
+        "JER_corr": {
+            "Jet_pt_JEC": [
+                "Jet_pt_JEC/Jet_JER_corr*Jet_JER_corr_up",
+                "Jet_pt_JEC/Jet_JER_corr*Jet_JER_corr_down"
+            ]
+        }
+    },
+    "shiftWeightSyst": {
+        "JES_NP_common": [
+            "JVMweight"
+        ],
+        "JES_NP_2024": [
+            "JVMweight"
+        ],
+        "JER_corr": [
+            "JVMweight",
+            "JVMweight_JER_corr_up",
+            "JVMweight_JER_corr_down"
+        ]
+    },
+    "overlaySyst": {
+        "channels": [
+            "TTHH"
+        ],
+        "includeMCStat": true
+    },
+    "signalWeightSyst": {
+        "PUWeight": [
+            "PUWeight_up",
+            "PUWeight_down"
+        ]
+    },
+    "signalShiftSyst": {
+        "JES_NP_common": [
+            "Jet_pt_JEC"
+        ],
+        "JES_NP_2024": [
+            "Jet_pt_JEC"
+        ]
+    },
+    "signalShiftExprSyst": {
+        "JER_corr": {
+            "Jet_pt_JEC": [
+                "Jet_pt_JEC/Jet_JER_corr*Jet_JER_corr_up",
+                "Jet_pt_JEC/Jet_JER_corr*Jet_JER_corr_down"
+            ]
+        }
+    },
+    "signalShiftWeightSyst": {
+        "JES_NP_common": [
+            "JVMweight"
+        ],
+        "JES_NP_2024": [
+            "JVMweight"
+        ],
+        "JER_corr": [
+            "JVMweight",
+            "JVMweight_JER_corr_up",
+            "JVMweight_JER_corr_down"
+        ]
+    }
+}

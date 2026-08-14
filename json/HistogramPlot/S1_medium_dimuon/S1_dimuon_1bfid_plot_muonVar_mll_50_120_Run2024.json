@@ -1,0 +1,74 @@
+{
+    "jobType": "plot",
+    "comments": "S1 full 2024 dimuon corretion",
+    "inDir": "S1_dimuon_mll_50_120_1bfid_jetVar_July21",
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+    "outDir": "S1_dimuon_mll_50_120_1bfid_jetVar_July21_plot",
+    "name": "S1_dimuon_mll_50_120_1bfid_jetVar_July21_DataMC_plot",
+    "era": [
+        "Run2024C",
+        "Run2024D",
+        "Run2024E",
+        "Run2024F",
+        "Run2024G",
+        "Run2024H",
+        "Run2024I"
+    ],
+    "mc_era": [
+        "RunIII2024Summer24NanoAODv15"
+    ],
+    "varNames": [
+        "diMuon_mass",
+        "diMuon_deltaEta",
+        "diMuon_dR",
+        "diMuon_dphi",
+        "leadingMuon_pt",
+        "subleadingMuon_pt"
+    ],
+    "needCrop": [
+	"diMuon_mass",
+	"leadingMuon_pt"
+    ],
+    "cropedRange": {
+        "diMuon_mass": [50, 120],
+	"leadingMuon_pt": [20, 200]
+    },
+    "histXSize": 700,
+    "histYSize": 800,
+    "datasets": [
+        "Muon",
+	"DY"
+    ],
+
+    "needMerge": {},
+    "isData": [
+        "Muon"
+    ],
+    "isSignal": [
+        "TTHH"
+    ],
+    "doLogPlot": 0,
+    "doRatioPlot": 1,
+    "doNormPlot": 0,
+    "numerator": [
+        "Muon"
+    ],
+    "stackOrder": [
+        "DY"
+    ],
+    "reOrder": 1,
+    "header": [
+        "Preliminary",
+        "%1.0f fb^{-1} (13.6 TeV)"
+    ],
+    "texts": [
+        "S1: 2#mu",
+	"50 #leq m_{ll} #leq 120 GeV",
+        "2024",
+        "PU, pre JEC."
+    ],
+    "varConfig": "json/variables/variables.json",
+    "lumiConfig": "json/Lumi/Run3.json",
+    "globalSystConfig": "json/syst/Run3_XSonly.json"
+}

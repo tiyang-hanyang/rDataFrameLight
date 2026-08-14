@@ -2,17 +2,14 @@
     "jobType": "collectingHists",
     "comments": "S1 2024 mc jet variables creation",
 
-    "era": "RunIII2024Summer24NanoAODv15",
-    "outDir": "S1_dimuon_jetVar_May21",
+    "era": "Run3Summer23NanoAODv12",
+    "outDir": "S1_dimuon_jetVar_SS_May21",
 
-    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/RunIII2024Summer24NanoAODv15_corrected_syst_May21.json",
+    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/Run3Summer23NanoAODv12_corrected_sameSign_May28.json",
 
     "varNames": [
         "nGoodJet",
         "leadingJet_pt"
-    ],
-    "varNames": [
-        "nGoodJet"
     ],
     "varConfig": "json/variables/variables.json",
 
@@ -33,19 +30,17 @@
         "QCD",
         "TV",
         "TTHH",
-        "VV"
+        "VV",
+        "VVV"
     ],
     "datasets": [
-        "DYTau"
+        "DY",
+        "WJets"
     ],
     "isData": [
     ],
 
     "needMerge": {
-        "DYTau": [
-            "DY2Tau",
-            "DY2Tau_low"
-        ],
         "TTHH" :[
             "TTHH_2B2W_SL",
             "TTHH_2B2W_DL"
@@ -56,14 +51,8 @@
             "TTBB_4Q"
         ],
         "DY": [
-            "DY2Mu",
-            "DY2Mu_low"
-        ],
-        "WJets": [
-            "WJet_1J",
-            "WJet_2J",
-            "WJet_3J",
-            "WJet_4J"
+            "DY2L",
+            "DY2L_low"
         ],
         "ttbar":[
             "ttbarDL",
@@ -122,7 +111,7 @@
     },
     "shiftSyst": {
         "JES_NP_common": ["Jet_pt_JEC"],
-        "JES_NP_2024": ["Jet_pt_JEC"]
+        "JES_NP_2023": ["Jet_pt_JEC"]
     },
 
     "shiftExprSyst": {
@@ -135,7 +124,7 @@
     },
     "shiftWeightSyst": {
         "JES_NP_common": ["JVMweight"],
-        "JES_NP_2024": ["JVMweight"],
+        "JES_NP_2023": ["JVMweight"],
         "JER_corr": [
             "JVMweight",
             "JVMweight_JER_corr_up",

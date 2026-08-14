@@ -1,0 +1,193 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S1 2023 mc jet variables creation",
+
+    "era": "Run3Summer23NanoAODv12",
+    "outDir": "S1_dimuon_jetVar",
+
+    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/Run3Summer23NanoAODv12_corrected_syst_May21.json",
+
+    "varNames": [
+        "nGoodJet",
+        "leadingJet_pt"
+    ],
+    "varConfig": "json/variables/variables.json",
+
+    "cutConfig": [
+        "json/cuts/SignalRegion/MET_filter.json",
+        "json/cuts/HistPlot/signalRegionVariables/jets_multiplicity.json",
+        "json/cuts/HistPlot/signalRegionVariables/leading_jet_kinematics.json"
+    ],
+
+    "datasets": [
+        "DY",
+        "WJets",
+        "ttbar",
+        "TTBB",
+        "TTH",
+        "TTW",
+        "TTZ",
+        "TTTT",
+        "QCD",
+        "TV",
+        "VV",
+        "VVV",
+        "TTHH"
+    ],
+    "isData": [ 
+    ],
+
+    "needMerge": {
+        "TTBB": [
+            "TTBB_DL",
+            "TTBB_SL",
+            "TTBB_4Q"
+        ],
+        "DY": [
+            "DY2L",
+            "DY2L_low"
+        ],
+        "ttbar":[
+            "ttbarDL",
+            "ttbarSL",
+            "ttbar4Q"
+        ],
+        "TTH": [
+            "TTHBB",
+            "TTHnonBB"
+        ],
+        "TV": [
+            "TWm2L",
+            "TbarWp2L",
+            "TZQB"
+        ],
+        "QCD": [
+            "QCD_15_20_mu",
+            "QCD_20_30_mu",
+            "QCD_30_50_mu",
+            "QCD_50_80_mu",
+            "QCD_80_120_mu",
+            "QCD_120_170_mu",
+            "QCD_170_300_mu",
+            "QCD_300_470_mu",
+            "QCD_470_600_mu",
+            "QCD_600_800_mu",
+            "QCD_800_1000_mu",
+            "QCD_1000_mu"
+        ],
+        "VV": [
+            "WW2L2Nu", 
+            "WZ2L2Q",
+            "ZZ2L2Nu",
+            "ZZ2L2Q",
+            "WZ3l",
+            "ZZ4l" 
+        ],
+        "TTZ": [
+            "TTZ_high",
+            "TTZ_low"
+        ],
+        "VVV": [
+            "WWW",
+            "WWZ",
+            "WZZ",
+            "ZZZ"
+        ],
+        "TTHH": ["TTHH_2B2W_DL", "TTHH_2B2W_SL"]
+    },
+
+    "MCweight": [
+        "genWeight", "PUWeight", "JVMweight"
+    ],
+
+    "weightSyst": {
+        "PUWeight": ["PUWeight_up", "PUWeight_down"]
+    },
+    "shiftSyst": {
+        "CMS_scale_j_FlavorQCD": ["Jet_pt_JEC"],
+        "CMS_scale_j_RelativeBal": ["Jet_pt_JEC"],
+        "CMS_scale_j_HF": ["Jet_pt_JEC"],
+        "CMS_scale_j_BBEC1": ["Jet_pt_JEC"],
+        "CMS_scale_j_EC2": ["Jet_pt_JEC"],
+        "CMS_scale_j_Absolute": ["Jet_pt_JEC"],
+        "CMS_scale_j_Absolute_2023": ["Jet_pt_JEC"],
+        "CMS_scale_j_HF_2023": ["Jet_pt_JEC"],
+        "CMS_scale_j_EC2_2023": ["Jet_pt_JEC"],
+        "CMS_scale_j_RelativeSample_2023": ["Jet_pt_JEC"],
+        "CMS_scale_j_BBEC1_2023": ["Jet_pt_JEC"]
+    },
+
+    "shiftExprSyst": {
+        "JER_corr": {
+            "Jet_pt_JEC": [
+                "Jet_pt_JEC/Jet_JER_corr*Jet_JER_corr_up",
+                "Jet_pt_JEC/Jet_JER_corr*Jet_JER_corr_down"
+            ]
+        }
+    },
+    "shiftWeightSyst": {
+        "CMS_scale_j_FlavorQCD": [
+            "JVMweight",
+            "JVMweight_scale_j_FlavorQCD_up",
+            "JVMweight_scale_j_FlavorQCD_down"
+        ],
+        "CMS_scale_j_RelativeBal": [
+            "JVMweight",
+            "JVMweight_scale_j_RelativeBal_up",
+            "JVMweight_scale_j_RelativeBal_down"
+        ],
+        "CMS_scale_j_HF": [
+            "JVMweight",
+            "JVMweight_scale_j_HF_up",
+            "JVMweight_scale_j_HF_down"
+        ],
+        "CMS_scale_j_BBEC1": [
+            "JVMweight",
+            "JVMweight_scale_j_BBEC1_up",
+            "JVMweight_scale_j_BBEC1_down"
+        ],
+        "CMS_scale_j_EC2": [
+            "JVMweight",
+            "JVMweight_scale_j_EC2_up",
+            "JVMweight_scale_j_EC2_down"
+        ],
+        "CMS_scale_j_Absolute": [
+            "JVMweight",
+            "JVMweight_scale_j_Absolute_up",
+            "JVMweight_scale_j_Absolute_down"
+        ],
+        "CMS_scale_j_Absolute_2023": [
+            "JVMweight",
+            "JVMweight_scale_j_Absolute_2023_up",
+            "JVMweight_scale_j_Absolute_2023_down"
+        ],
+        "CMS_scale_j_HF_2023": [
+            "JVMweight",
+            "JVMweight_scale_j_HF_2023_up",
+            "JVMweight_scale_j_HF_2023_down"
+        ],
+        "CMS_scale_j_EC2_2023": [
+            "JVMweight",
+            "JVMweight_scale_j_EC2_2023_up",
+            "JVMweight_scale_j_EC2_2023_down"
+        ],
+        "CMS_scale_j_RelativeSample_2023": [
+            "JVMweight",
+            "JVMweight_scale_j_RelativeSample_2023_up",
+            "JVMweight_scale_j_RelativeSample_2023_down"
+        ],
+        "CMS_scale_j_BBEC1_2023": [
+            "JVMweight",
+            "JVMweight_scale_j_BBEC1_2023_up",
+            "JVMweight_scale_j_BBEC1_2023_down"
+        ],
+        "JER_corr": [
+            "JVMweight",
+            "JVMweight_JER_corr_up",
+            "JVMweight_JER_corr_down"
+        ]
+    },
+
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

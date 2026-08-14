@@ -3,23 +3,20 @@
     "comments": "S1 2024 mc jet variables creation",
 
     "era": "RunIII2024Summer24NanoAODv15",
-    "outDir": "S1_dimuon_jetVar_May21",
+    "outDir": "S1_dimuon_jetVar_noOSPair_SS_1bfid_tt_July20",
 
-    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/RunIII2024Summer24NanoAODv15_corrected_syst_May21.json",
+    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/RunIII2024Summer24NanoAODv15_1bfid_corrected_July21.json",
 
-    "varNames": [
-        "nGoodJet",
-        "leadingJet_pt"
-    ],
     "varNames": [
         "nGoodJet"
     ],
     "varConfig": "json/variables/variables.json",
 
     "cutConfig": [
+        "json/cuts/SignalRegion/SameSign.json",
         "json/cuts/SignalRegion/MET_filter.json",
         "json/cuts/HistPlot/signalRegionVariables/jets_multiplicity.json",
-        "json/cuts/HistPlot/signalRegionVariables/leading_jet_kinematics.json"
+	"json/cuts/SignalRegion/define_loose_muon.json"
     ],
 
     "datasets": [
@@ -27,25 +24,18 @@
         "WJets",
         "ttbar",
         "TTH",
+	"TTVV",
         "TTW",
         "TTZ",
         "TTTT",
         "QCD",
         "TV",
         "TTHH",
-        "VV"
-    ],
-    "datasets": [
-        "DYTau"
-    ],
-    "isData": [
+        "VV",
+        "VVV"
     ],
 
     "needMerge": {
-        "DYTau": [
-            "DY2Tau",
-            "DY2Tau_low"
-        ],
         "TTHH" :[
             "TTHH_2B2W_SL",
             "TTHH_2B2W_DL"
@@ -60,11 +50,20 @@
             "DY2Mu_low"
         ],
         "WJets": [
-            "WJet_1J",
-            "WJet_2J",
-            "WJet_3J",
-            "WJet_4J"
+	    "WJet_HT100to400",
+            "WJet_HT1500to2500",
+            "WJet_HT2500",
+            "WJet_HT400to800",
+            "WJet_HT40to100",
+            "WJet_HT800to1500"
         ],
+	"WJets": [
+	    "WJet_1J",
+	    "WJet_2J",
+	    "WJet_3J",
+	    "WJet_4J",
+	    "WMu_Jets"
+	],
         "ttbar":[
             "ttbarDL",
             "ttbarSL",
@@ -72,11 +71,16 @@
         ],
         "TTH": [
             "TTHBB",
-            "TTHnonBB"
+            "TTHnonBB",
+	    "TTWH",
+	    "THQ",
+	    "THW"
         ],
         "TV": [
             "TWm2L",
             "TbarWp2L",
+	    "TWm1L",
+	    "TbarWp1L",
             "TZQB"
         ],
         "QCD": [
@@ -105,6 +109,11 @@
             "TTZ_high",
             "TTZ_low"
         ],
+	"TTVV":[
+	    "TTWW",
+	    "TTWZ",
+	    "TTZZ"
+	],
         "VVV": [
             "WWW",
             "WWZ",
@@ -116,33 +125,6 @@
     "MCweight": [
         "genWeight", "PUWeight", "JVMweight"
     ],
-
-    "weightSyst": {
-        "PUWeight": ["PUWeight_up", "PUWeight_down"]
-    },
-    "shiftSyst": {
-        "JES_NP_common": ["Jet_pt_JEC"],
-        "JES_NP_2024": ["Jet_pt_JEC"]
-    },
-
-    "shiftExprSyst": {
-        "JER_corr": {
-            "Jet_pt_JEC": [
-                "Jet_pt_JEC/Jet_JER_corr*Jet_JER_corr_up",
-                "Jet_pt_JEC/Jet_JER_corr*Jet_JER_corr_down"
-            ]
-        }
-    },
-    "shiftWeightSyst": {
-        "JES_NP_common": ["JVMweight"],
-        "JES_NP_2024": ["JVMweight"],
-        "JER_corr": [
-            "JVMweight",
-            "JVMweight_JER_corr_up",
-            "JVMweight_JER_corr_down"
-        ]
-    },
-
 
     "lumiConfig": "json/Lumi/Run3.json"
 }
