@@ -10,6 +10,7 @@ class GeneralJob:
         self.datasets = []
         self.workflow = []
         self.outDir = []
+        self.moduleOptions = {}
 
     def declare(self):
         raise NotImplementedError

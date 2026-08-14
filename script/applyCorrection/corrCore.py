@@ -4,8 +4,112 @@ import importlib.util
 import inspect
 import os
 import json
+import sys
 
 from jobDef import GeneralJob
+
+
+def run_processing_module(procName, procFunc, rdf, recordedModules, branchArray, era, dataset, moduleOptions=None):
+    moduleOptions = moduleOptions or {}
+    procOptions = moduleOptions.get(procName, {})
+    signature = inspect.signature(procFunc)
+    if "options" in signature.parameters:
+        return procFunc(rdf, recordedModules, branchArray, era, dataset, options=procOptions)
+    return procFunc(rdf, recordedModules, branchArray, era, dataset)
+
+
+def _get_genweight_sum_from_file(file_path):
+    file_in = ROOT.TFile(file_path, "read")
+    if not file_in or file_in.IsZombie():
+        raise OSError(f"cannot open ROOT file: {file_path}")
+
+    try:
+        obj = file_in.Get("genWeightSum")
+        if obj and obj.InheritsFrom("TH1"):
+            return obj.Integral()
+        if obj and hasattr(obj, "GetBinContent"):
+            return obj.GetBinContent(1)
+        if obj and hasattr(obj, "GetVal"):
+            return obj.GetVal()
+
+        runs_tree = file_in.Get("Runs")
+        if runs_tree and runs_tree.InheritsFrom("TTree"):
+            if runs_tree.GetBranch("genEventSumw"):
+                total = 0.0
+                for entry in runs_tree:
+                    total += float(entry.genEventSumw)
+                return total
+            runs_df = ROOT.ROOT.RDataFrame("Runs", file_path)
+            runs_cols = runs_df.GetColumnNames()
+            if "genEventSumw" in runs_cols:
+                return runs_df.Sum("genEventSumw").GetValue()
+
+        events_tree = file_in.Get("Events")
+        if events_tree and events_tree.InheritsFrom("TTree"):
+            if events_tree.GetBranch("genWeight"):
+                total = 0.0
+                for entry in events_tree:
+                    total += float(entry.genWeight)
+                return total
+            events_df = ROOT.ROOT.RDataFrame("Events", file_path)
+            event_cols = events_df.GetColumnNames()
+            if "genWeight" in event_cols:
+                return events_df.Sum("genWeight").GetValue()
+
+        key_names = [key.GetName() for key in file_in.GetListOfKeys()] if file_in.GetListOfKeys() else []
+        runs_branches = []
+        if runs_tree and runs_tree.InheritsFrom("TTree"):
+            runs_branches = [br.GetName() for br in runs_tree.GetListOfBranches()]
+        event_branches = []
+        if events_tree and events_tree.InheritsFrom("TTree"):
+            event_branches = [br.GetName() for br in events_tree.GetListOfBranches()]
+
+        raise RuntimeError(
+            f"{file_path} has no usable genWeight source; "
+            f"keys={key_names}, Runs branches={runs_branches[:10]}, Events has genWeight={'genWeight' in event_branches}"
+        )
+    finally:
+        file_in.Close()
+
+
+def _prepare_snapshot_columns(branchArray):
+    if branchArray is None:
+        raise RuntimeError("branchArray is None before Snapshot")
+
+    normalized = []
+    bad_entries = []
+    for idx, branch in enumerate(branchArray):
+        if branch is None:
+            bad_entries.append((idx, None, "NoneType"))
+            continue
+        try:
+            branch_name = str(branch)
+        except Exception as exc:
+            bad_entries.append((idx, repr(branch), f"{type(branch).__name__}: {exc}"))
+            continue
+        if not branch_name:
+            bad_entries.append((idx, repr(branch), "empty string"))
+            continue
+        normalized.append(branch_name)
+
+    if bad_entries:
+        raise RuntimeError(f"Invalid Snapshot branch entries: {bad_entries[:10]}")
+    if not normalized:
+        raise RuntimeError("No branches selected for Snapshot")
+
+    out = ROOT.std.vector("string")()
+    for branch_name in normalized:
+        out.push_back(branch_name)
+    return out
+
+
+def _chunk_file_paths(file_paths, chunk_size):
+    if chunk_size is None:
+        return [file_paths]
+    chunk_size = int(chunk_size)
+    if chunk_size <= 0:
+        raise ValueError(f"heavySplit chunk size must be positive, got {chunk_size}")
+    return [file_paths[i:i + chunk_size] for i in range(0, len(file_paths), chunk_size)]
 
 neededBr = [
     "run",
@@ -79,6 +183,7 @@ neededBr = [
     "Muon_mvaMuID_WP",
     "Muon_mvaMuID",
     "Muon_promptMVA",
+    "Muon_promptMVA_compat",
     "Muon_mvaTTH",
     "Muon_dxy",
     "Muon_dxyErr",
@@ -102,6 +207,12 @@ neededBr = [
     "Muon_pt_Rscale_dn",
     "Muon_pt_Rcorr_resolup",
     "Muon_pt_Rcorr_resoldn",
+    "Muon_originTraceCode",
+    "Muon_hasGenMuon",
+    "Muon_isFromB",
+    "Muon_isFromC",
+    "Muon_isPrompt",
+    "Muon_isFromFromTop",
 
     "leadingMuon_charge",
     "leadingMuon_pt",
@@ -160,15 +271,106 @@ neededBr = [
     "weight_XS",
     "PassJetVeto",
     "btag_weight",
+    "btag_weight_up",
+    "btag_weight_down",
+    "btag_weight_lf_up",
+    "btag_weight_lf_down",
+    "btag_weight_lfstats1_up",
+    "btag_weight_lfstats1_down",
+    "btag_weight_lfstats2_up",
+    "btag_weight_lfstats2_down",
+    "btag_weight_hf_up",
+    "btag_weight_hf_down",
+    "btag_weight_hfstats1_up",
+    "btag_weight_hfstats1_down",
+    "btag_weight_hfstats2_up",
+    "btag_weight_hfstats2_down",
+    "btag_weight_cferr1_up",
+    "btag_weight_cferr1_down",
+    "btag_weight_cferr2_up",
+    "btag_weight_cferr2_down",
+    "btag_weight_mur_up",
+    "btag_weight_mur_down",
+    "btag_weight_pileup_up",
+    "btag_weight_pileup_down",
+    "btag_weight_pdfas_up",
+    "btag_weight_pdfas_down",
+    "btag_weight_isrdef_up",
+    "btag_weight_isrdef_down",
+    "btag_weight_topmass_up",
+    "btag_weight_topmass_down",
+    "btag_weight_bfragmentation_up",
+    "btag_weight_bfragmentation_down",
+    "btag_weight_hdamp_up",
+    "btag_weight_hdamp_down",
+    "btag_weight_jer_up",
+    "btag_weight_jer_down",
+    "btag_weight_statistic_up",
+    "btag_weight_statistic_down",
+    "btag_weight_muf_up",
+    "btag_weight_muf_down",
+    "btag_weight_fsrdef_up",
+    "btag_weight_fsrdef_down",
+    "btag_weight_jes_up",
+    "btag_weight_jes_down",
+    "btag_weight_type3_up",
+    "btag_weight_type3_down",
     "Muon_IDscale",
+    "Muon_IDscale_up",
+    "Muon_IDscale_down",
     "Muon_Isoscale",
+    "Muon_Isoscale_up",
+    "Muon_Isoscale_down",
     "Muon_MVAscale",
+    "Muon_MVAscale_up",
+    "Muon_MVAscale_down",
     "MuonScale",
+    "MuonScale_up",
+    "MuonScale_down",
+    "TriggerScale",
+    "TriggerScale_up",
+    "TriggerScale_down",
     "ZptWgt",
     "PUWeight",
+    "PUWeight_up",
+    "PUWeight_down",
     "IsoMu24Scale",
 
     "Jet_rawFactor",
+    "Jet_JER_corr",
+    "Jet_JER_corr_up",
+    "Jet_JER_corr_down",
+    "CMS_scale_j_FlavorQCD",
+    "CMS_scale_j_RelativeBal",
+    "CMS_scale_j_HF",
+    "CMS_scale_j_BBEC1",
+    "CMS_scale_j_EC2",
+    "CMS_scale_j_Absolute",
+    "CMS_scale_j_Absolute_2022",
+    "CMS_scale_j_HF_2022",
+    "CMS_scale_j_EC2_2022",
+    "CMS_scale_j_RelativeSample_2022",
+    "CMS_scale_j_BBEC1_2022",
+    "CMS_scale_j_Absolute_2022EE",
+    "CMS_scale_j_HF_2022EE",
+    "CMS_scale_j_EC2_2022EE",
+    "CMS_scale_j_RelativeSample_2022EE",
+    "CMS_scale_j_BBEC1_2022EE",
+    "CMS_scale_j_Absolute_2023",
+    "CMS_scale_j_HF_2023",
+    "CMS_scale_j_EC2_2023",
+    "CMS_scale_j_RelativeSample_2023",
+    "CMS_scale_j_BBEC1_2023",
+    "CMS_scale_j_Absolute_2023BPix",
+    "CMS_scale_j_HF_2023BPix",
+    "CMS_scale_j_EC2_2023BPix",
+    "CMS_scale_j_RelativeSample_2023BPix",
+    "CMS_scale_j_BBEC1_2023BPix",
+    "CMS_scale_j_Absolute_2024",
+    "CMS_scale_j_HF_2024",
+    "CMS_scale_j_EC2_2024",
+    "CMS_scale_j_RelativeSample_2024",
+    "CMS_scale_j_BBEC1_2024",
     "Rho_fixedGridRhoFastjetAll",
     "Jet_genJetIdx",
     "nGenJet",
@@ -185,11 +387,98 @@ neededBr = [
     "Muon_conePt",
     "onlyLeadingFake",
     "onlySubleadingFake",
-    "bothFake"
+    "bothFake",
+
+    "Electron_pt",
+    "Electron_phi",
+    "Electron_eta",
+    "Electron_superclusterEta",
+    "Electron_deltaEtaSC",
+    "Electron_sieie",
+    "Electron_mass",
+    "Electron_charge",
+
+    "Electron_genPartIdx",
+    "Electron_genPartFlav",
+
+    "Electron_dxy",
+    "Electron_dz",
+    "Electron_ip3d",
+    "Electron_sip3d",
+
+    "Electron_eInvMinusPInv",
+    "Electron_hoe",
+    "Electron_convVeto",
+    "Electron_lostHits",
+    "Electron_mvaIso_WP80",
+    "Electron_mvaIso_WP90",
+    "Electron_mvaIso_WPHZZ",
+    "Electron_mvaNoIso_WP80",
+    "Electron_mvaNoIso_WP90",
+    "Electron_jetIdx",
+    "Electron_jetRelIso",
+    "Electron_jetPtRelv2",
+    "Electron_jetDF",
+    "Electron_miniPFRelIso_all",
+    "Electron_pfRelIso03_all",
+    "Electron_pfRelIso04_all",
+    "Electron_cutBased",
+    "Electron_promptMVA",
+
+    "leadingElectronIdx"
 ]
 
+_jvm_syst_sources = [
+    "scale_j_FlavorQCD",
+    "scale_j_RelativeBal",
+    "scale_j_HF",
+    "scale_j_BBEC1",
+    "scale_j_EC2",
+    "scale_j_Absolute",
+    "scale_j_Absolute_2022",
+    "scale_j_HF_2022",
+    "scale_j_EC2_2022",
+    "scale_j_RelativeSample_2022",
+    "scale_j_BBEC1_2022",
+    "scale_j_Absolute_2022EE",
+    "scale_j_HF_2022EE",
+    "scale_j_EC2_2022EE",
+    "scale_j_RelativeSample_2022EE",
+    "scale_j_BBEC1_2022EE",
+    "scale_j_Absolute_2023",
+    "scale_j_HF_2023",
+    "scale_j_EC2_2023",
+    "scale_j_RelativeSample_2023",
+    "scale_j_BBEC1_2023",
+    "scale_j_Absolute_2023BPix",
+    "scale_j_HF_2023BPix",
+    "scale_j_EC2_2023BPix",
+    "scale_j_RelativeSample_2023BPix",
+    "scale_j_BBEC1_2023BPix",
+    "scale_j_Absolute_2024",
+    "scale_j_HF_2024",
+    "scale_j_EC2_2024",
+    "scale_j_RelativeSample_2024",
+    "scale_j_BBEC1_2024",
+]
+for _jvm_syst_source in _jvm_syst_sources:
+    neededBr.append(f"JVMweight_{_jvm_syst_source}_up")
+    neededBr.append(f"JVMweight_{_jvm_syst_source}_down")
+neededBr.append("JVMweight_JER_corr_up")
+neededBr.append("JVMweight_JER_corr_down")
+
 # to process all the decorations for merged process into a single output
-def processMergeDS(era, dataset, filePaths, commonOutDir, procedures, recordedModules, needSlice=1):
+def processMergeDS(
+    era,
+    dataset,
+    filePaths,
+    commonOutDir,
+    procedures,
+    recordedModules,
+    needSlice=1,
+    moduleOptions=None,
+    output_name=None,
+):
     outDir = commonOutDir+"/"+era+"/"+dataset+"/"
     if not os.path.exists(outDir):
         os.makedirs(outDir)
@@ -197,8 +486,12 @@ def processMergeDS(era, dataset, filePaths, commonOutDir, procedures, recordedMo
     # always enable MT
     ROOT.EnableImplicitMT() 
 
+    isData = (era=="Run2024C") or (era=="Run2024D") or (era=="Run2024E") or (era=="Run2024F") or (era=="Run2024G") or (era=="Run2024H") or (era=="Run2024I") or (era=="Run2023C") or (era=="Run2023D") or (era=="Run2022C") or (era=="Run2022D") or (era=="Run2022E") or (era=="Run2022F") or (era=="Run2022G")
+
     # if the merged job output already exist, then nothing needed, just skip.
-    fout = outDir + dataset + "_skimmed.root"
+    if output_name is None:
+        output_name = dataset + "_skimmed.root"
+    fout = outDir + output_name
     if os.path.isfile(fout):
         print(fout, "already exists, skip")
         return recordedModules
@@ -206,15 +499,25 @@ def processMergeDS(era, dataset, filePaths, commonOutDir, procedures, recordedMo
     # processing
     ch1=ROOT.TChain("Events")
     samples = 0
+    validGenWeightSums = []
     for fin in filePaths:
         fileTest = ROOT.TFile(fin, "read")
         if not "Events" in fileTest.GetListOfKeys():
+            fileTest.Close()
             continue
         tempTree = fileTest.Get("Events")
         if not tempTree:
+            fileTest.Close()
             continue
         if tempTree.GetEntries() == 0:
+            fileTest.Close()
             continue
+        fileTest.Close()
+
+        if not isData:
+            fileGenWeightSum = _get_genweight_sum_from_file(fin)
+            validGenWeightSums.append(fileGenWeightSum)
+
         ch1.Add(fin)
         samples += 1
     if samples == 0:
@@ -239,19 +542,23 @@ def processMergeDS(era, dataset, filePaths, commonOutDir, procedures, recordedMo
         procFunc = getattr(procModel, "processing")
         if not callable(procFunc):
             raise TypeError(f"`processing` in {module_path} is not callable")
-        rdf, recordedModules, branchArray = procFunc(rdf, recordedModules, branchArray, era, dataset)
-    rdf.Snapshot("Events", fout, branchArray, opt)
+        rdf, recordedModules, branchArray = run_processing_module(
+            procName,
+            procFunc,
+            rdf,
+            recordedModules,
+            branchArray,
+            era,
+            dataset,
+            moduleOptions=moduleOptions,
+        )
+    snapshotColumns = _prepare_snapshot_columns(branchArray)
+    rdf.Snapshot("Events", fout, snapshotColumns, opt)
 
     # transfer the genWeight
     # only for MC
-    isData = (era=="Run2024C") or (era=="Run2024D") or (era=="Run2024E") or (era=="Run2024F") or (era=="Run2024G") or (era=="Run2024H") or (era=="Run2024I") or (era=="Run2023C") or (era=="Run2023D") or (era=="Run2022C") or (era=="Run2022D") or (era=="Run2022E") or (era=="Run2022F") or (era=="Run2022G")
     if not isData:
-        totalGenWeight = 0.0
-        for fin in filePaths:
-            fileIn = ROOT.TFile(fin, "read")
-            genWeightHist = fileIn.Get("genWeightSum")
-            totalGenWeight += genWeightHist.Integral()
-            fileIn.Close()
+        totalGenWeight = sum(validGenWeightSums)
         fileOut = ROOT.TFile(fout, "UPDATE")
         genWeightSumHist = ROOT.TH1D("genWeightSum", "sum of genWeight", 1, 0.0, 1.0) 
         genWeightSumHist.SetBinContent(1, totalGenWeight)
@@ -262,7 +569,7 @@ def processMergeDS(era, dataset, filePaths, commonOutDir, procedures, recordedMo
     return recordedModules
 
 # to process all the decorations for the non-merged process, one file to one file
-def processNonMergeDS(era, dataset, filePaths, commonOutDir, procedures, recordedModules, batch_size=16, needSlice=1):
+def processNonMergeDS(era, dataset, filePaths, commonOutDir, procedures, recordedModules, batch_size=16, needSlice=1, moduleOptions=None):
     outDir = commonOutDir+"/"+era+"/"+dataset+"/"
     if not os.path.exists(outDir):
         os.makedirs(outDir)
@@ -312,8 +619,18 @@ def processNonMergeDS(era, dataset, filePaths, commonOutDir, procedures, recorde
                 procFunc = getattr(procModel, "processing")
                 if not callable(procFunc):
                     raise TypeError(f"`processing` in {module_path} is not callable")
-                rdf, recordedModules, branchArray = procFunc(rdf, recordedModules, branchArray, era, dataset)
-            h = rdf.Snapshot("Events", fout, branchArray, opt)
+                rdf, recordedModules, branchArray = run_processing_module(
+                    procName,
+                    procFunc,
+                    rdf,
+                    recordedModules,
+                    branchArray,
+                    era,
+                    dataset,
+                    moduleOptions=moduleOptions,
+                )
+            snapshotColumns = _prepare_snapshot_columns(branchArray)
+            h = rdf.Snapshot("Events", fout, snapshotColumns, opt)
             handles.append(h)  
             graphs.append(rdf)
         ROOT.RDF.RunGraphs(handles)
@@ -347,6 +664,25 @@ def load_job_from_file(file_path: str) -> GeneralJob:
     raise RuntimeError(f"{file_path} is not a derived class of GeneralJob")
 
 
+def _load_sample_list(job, era, ds):
+    periods, datasets, mergeDS, workflow, fileJson, outDir = job.declare()
+    if era not in periods:
+        raise RuntimeError(f"Era {era} is not declared in job periods: {periods}")
+    if ds not in datasets:
+        raise RuntimeError(f"Dataset {ds} is not declared in job datasets: {datasets}")
+
+    with open(fileJson[era]) as jFile:
+        jsonFull = json.load(jFile)
+
+    if ds not in jsonFull["dir"].keys() or ds not in jsonFull["file"].keys():
+        raise RuntimeError(f"{ds} is not available in sample json for era {era}")
+
+    sampleList = sorted([jsonFull["dir"][ds] + i for i in jsonFull["file"][ds]])
+    if len(sampleList) == 0:
+        raise RuntimeError(f"Dataset {ds} in era {era} has an empty sample list")
+    return sampleList
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -356,6 +692,8 @@ def main():
     args = parser.parse_args()
     job = load_job_from_file(args.job_file)
     periods, datasets, mergeDS, workflow, fileJson, outDir = job.declare()
+    moduleOptions = getattr(job, "moduleOptions", {})
+    heavySplit = getattr(job, "heavySplit", {})
 
     # need additional control only turned on the reduce branches in the initial skim
     needSlice = 0
@@ -371,15 +709,43 @@ def main():
             if ds not in jsonFull["dir"].keys() or ds not in jsonFull["file"].keys():
                 print(ds, "not available after selection.")
                 continue
-            sampleList = [ jsonFull["dir"][ds] + i for i in jsonFull["file"][ds]]
+            sampleList = sorted([jsonFull["dir"][ds] + i for i in jsonFull["file"][ds]])
             if len(sampleList) == 0:
                 print("DS", ds, "does not exist")
                 continue
             print(sampleList)
             if ds in mergeDS:
-                recordedModules=processMergeDS(era, ds, sampleList, outDir, workflow, recordedModules, needSlice)
+                chunk_size = heavySplit.get(ds)
+                if chunk_size is None:
+                    recordedModules = processMergeDS(
+                        era,
+                        ds,
+                        sampleList,
+                        outDir,
+                        workflow,
+                        recordedModules,
+                        needSlice,
+                        moduleOptions=moduleOptions,
+                    )
+                else:
+                    sample_chunks = _chunk_file_paths(sampleList, chunk_size)
+                    print(f"heavySplit enabled for {ds}: {len(sampleList)} input files -> {len(sample_chunks)} merged chunks with size {chunk_size}")
+                    for chunk_idx, sample_chunk in enumerate(sample_chunks, start=1):
+                        output_name = f"{ds}_skimmed_{int(chunk_size)}_{chunk_idx}.root"
+                        print(f"processing heavySplit chunk {chunk_idx}/{len(sample_chunks)}: {output_name}")
+                        recordedModules = processMergeDS(
+                            era,
+                            ds,
+                            sample_chunk,
+                            outDir,
+                            workflow,
+                            recordedModules,
+                            needSlice,
+                            moduleOptions=moduleOptions,
+                            output_name=output_name,
+                        )
             else:
-                recordedModules=processNonMergeDS(era, ds, sampleList, outDir, workflow, recordedModules, needSlice)
+                recordedModules=processNonMergeDS(era, ds, sampleList, outDir, workflow, recordedModules, needSlice, moduleOptions=moduleOptions)
 
 if __name__ == "__main__":
     main()

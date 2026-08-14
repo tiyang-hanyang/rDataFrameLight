@@ -1,9 +1,9 @@
 import os
 import argparse
 import json
+import re
 
-def name_simplification(folderName):
-    name_short = {
+OFFICIAL_NAME_SHORT = {
         "DYto2Mu-2Jets_Bin-MLL-50_TuneCP5_13p6TeV_amcatnloFXFX-pythia8": "DY2Mu",
         "DYto2Mu_Bin-MLL-10to50_TuneCP5_13p6TeV_powheg-pythia8": "DY2Mu_low",
         "DYto2Tau-2Jets_Bin-MLL-50_TuneCP5_13p6TeV_amcatnloFXFX-pythia8": "DY2Tau",
@@ -19,9 +19,15 @@ def name_simplification(folderName):
         "TTBBto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8": "TTBB_DL",
         "TTBBtoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8": "TTBB_SL",
         "TTBBto4Q_TuneCP5_13p6TeV_powheg-pythia8": "TTBB_4Q",
+
+        "TTHH-TTto2L2Nu-HHto2B2W_TuneCP5_13p6TeV_madgraph-pythia8": "TTHH_2B2W_DL",
+        "TTHH-TTtoLNu2Q-HHto2B2W_TuneCP5_13p6TeV_madgraph-pythia8": "TTHH_2B2W_SL",
+        "TTHH-TTto2L2Nu-HHto2B2Tau_TuneCP5_13p6TeV_madgraph-pythia8": "TTHH_2B2Tau_DL",
     
         "TTHto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8": "TTHBB",
+        "TTH_Hto2B_M-125_TuneCP5_13p6TeV_powheg-pythia8": "TTHBB",
         "TTHtoNon2B_M-125_TuneCP5_13p6TeV_powheg-pythia8": "TTHnonBB",
+        "TTH_HtoNon2B_M-125_TuneCP5_13p6TeV_powheg-pythia8": "TTHnonBB",
         "TTH-Hto2B_Par-M-125_TuneCP5_13p6TeV_powheg-pythia8": "TTHBB",
         "TTH-HtoNon2B_Par-M-125_TuneCP5_13p6TeV_powheg-pythia8": "TTHnonBB",
         "TTZH_TuneCP5_13p6TeV_madgraph-pythia8": "TTZH",
@@ -29,10 +35,13 @@ def name_simplification(folderName):
         "TTZH-ZHto4B_TuneCP5_13p6TeV_madgraph-pythia8": "TTZH",
         "THQ_ctcvcp_HIncl_M-125_4FS_TuneCP5_13p6TeV_madgraph-pythia8": "THQ",
         "THW_ctcvcp_HIncl_M-125_5FS_TuneCP5_13p6TeV_madgraph-pythia8": "THW",
+        "THQ-4FS-ctcvcp_Par-M-125_TuneCP5_13p6TeV_madgraph-pythia8": "THQ",
+        "THW-5FS-ctcvcp_Par-M-125_TuneCP5_13p6TeV_madgraph-pythia8": "THW",
 
         "WWW_4F_TuneCP5_13p6TeV_amcatnlo-madspin-pythia8": "WWW",
         "WWW-4F_TuneCP5_13p6TeV_amcatnlo-pythia8": "WWW",
         "WWZ-4F_TuneCP5_13p6TeV_amcatnlo-pythia8": "WWZ",
+        "WWZ_4F_TuneCP5_13p6TeV_amcatnlo-pythia8": "WWZ",
         "WZZ-5F_TuneCP5_13p6TeV_amcatnlo-pythia8": "WZZ",
         "ZZZ-5F_TuneCP5_13p6TeV_amcatnlo-pythia8": "ZZZ",
         "WZZ_TuneCP5_13p6TeV_amcatnlo-pythia8": "WZZ",
@@ -84,37 +93,185 @@ def name_simplification(folderName):
         "TTZZ_TuneCP5_13p6TeV_madgraph-madspin-pythia8": "TTZZ",
         "TTWW_TuneCP5_13p6TeV_madgraph-pythia8": "TTWW",
         "TTWZ_TuneCP5_13p6TeV_madgraph-pythia8": "TTWZ",
+        "TTZZ_TuneCP5_13p6TeV_madgraph-pythia8": "TTZZ",
 
-        "WtoLNu-4Jets_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WJets",
+        "WtoMuNu-4Jets_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WMu_Jets",
         "WtoLNu-4Jets_Bin-1J_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WJet_1J",
         "WtoLNu-4Jets_Bin-2J_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WJet_2J",
         "WtoLNu-4Jets_Bin-3J_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WJet_3J",
         "WtoLNu-4Jets_Bin-4J_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WJet_4J",
+        "WtoLNu-4Jets_Bin-HT-40to100-MLNu-0to120_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WJet_HT40to100",
+        "WtoLNu-4Jets_Bin-HT-100to400-MLNu-0to120_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WJet_HT100to400",
+        "WtoLNu-4Jets_Bin-HT-400to800-MLNu-0to120_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WJet_HT400to800",
+        "WtoLNu-4Jets_Bin-HT-800to1500-MLNu-0to120_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WJet_HT800to1500",
+        "WtoLNu-4Jets_Bin-HT-1500to2500-MLNu-0to120_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WJet_HT1500to2500",
+        "WtoLNu-4Jets_Bin-HT-2500-MLNu-0to120_TuneCP5_13p6TeV_madgraphMLM-pythia8": "WJet_HT2500",
 
         "TbarWplusto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8": "TbarWp2L",
         "TbarWplustoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8": "TbarWp1L",
-        "TbarWplusto4Q_TuneCP5_13p6TeV_powheg-pythia8": "TbarWp4Q",
         "TWminusto2L2Nu_TuneCP5_13p6TeV_powheg-pythia8": "TWm2L",
         "TWminustoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8": "TWm1L",
-        "TWminusto4Q_TuneCP5_13p6TeV_powheg-pythia8": "TWm4Q",
         "TZQB-Zto2L-4FS_Bin-MLL-30_TuneCP5_13p6TeV_amcatnlo-pythia8": "TZQB",
+        "TZQB-Zto2L-4FS_MLL-30_TuneCP5_13p6TeV_amcatnlo-pythia8": "TZQB",
 
+        "TBbarQtoLNu-t-channel-4FS_TuneCP5_13p6TeV_powheg-madspin-pythia8": "TBbarQ",
         "TBbarQ_t-channel_4FS_TuneCP5_13p6TeV_powheg-madspin-pythia8": "TBbarQ",
+        "TbarBQtoLNu-t-channel-4FS_TuneCP5_13p6TeV_powheg-madspin-pythia8": "TbarBQ",
         "TbarBQ_t-channel_4FS_TuneCP5_13p6TeV_powheg-madspin-pythia8": "TbarBQ",
-        "TBbarQto2Q-t-channel-4FS_TuneCP5_13p6TeV_powheg-madspin-pythia8": "TBbarQ2Q",
-        "TBbarQtoLNu-t-channel-4FS_TuneCP5_13p6TeV_powheg-madspin-pythia8": "TBbarQ1L",
-        "TbarBQto2Q-t-channel-4FS_TuneCP5_13p6TeV_powheg-madspin-pythia8": "TbarBQ2Q",
-        "TbarBQtoLNu-t-channel-4FS_TuneCP5_13p6TeV_powheg-madspin-pythia8": "TbarBQ1L",
 
-        "TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8": "TBbar1L",
-        "TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8": "TbarB1L",
-        "TBbartoLNu-s-channel_TuneCP5_13p6TeV_powheg-pythia8": "TBbar1L",
-    }
+        "TBbartoLNu-s-channel_TuneCP5_13p6TeV_powheg-pythia8": "TBbar",
+        "TbarBtoLNu-s-channel_TuneCP5_13p6TeV_powheg-pythia8": "TbarB",
+        "TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8": "TBbar",
+        "TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8": "TbarB",
+}
 
-    if folderName in name_short.keys():
-        return name_short[folderName]
-    else:
+PRIVATE_NAME_SHORT = {
+    "TTHH_DL_LO_2B2W_251024_002450": "TTHH_DL_2B2W_batch1",
+    "TTHH_DL_LO_2B2W_251026_035857": "TTHH_DL_2B2W_batch2",
+    "TTHH_DL_LO_BBWW_251026_105906": "TTHH_DL_2B2W_batch3",
+    "TTHH_SL_LO_2B2W_251024_082942": "TTHH_SL_2B2W_batch1",
+    "TTHH_SL_LO_2B2W_251026_084231": "TTHH_SL_2B2W_batch2",
+}
+
+OFFICIAL_DATA_CHANNELS = {
+    "Muon": [
+        "Muon0",
+        "Muon1",
+        "Muon",
+    ],
+    "JetMET": [
+        "JetMET",
+        "JetMET0",
+        "JetMET1",
+    ],
+}
+
+OFFICIAL_MC_CHANNELS = [
+    "DY2Mu",
+    "DY2Mu_low",
+    "DY2L",
+    "DY2L_low",
+    "DY2Tau",
+    "DY2Tau_low",
+    "ttbarDL",
+    "ttbarSL",
+    "ttbar4Q",
+    "TTBB_DL",
+    "TTBB_SL",
+    "TTBB_4Q",
+    "TTHH_2B2W_DL",
+    "TTHH_2B2W_SL",
+    "TTHH_2B2Tau_DL",
+    "QCD_120_170_mu",
+    "QCD_20_30_mu",
+    "QCD_470_600_mu",
+    "QCD_800_1000_mu",
+    "QCD_15_20_mu",
+    "QCD_300_470_mu",
+    "QCD_50_80_mu",
+    "QCD_80_120_mu",
+    "QCD_1000_mu",
+    "QCD_170_300_mu",
+    "QCD_30_50_mu",
+    "QCD_600_800_mu",
+    "TTHBB",
+    "TTHnonBB",
+    "TTWH",
+    "TTZH",
+    "THQ",
+    "THW",
+    "WMu_Jets",
+    "WJet_1J",
+    "WJet_2J",
+    "WJet_3J",
+    "WJet_4J",
+    "WJet_HT40to100",
+    "WJet_HT100to400",
+    "WJet_HT400to800",
+    "WJet_HT800to1500",
+    "WJet_HT1500to2500",
+    "WJet_HT2500",
+    "WW2L2Nu",
+    "WW",
+    "WZ2L2Q",
+    "ZZ2L2Q",
+    "ZZ2L2Nu",
+    "WZ3l",
+    "ZZ4l",
+    "WZ",
+    "ZZ",
+    "WWW",
+    "WWZ",
+    "WZZ",
+    "ZZZ",
+    "TTWW",
+    "TTWZ",
+    "TTZZ",
+    "TbarWp2L",
+    "TWm2L",
+    "TbarWp1L",
+    "TWm1L",
+    "TbarB",
+    "TBbar",
+    "TbarBQ",
+    "TBbarQ",
+    "TZQB",
+    "TTW",
+    "TTZ_low",
+    "TTZ_high",
+    "TTTT",
+    "WWLNu2Q",
+    "WZLNu2Q",
+]
+
+PRIVATE_CHANNELS = [
+    "TTHH_DL",
+    "TTHH_SL",
+    "TTHH_DL_2B2W_batch1",
+    "TTHH_DL_2B2W_batch2",
+    "TTHH_DL_2B2W_batch3",
+    "TTHH_SL_2B2W_batch1",
+    "TTHH_SL_2B2W_batch2",
+]
+
+
+def get_name_map(private_only=False):
+    return PRIVATE_NAME_SHORT if private_only else OFFICIAL_NAME_SHORT
+
+
+def get_channels(private_only=False, data_stream="Muon"):
+    if private_only:
+        return PRIVATE_CHANNELS
+    return OFFICIAL_DATA_CHANNELS[data_stream] + OFFICIAL_MC_CHANNELS
+
+
+def match_wjets_variant(folder_name):
+    if "WtoMuNu" in folder_name and "Jets" in folder_name:
+        return "WMu_Jets"
+
+    if "WtoLNu" not in folder_name:
         return ""
+
+    jet_match = re.search(r"Bin-(\d)J", folder_name)
+    if jet_match:
+        return f"WJet_{jet_match.group(1)}J"
+
+    ht_match = re.search(r"HT-(\d+to\d+|\d+)(?:-|_|\b)", folder_name)
+    if ht_match:
+        return f"WJet_HT{ht_match.group(1)}"
+
+    return ""
+
+
+def name_simplification(folderName, private_only=False):
+    name_short = get_name_map(private_only)
+    if folderName in name_short:
+        return name_short[folderName]
+    if not private_only:
+        wjets_symbol = match_wjets_variant(folderName)
+        if wjets_symbol:
+            return wjets_symbol
+    return ""
 
 # extracting to the last common folder
 def find_single_chain_dir(start_dir):
@@ -145,79 +302,11 @@ def collect_root_files(base_dir):
     return sorted(root_files)
 
 
-def saveFiles(outName, fileDir):
-    channels = [
-        "Muon0",
-        "Muon1",
-        "Muon",
-
-        "DY2Mu",
-        "DY2Mu_low",
-
-        "ttbarDL",
-        "ttbarSL",
-        "ttbar4Q",
-
-        "TTBB_DL",
-        "TTBB_SL",
-        "TTBB_4Q",
-
-        "QCD_120_170_mu",
-        "QCD_20_30_mu",
-        "QCD_470_600_mu",
-        "QCD_800_1000_mu",
-        "QCD_15_20_mu",
-        "QCD_300_470_mu",
-        "QCD_50_80_mu",
-        "QCD_80_120_mu",
-        "QCD_1000_mu",
-        "QCD_170_300_mu",
-        "QCD_30_50_mu",
-        "QCD_600_800_mu",
-
-        "TTHBB",
-        "TTHnonBB",
-        "TTWH",
-        "TTZH",
-        "THQ",
-        "THW",
-
-        "WJet_1J",
-        "WJet_2J",
-        "WJet_3J",
-        "WJet_4J",
-
-        "WW2L2Nu",
-        "WZ2L2Q",
-        "ZZ2L2Q",
-        "ZZ2L2Nu",
-        "WZ3l",
-        "ZZ4l",
-
-        "WW",
-        "WZ",
-        "ZZ",
-
-        "WWW",
-        "WWZ",
-        "WZZ",
-        "ZZZ",
-
-        "TbarWp2L",
-        "TWm2L",
-        "TbarWp1L",
-        "TWm1L",
-        "TZQB",
-        
-        "TTW",
-        "TTZ_low",
-        "TTZ_high",
-
-        "TTTT"
-    ]
-
+def saveFiles(outName, fileDir, private_only=False, data_stream="Muon"):
+    channels = get_channels(private_only, data_stream)
     dirBlk=["{", "    \"dir\": {"]
     fileBlk=["    },", "    \"file\": {"]
+    unknown_folders = []
 
     for folderName in os.listdir(fileDir):
         if folderName in channels:
@@ -233,7 +322,7 @@ def saveFiles(outName, fileDir):
             else:
                 fileBlk.append("        \""+folderName+"\": [],")
             continue
-        symbol = name_simplification(folderName)
+        symbol = name_simplification(folderName, private_only)
         if symbol in channels:
             commonDir = find_single_chain_dir(os.path.join(fileDir, folderName))
             dirBlk.append("        \""+symbol+"\": \""+commonDir+"/\",")
@@ -246,6 +335,8 @@ def saveFiles(outName, fileDir):
                 fileBlk.append("        ],")
             else:
                 fileBlk.append("        \""+symbol+"\": [],")
+            continue
+        unknown_folders.append(folderName)
     dirBlk[-1] = dirBlk[-1][:-1]
     fileBlk[-1] = fileBlk[-1][:-1]
     fileBlk.append("    }")
@@ -257,12 +348,30 @@ def saveFiles(outName, fileDir):
         for line in fileBlk:
             f.write(line+"\n")
 
+    print(f"[createFileList] saved json: {outName}")
+    print(f"[createFileList] recognized dataset folders: {len(dirBlk) - 2}")
+    if unknown_folders:
+        print("[createFileList] warning: unrecognized folders were skipped:")
+        for folderName in sorted(unknown_folders):
+            print(f"  - {folderName}")
+
 def build_args():
     parser = argparse.ArgumentParser(description="Create file list JSON.")
     parser.add_argument("output_json", help="Output JSON filename, e.g. RunIII2024Summer24NanoAODv15_raw.json")
     parser.add_argument("base_dir",help="Base directory that contains dataset folders, e.g. /data2/common/NanoAOD/mc/v15/RunIII2024Summer24NanoAODv15/")
+    parser.add_argument(
+        "--private-only",
+        action="store_true",
+        help="Only collect private TTHH samples instead of the standard official datasets.",
+    )
+    parser.add_argument(
+        "--data-stream",
+        choices=["Muon", "JetMET"],
+        default="Muon",
+        help="Choose which data stream names to collect. 'Muon' keeps Muon0/Muon1/Muon; 'JetMET' keeps JetMET plus JetMET0/JetMET1.",
+    )
     return parser.parse_args()
 
 if __name__ == "__main__":
     args = build_args()
-    saveFiles(args.output_json, args.base_dir)
+    saveFiles(args.output_json, args.base_dir, private_only=args.private_only, data_stream=args.data_stream)

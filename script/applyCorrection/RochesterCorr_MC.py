@@ -9,7 +9,7 @@ def processing(rdf, recordedModules, branchArray, era, ds=""):
         ROOT.gInterpreter.AddIncludePath(this_dir)
         ROOT.gInterpreter.ProcessLine('#include "RochesterCorr_MC.C"')
         recordedModules.append("RochesterCorr_MC.C")
-        ROOT.gInterpreter.ProcessLine('RCorr_MC_init("'+era+'")')
+    ROOT.gInterpreter.ProcessLine('RCorr_MC_init("'+era+'")')
 
 
     # scale correction

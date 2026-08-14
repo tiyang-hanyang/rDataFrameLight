@@ -9,9 +9,27 @@ std::shared_ptr<const correction::CorrectionSet> RCorr_MC_cset;
 
 void RCorr_MC_init(const std::string& era) {
     // too many tables, all for the parameters, contain no era information, just define global cset
+    const std::string run2024RochesterFile = "/home/tiyang/public/rDataFrameLight_git/correction/MUO/Run3-24CDEReprocessingFGHIPrompt-Summer24-NanoAODv15/muon_scalesmearing.json";
     std::map<std::string, std::string> RCorr_Files = {
-        {"RunIII2024Summer24NanoAODv15", "/home/tiyang/public/rDataFrameLight_git/correction/MUO/Run3-24CDEReprocessingFGHIPrompt-Summer24-NanoAODv15/muon_scalesmearing.json"},
-        {"Run3Summer23NanoAODv12", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/MUO/2023_Summer23/muon_scalesmearing.json"},
+        {"Run2022C", run2024RochesterFile},
+        {"Run2022D", run2024RochesterFile},
+        {"Run2022E", run2024RochesterFile},
+        {"Run2022F", run2024RochesterFile},
+        {"Run2022G", run2024RochesterFile},
+        {"Run2023C", run2024RochesterFile},
+        {"Run2023D", run2024RochesterFile},
+        {"Run2024C", run2024RochesterFile},
+        {"Run2024D", run2024RochesterFile},
+        {"Run2024E", run2024RochesterFile},
+        {"Run2024F", run2024RochesterFile},
+        {"Run2024G", run2024RochesterFile},
+        {"Run2024H", run2024RochesterFile},
+        {"Run2024I", run2024RochesterFile},
+        {"RunIII2024Summer24NanoAODv15", run2024RochesterFile},
+        {"Run3Summer22NanoAODv12", run2024RochesterFile},
+        {"Run3Summer22EENanoAODv12", run2024RochesterFile},
+        {"Run3Summer23NanoAODv12", run2024RochesterFile},
+        {"Run3Summer23BPixNanoAODv12", run2024RochesterFile},
     };
     RCorr_MC_cset = correction::CorrectionSet::from_file(RCorr_Files[era]);
 }
