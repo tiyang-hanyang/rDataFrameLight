@@ -9,6 +9,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <set>
 #include <functional>
 #include <optional>
 
@@ -69,6 +70,20 @@ private:
     // limit number of files per channel (0 means no limit)
     int _maxFilesPerChannel;
 
+    // Optional syst-aware loose skim filter, intended to keep events that can
+    // pass the 4-jet selection under the maximum JME up variation.
+    int _useSystAwareFourJet = 0;
+    std::string _systAwareSelectionType = "fourJetUpEnvelope";
+    int _systAwareNJet = 4;
+    float _systAwareJetPtThreshold = 30.0;
+    float _systAwareBTagThreshold = 0.1272;
+    std::string _systAwareBTagBranch = "Jet_btagUParTAK4B";
+    std::string _systAwareGoodJetExpr = "";
+    int _systAwareRequireJVMEnvelope = 1;
+    int _skipNominalFourJetSteps = 1;
+    std::map<std::string, std::vector<std::string>> _skimShiftSyst;
+    std::set<std::string> _skimSystSkipSteps;
+
 public:
     SkimControl() = default;
     explicit SkimControl(nlohmann::json configFile);
@@ -85,6 +100,7 @@ public:
     // operations inside the run
     double _getTotalGenWeight(std::vector<std::string> fileLists);
     ROOT::RDF::RNode _preliminaryDeco(ROOT::RDF::RNode rndDS, const std::string& channel, double totalGenWeight);
+    ROOT::RDF::RNode _applySystAwareFourJet(ROOT::RDF::RNode rndDS);
     std::vector<std::string> _getBranchArray(ROOT::RDF::RNode rndDS, int isPreliminary);
 
     // better to split run one by one file, to avoid failure in the middle

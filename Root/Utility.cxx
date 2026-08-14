@@ -11,21 +11,27 @@
 /// @return The json format data structure, details checking and extraction is left to specific modules.
 nlohmann::json rdfWS_utility::readJson(const std::string &prog, const std::string &configPath)
 {
-    // if not absolute path, need to make sure json is in reference of the source/ folder
-    std::string properPath = configPath;
-    if (configPath[0] != '/')
+    std::filesystem::path sourceRoot = std::filesystem::path(__FILE__).parent_path().parent_path();
+    std::filesystem::path properPath = configPath;
+    if (!properPath.is_absolute())
     {
-        std::filesystem::path sourceFile = __FILE__;
-        properPath = sourceFile.parent_path().parent_path().string() + "/" + configPath;
+        if (configPath.rfind("json/", 0) == 0)
+        {
+            properPath = sourceRoot / properPath;
+        }
+        else if (!std::filesystem::exists(properPath) && std::filesystem::exists(sourceRoot / properPath))
+        {
+            properPath = sourceRoot / properPath;
+        }
     }
 
-    messageINFO(prog, "Loading json from: " + properPath);
+    messageINFO(prog, "Loading json from: " + properPath.string());
     try
     {
         // check existence of the json file
         if (!std::filesystem::exists(properPath))
         {
-            messageERROR(prog, "JSON file " + properPath + " not exists");
+            messageERROR(prog, "JSON file " + properPath.string() + " not exists");
         }
     }
     catch (const std::filesystem::filesystem_error &ex)
@@ -43,7 +49,7 @@ nlohmann::json rdfWS_utility::readJson(const std::string &prog, const std::strin
     }
     catch (const nlohmann::json::parse_error &ex)
     {
-        messageERROR(prog, "JSON file " + properPath + " parse error: " + std::string(ex.what()));
+        messageERROR(prog, "JSON file " + properPath.string() + " parse error: " + std::string(ex.what()));
     }
 
     return jsonData;

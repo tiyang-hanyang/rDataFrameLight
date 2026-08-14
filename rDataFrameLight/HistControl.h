@@ -5,6 +5,7 @@
 #include <map>
 #include <tuple>
 #include <optional>
+#include <vector>
 
 #include "ROOT/RDataFrame.hxx"
 #include "TH1D.h"
@@ -13,13 +14,12 @@
 // used in case of no template hist provided.
 struct HistBinning
 {
-    // if nBins==-1 && bins.size()==0, will go to auto bins
+    // if nBins==-1 && varBins.size()==0, will go to auto bins
     int nBins = -1;
     int defaultNBins = 100;
     double min = -1;
     double max = -1;
-    // to add variable binning later
-    // std::vector<double> varBins={};
+    std::vector<double> varBins = {};
     // if auto bin, by default stripe out extreme values
     bool stripeHigh = false;
     bool stripeLow = false;
@@ -36,11 +36,14 @@ private:
     std::map<std::string, TH1D*> _histograms; // internal stored histograms
     TH1D* _templateHist = nullptr;
 
+    std::string buildHistogramKey(const std::string &datasetName, const std::string &weightName) const;
+
     // internal needed functions, very slow, better not rely on this, but using json
     std::tuple<double, double> getMinMax(ROOT::RDF::RNode &rnode, const std::string &varName, bool stripeLow, bool stripeHigh);
 
     // need always get the template first
     void generateTemplateFromBinning(int bins, double min, double max);
+    void generateTemplateFromBinning(const std::vector<double> &binEdges);
 
     TH1D *calculateRatio(TH1D *numerator, TH1D *denominator, const std::string &ratioName);
 
@@ -53,9 +56,13 @@ public:
     // Create a histogram from RDataFrame
     TH1D *createHistogram(ROOT::RDF::RNode &rnode, const std::string &datasetName, const HistBinning *binning=nullptr, const std::string &varName="", const std::string& weightName="one", const std::string& outDir="", bool ifSave=1);
     // Load a histogram from a file
-    TH1D *loadHistogram(const std::string &fileName, const std::string &histName, const std::string & histKey, float scaling=1.0, const std::string &varName="", const std::string& additionalName="");
+    void loadHistogram(const std::string &fileName, const std::string &histName, const std::string & histKey, float scaling=1.0, const std::string &varName="", const std::string& additionalName="");
+    // Insert an already prepared histogram into the controller.
+    void addHistogram(const TH1D *hist, const std::string &histKey, const std::string &varName="", const std::string& additionalName="");
     // Save a histogram to a file
     void saveHistogram(const TH1D *hist, const std::string &fileName, const std::string& outDir="");
+    void removeHistogram(const std::string &datasetName, const std::string &weightName="one");
+    void clearHistograms();
 
     // get required hists
     std::map<std::string, TH1D *> getHists(std::vector<std::string> histKeys);
@@ -69,12 +76,16 @@ public:
 
     // to add histogram together
     HistControl addHistograms(const HistControl& toAdd);
+    void absorbHistograms(const HistControl& toAdd);
 
     HistControl(const HistControl &other);
     HistControl &operator=(const HistControl &other);
-
+    HistControl(HistControl &&other) noexcept;
+    HistControl &operator=(HistControl &&other) noexcept;
     // get instance for direct editing, not recommend to use unless necessary
     std::map<std::string, TH1D*> getHistInstance();
 };
 
 #endif
+
+

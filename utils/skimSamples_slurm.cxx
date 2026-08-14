@@ -27,14 +27,17 @@ std::string buildOutputPath(const std::string &outDir,
 static bool appendJobs(std::ofstream &ofs,
                        const std::vector<std::pair<std::string, std::string>> &jobs,
                        const std::string &skimConfig,
+                       std::size_t &nextJobIndex,
                        std::size_t &written,
                        std::size_t batchLimit)
 {
-    for (const auto &job : jobs)
+    while (nextJobIndex < jobs.size())
     {
+        const auto &job = jobs[nextJobIndex];
         const auto &inputFile = job.first;
         const auto &outFile = job.second;
         ofs << inputFile << " " << outFile << " " << skimConfig << "\n";
+        ++nextJobIndex;
         ++written;
         if (batchLimit > 0 && written >= batchLimit)
             return true;
@@ -152,15 +155,13 @@ int main(int argc, char *argv[])
                 TFile fcheck(outputPath.c_str(), "READ");
                 if (fcheck.IsZombie())
                 {
-                    rdfWS_utility::messageWARN("skimSamples_slurm", "Output is zombie, removing: " + outputPath);
+                    rdfWS_utility::messageWARN("skimSamples_slurm", "Output is zombie, will reskim: " + outputPath);
                     fcheck.Close();
-                    std::filesystem::remove(outputPath);
                 }
                 else if (!fcheck.Get("genWeightSum"))
                 {
-                    rdfWS_utility::messageWARN("skimSamples_slurm", "Output missing genWeightSum, removing: " + outputPath);
+                    rdfWS_utility::messageWARN("skimSamples_slurm", "Output missing genWeightSum, will reskim: " + outputPath);
                     fcheck.Close();
-                    std::filesystem::remove(outputPath);
                 }
                 else
                 {
@@ -176,11 +177,12 @@ int main(int argc, char *argv[])
             jobs.erase(jobs.begin() + maxFiles, jobs.end());
         }
 
-        while (true)
+        std::size_t nextJobIndex = 0;
+        while (nextJobIndex < jobs.size())
         {
-            if (!appendJobs(ofs, jobs, skimConfig, writtenInBatch, batchLimit))
+            if (!appendJobs(ofs, jobs, skimConfig, nextJobIndex, writtenInBatch, batchLimit))
                 return 1;
-            if (batchLimit == 0 || writtenInBatch < batchLimit)
+            if (nextJobIndex >= jobs.size() || batchLimit == 0 || writtenInBatch < batchLimit)
                 break;
             ++batchIndex;
             writtenInBatch = 0;

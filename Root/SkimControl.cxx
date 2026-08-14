@@ -2,6 +2,46 @@
 #include "Utility.h"
 
 #include <filesystem>
+
+namespace
+{
+std::map<std::string, std::vector<std::string>> loadSystAliases()
+{
+    rdfWS_utility::JsonObject aliasConfig(
+        rdfWS_utility::readJson("SkimControl", "json/general_config/syst_NP.json"),
+        "Systematic Alias Config"
+    );
+    return aliasConfig.get<std::map<std::string, std::vector<std::string>>>();
+}
+
+std::map<std::string, std::vector<std::string>> expandShiftSystAliases(
+    const nlohmann::json &rawConfig)
+{
+    if (!rawConfig.is_object())
+        rdfWS_utility::messageERROR("SkimControl", "shiftSyst must be a map.");
+
+    const auto aliases = loadSystAliases();
+    std::map<std::string, std::vector<std::string>> expanded;
+    for (auto it = rawConfig.begin(); it != rawConfig.end(); ++it)
+    {
+        if (!it.value().is_array())
+            rdfWS_utility::messageERROR("SkimControl", "shiftSyst entry " + it.key() + " must be a list of target branches.");
+        const auto targets = it.value().get<std::vector<std::string>>();
+        auto aliasIter = aliases.find(it.key());
+        if (aliasIter != aliases.end())
+        {
+            for (const auto &name : aliasIter->second)
+                expanded.emplace(name, targets);
+        }
+        else
+        {
+            expanded.emplace(it.key(), targets);
+        }
+    }
+    return expanded;
+}
+
+}
 #include <fstream>
 #include <stdexcept>
 #include <memory>
@@ -16,8 +56,104 @@
 #include "TFile.h"
 #include "TTree.h"
 #include "TChain.h"
+#include "TInterpreter.h"
 #include "ROOT/RSnapshotOptions.hxx"
 #include "ROOT/RDFHelpers.hxx"
+
+namespace
+{
+    void DeclareSkimSystHelpersToCling()
+    {
+        static bool done = false;
+        if (done)
+            return;
+        gInterpreter->Declare(R"(
+            #include "ROOT/RVec.hxx"
+            #include <algorithm>
+            #include <cmath>
+            #include <initializer_list>
+            #include <stdexcept>
+
+            ROOT::VecOps::RVec<float> skimQuadratureSum(std::initializer_list<ROOT::VecOps::RVec<float>> sources)
+            {
+                ROOT::VecOps::RVec<float> total;
+                bool initialized = false;
+                for (const auto& source : sources)
+                {
+                    if (!initialized)
+                    {
+                        total = ROOT::VecOps::RVec<float>(source.size(), 0.0f);
+                        initialized = true;
+                    }
+                    if (source.size() != total.size())
+                    {
+                        throw std::runtime_error("skimQuadratureSum got RVec inputs with different sizes.");
+                    }
+                    for (size_t i = 0; i < source.size(); ++i)
+                    {
+                        total[i] += source[i] * source[i];
+                    }
+                }
+                for (size_t i = 0; i < total.size(); ++i)
+                {
+                    total[i] = std::sqrt(total[i]);
+                }
+                return total;
+            }
+
+            ROOT::VecOps::RVec<float> skimJMEUpEnvelopePt(
+                const ROOT::VecOps::RVec<float>& Jet_pt_JEC,
+                const ROOT::VecOps::RVec<float>& CMS_scale_j_Total,
+                const ROOT::VecOps::RVec<float>& Jet_pt_JEScorr,
+                const ROOT::VecOps::RVec<float>& Jet_JER_corr_up,
+                const ROOT::VecOps::RVec<float>& Jet_JER_corr_down)
+            {
+                int nJet = Jet_pt_JEC.size();
+                ROOT::VecOps::RVec<float> shifted(nJet);
+                for (int i = 0; i < nJet; ++i)
+                {
+                    const float jesAbs = Jet_pt_JEC[i] * CMS_scale_j_Total[i];
+                    const float jerUpPt = Jet_pt_JEScorr[i] * Jet_JER_corr_up[i];
+                    const float jerDownPt = Jet_pt_JEScorr[i] * Jet_JER_corr_down[i];
+                    const float jerMaxPt = std::max(jerUpPt, jerDownPt);
+                    const float jerAbs = std::max(0.0f, jerMaxPt - Jet_pt_JEC[i]);
+                    shifted[i] = Jet_pt_JEC[i] + std::sqrt(jesAbs * jesAbs + jerAbs * jerAbs);
+                }
+                return shifted;
+            }
+
+            ROOT::VecOps::RVec<float> skimMinDistanceFromMuon(
+                const ROOT::VecOps::RVec<int>& isGoodJet,
+                const ROOT::VecOps::RVec<float>& eta,
+                const ROOT::VecOps::RVec<float>& phi,
+                const int& leadingMuonIdx,
+                const int& subleadingMuonIdx,
+                const ROOT::VecOps::RVec<float>& Muon_eta,
+                const ROOT::VecOps::RVec<float>& Muon_phi)
+            {
+                auto jetSize = isGoodJet.size();
+                ROOT::VecOps::RVec<float> minDR(jetSize);
+                auto leadingMuonEta = Muon_eta[leadingMuonIdx];
+                auto leadingMuonPhi = Muon_phi[leadingMuonIdx];
+                auto subleadingMuonEta = Muon_eta[subleadingMuonIdx];
+                auto subleadingMuonPhi = Muon_phi[subleadingMuonIdx];
+                for (auto i=0; i < jetSize; i++)
+                {
+                    if (!isGoodJet[i])
+                    {
+                        minDR[i]=0.0;
+                        continue;
+                    }
+                    float dRleading = ROOT::VecOps::DeltaR(leadingMuonEta, eta[i], leadingMuonPhi, phi[i]);
+                    float dRsubleading = ROOT::VecOps::DeltaR(subleadingMuonEta, eta[i], subleadingMuonPhi, phi[i]);
+                    minDR[i] = std::min(dRleading, dRsubleading);
+                }
+                return minDR;
+            }
+        )");
+        done = true;
+    }
+}
 
 ////////////////////////////////////////////////// Setup configs
 
@@ -73,6 +209,63 @@ void SkimControl::readConfig(nlohmann::json origConfigFile)
         if (maxFiles < 0) maxFiles = 0;
     }
     this->_maxFilesPerChannel = maxFiles;
+
+    if (origConfigFile.contains("skimSystSelection"))
+    {
+        auto systSelection = origConfigFile.at("skimSystSelection");
+        std::string selectionType = systSelection.value("type", "");
+        if (selectionType == "fourJetUpEnvelope" || selectionType == "bJetUpEnvelope")
+        {
+            this->_useSystAwareFourJet = 1;
+            this->_systAwareSelectionType = selectionType;
+            this->_systAwareNJet = systSelection.value("nJet", selectionType == "bJetUpEnvelope" ? 3 : 4);
+            this->_systAwareJetPtThreshold = systSelection.value("jetPtThreshold", 30.0);
+            this->_systAwareBTagThreshold = systSelection.value("btagThreshold", 0.1272);
+            this->_systAwareBTagBranch = systSelection.value("btagBranch", "Jet_btagUParTAK4B");
+            this->_systAwareGoodJetExpr = systSelection.value("goodJetExpr", "");
+            this->_systAwareRequireJVMEnvelope = systSelection.value("requireJVMEnvelope", selectionType == "fourJetUpEnvelope" ? 1 : 0);
+            this->_skipNominalFourJetSteps = systSelection.value("skipNominalFourJet", 1);
+            if (systSelection.contains("skipSteps"))
+            {
+                auto skipSteps = systSelection.at("skipSteps").get<std::vector<std::string>>();
+                this->_skimSystSkipSteps.insert(skipSteps.begin(), skipSteps.end());
+            }
+            else
+            {
+                this->_skimSystSkipSteps.insert("pass JVM necessary");
+                if (selectionType == "bJetUpEnvelope")
+                {
+                    this->_skimSystSkipSteps.insert("BJetCond");
+                    this->_skimSystSkipSteps.insert("nBJet");
+                    this->_skimSystSkipSteps.insert("at least three bjet");
+                }
+                else
+                {
+                    this->_skimSystSkipSteps.insert("nGoodJet");
+                    this->_skimSystSkipSteps.insert("at least four good jets");
+                }
+            }
+            if (this->_systAwareRequireJVMEnvelope)
+                this->_skimSystSkipSteps.insert("pass JVM necessary");
+
+            if (systSelection.contains("shiftSyst"))
+            {
+                this->_skimShiftSyst = expandShiftSystAliases(systSelection.at("shiftSyst"));
+            }
+            else if (origConfigFile.contains("shiftSyst"))
+            {
+                this->_skimShiftSyst = expandShiftSystAliases(origConfigFile.at("shiftSyst"));
+            }
+            else
+            {
+                rdfWS_utility::messageERROR("SkimControl", "skimSystSelection " + selectionType + " requires shiftSyst either inside skimSystSelection or at top level.");
+            }
+        }
+        else if (selectionType != "")
+        {
+            rdfWS_utility::messageERROR("SkimControl", "Unknown skimSystSelection type: " + selectionType);
+        }
+    }
 
     this->_outDir = configFile.at("outDir").get<std::string>();
     rdfWS_utility::creatingFolder("SkimControl", this->_outDir);
@@ -301,6 +494,114 @@ ROOT::RDF::RNode SkimControl::_preliminaryDeco(ROOT::RDF::RNode rndDS, const std
     return rndDS;
 }
 
+ROOT::RDF::RNode SkimControl::_applySystAwareFourJet(ROOT::RDF::RNode rndDS)
+{
+    if (!this->_useSystAwareFourJet)
+        return rndDS;
+
+    DeclareSkimSystHelpersToCling();
+
+    if (this->_systAwareRequireJVMEnvelope)
+    {
+        std::string jvmEnvelopeExpr = "(JVMweight > 0.0";
+        auto availableColumns = rndDS.GetColumnNames();
+        for (const auto &column : availableColumns)
+        {
+            if (column.rfind("JVMweight_", 0) == 0)
+                jvmEnvelopeExpr += " || " + column + " > 0.0";
+        }
+        jvmEnvelopeExpr += ")";
+        rndDS = rndDS.Define("JVMweight_skimEnvelope", jvmEnvelopeExpr);
+    }
+
+    std::vector<std::string> jetPtSources;
+    for (const auto &[systName, targets] : this->_skimShiftSyst)
+    {
+        if (std::find(targets.begin(), targets.end(), "Jet_pt_JEC") != targets.end() && rndDS.HasColumn(systName))
+            jetPtSources.push_back(systName);
+    }
+    if (jetPtSources.empty())
+    {
+        rdfWS_utility::messageERROR("SkimControl", "syst-aware skim needs at least one shiftSyst source targeting Jet_pt_JEC.");
+    }
+
+    std::string totalExpr = "skimQuadratureSum({";
+    for (size_t i = 0; i < jetPtSources.size(); ++i)
+    {
+        if (i > 0)
+            totalExpr += ", ";
+        totalExpr += jetPtSources[i];
+    }
+    totalExpr += "})";
+
+    rndDS = rndDS.Define("CMS_scale_j_skimTotalUpEnvelope", totalExpr);
+    if (rndDS.HasColumn("Jet_pt_JEScorr") && rndDS.HasColumn("Jet_JER_corr_up") && rndDS.HasColumn("Jet_JER_corr_down"))
+    {
+        rndDS = rndDS.Define("Jet_pt_JEC_skimJMEUpEnvelope", "skimJMEUpEnvelopePt(Jet_pt_JEC, CMS_scale_j_skimTotalUpEnvelope, Jet_pt_JEScorr, Jet_JER_corr_up, Jet_JER_corr_down)");
+    }
+    else
+    {
+        rdfWS_utility::messageWARN("SkimControl", "JER columns not available; syst-aware fourJet skim uses JES-only up envelope.");
+        rndDS = rndDS.Define("Jet_pt_JEC_skimJMEUpEnvelope", "Jet_pt_JEC * (1.0f + CMS_scale_j_skimTotalUpEnvelope)");
+    }
+
+    if (this->_skipNominalFourJetSteps)
+        return rndDS;
+
+    if (this->_systAwareGoodJetExpr.empty())
+    {
+        if (rndDS.HasColumn("Jet_tightNoPt") && rndDS.HasColumn("Jet_drFromMuon"))
+        {
+            rndDS = rndDS.Define(
+                "GoodJetCond_skimJMEUpEnvelope",
+                "(Jet_pt_JEC_skimJMEUpEnvelope > " + std::to_string(this->_systAwareJetPtThreshold) + ") && Jet_tightNoPt && (Jet_drFromMuon > 0.4)"
+            );
+        }
+        else
+        {
+            rndDS = rndDS.Define(
+                "Jet_mediumPtTight_skimJMEUpEnvelope",
+                "(Jet_pt_JEC_skimJMEUpEnvelope > " + std::to_string(this->_systAwareJetPtThreshold) + ") && (abs(Jet_eta)<2.5) && (Jet_rawFactor<0.9) && JetIdTight"
+            );
+            rndDS = rndDS.Define(
+                "Jet_drFromMuon_skimJMEUpEnvelope",
+                "skimMinDistanceFromMuon(Jet_mediumPtTight_skimJMEUpEnvelope, Jet_eta, Jet_phi, leadingMuonIdx, subleadingMuonIdx, Muon_eta, Muon_phi)"
+            );
+            rndDS = rndDS.Define("GoodJetCond_skimJMEUpEnvelope", "(Jet_drFromMuon_skimJMEUpEnvelope>0.4)");
+        }
+    }
+    else
+    {
+        rndDS = rndDS.Define("GoodJetCond_skimJMEUpEnvelope", this->_systAwareGoodJetExpr);
+    }
+
+    std::string filterExpr;
+    if (this->_systAwareSelectionType == "bJetUpEnvelope")
+    {
+        if (!rndDS.HasColumn(this->_systAwareBTagBranch))
+        {
+            rdfWS_utility::messageERROR("SkimControl", "bJetUpEnvelope requested missing btagBranch: " + this->_systAwareBTagBranch);
+        }
+        rndDS = rndDS.Define(
+            "BJetCond_skimJMEUpEnvelope",
+            "GoodJetCond_skimJMEUpEnvelope && (" + this->_systAwareBTagBranch + " > " + std::to_string(this->_systAwareBTagThreshold) + ")"
+        );
+        rndDS = rndDS.Define("nBJet_skimJMEUpEnvelope", "Nonzero(BJetCond_skimJMEUpEnvelope).size()");
+        filterExpr = "(nBJet_skimJMEUpEnvelope >= " + std::to_string(this->_systAwareNJet) + ")";
+    }
+    else
+    {
+        rndDS = rndDS.Define("nGoodJet_skimJMEUpEnvelope", "Nonzero(GoodJetCond_skimJMEUpEnvelope).size()");
+        filterExpr = "(nGoodJet_skimJMEUpEnvelope >= " + std::to_string(this->_systAwareNJet) + ")";
+    }
+
+    if (this->_systAwareRequireJVMEnvelope)
+        filterExpr += " && JVMweight_skimEnvelope > 0.0";
+    rndDS = rndDS.Filter(filterExpr);
+
+    return rndDS;
+}
+
 std::vector<std::string> SkimControl::_getBranchArray(ROOT::RDF::RNode rndDS, int isPreliminary)
 {
     // keep the branches in the config only and dump into files
@@ -325,6 +626,28 @@ void SkimControl::run()
     signal(SIGINT, SkimControl::signalHandler);
     signal(SIGTERM, SkimControl::signalHandler);
 
+
+    auto hasValidEventsTree = [](const std::string &filePath) -> bool
+    {
+        std::unique_ptr<TFile> fTemp{TFile::Open(filePath.c_str(), "READ")};
+        if (!fTemp || fTemp->IsZombie())
+        {
+            rdfWS_utility::messageWARN("SkimControl", filePath + " not exist!");
+            return false;
+        }
+        if (!fTemp->GetListOfKeys()->FindObject("Events"))
+        {
+            rdfWS_utility::messageWARN("SkimControl", filePath + " has no Events tree, skip.");
+            return false;
+        }
+        auto eventsTree = dynamic_cast<TTree *>(fTemp->Get("Events"));
+        if (!eventsTree)
+        {
+            rdfWS_utility::messageWARN("SkimControl", filePath + " Events is not a valid TTree, skip.");
+            return false;
+        }
+        return true;
+    };
 
     for (const auto &channel : this->_channels)
     {
@@ -399,6 +722,12 @@ void SkimControl::run()
                 }
                 chDS->Add(filePath.c_str());
             }
+            if (chDS->GetNtrees() == 0)
+            {
+                rdfWS_utility::messageWARN("SkimControl", "No valid input files with Events tree remain for channel " + channel + ", skip channel.");
+                delete chDS;
+                continue;
+            }
             ROOT::RDataFrame rdfDS(*chDS);
             ROOT::RDF::RNode rndDS(rdfDS);
 
@@ -407,7 +736,24 @@ void SkimControl::run()
                 rndDS = this->_preliminaryDeco(rndDS, channel, totalGenWeightMerged);
 
             // apply the filter
-            rndDS = this->_skimCut.applyCut(rndDS);
+            if (this->_useSystAwareFourJet && !isData)
+                rndDS = this->_applySystAwareFourJet(rndDS);
+            if (this->_useSystAwareFourJet && !isData && this->_skipNominalFourJetSteps)
+            {
+                rndDS = this->_skimCut.applyCutSkippingSteps(rndDS, this->_skimSystSkipSteps);
+                std::map<std::string, std::string> skimExprReplacements{
+                    {"Jet_pt_JEC", "Jet_pt_JEC_skimJMEUpEnvelope"}
+                };
+                if (this->_systAwareRequireJVMEnvelope)
+                    skimExprReplacements["JVMweight"] = "JVMweight_skimEnvelope";
+                rndDS = this->_skimCut.applySuffixedCutSubset(
+                    rndDS,
+                    this->_skimSystSkipSteps,
+                    "_skimJMEUpEnvelope",
+                    skimExprReplacements);
+            }
+            else
+                rndDS = this->_skimCut.applyCut(rndDS);
 
             // keep the branches in the config only and dump into files
             auto branchArray = this->_getBranchArray(rndDS, isPreSkim);
@@ -438,6 +784,11 @@ void SkimControl::run()
 
             for (const auto &filePath: filePaths)
             {
+                if (!hasValidEventsTree(filePath))
+                {
+                    rdfWS_utility::messageWARN("SkimControl", "Skip job construction for invalid input file: " + filePath);
+                    continue;
+                }
                 // file naming structure
                 // original: data or mc /era/channel/ (NANOAOD/MINIAOD) or condition/ runNumber / sampleName
                 // after Rochester corr, uniformed: data or mc /era/channel/ (runNumber+sample)
@@ -527,7 +878,24 @@ void SkimControl::run()
                             rndDS = this->_preliminaryDeco(rndDS, channel, totalGenWeight);
 
                         // apply the filter
-                        rndDS = this->_skimCut.applyCut(rndDS);
+                        if (this->_useSystAwareFourJet && !isData)
+                            rndDS = this->_applySystAwareFourJet(rndDS);
+                        if (this->_useSystAwareFourJet && !isData && this->_skipNominalFourJetSteps)
+                        {
+                            rndDS = this->_skimCut.applyCutSkippingSteps(rndDS, this->_skimSystSkipSteps);
+                            std::map<std::string, std::string> skimExprReplacements{
+                                {"Jet_pt_JEC", "Jet_pt_JEC_skimJMEUpEnvelope"}
+                            };
+                            if (this->_systAwareRequireJVMEnvelope)
+                                skimExprReplacements["JVMweight"] = "JVMweight_skimEnvelope";
+                            rndDS = this->_skimCut.applySuffixedCutSubset(
+                                rndDS,
+                                this->_skimSystSkipSteps,
+                                "_skimJMEUpEnvelope",
+                                skimExprReplacements);
+                        }
+                        else
+                            rndDS = this->_skimCut.applyCut(rndDS);
 
                         // keep the branches in the config only and dump into files
                         auto branchArray = this->_getBranchArray(rndDS, isPreSkim);
@@ -595,7 +963,24 @@ void SkimControl::run()
                         rndDS = this->_preliminaryDeco(rndDS, channel, totalGenWeight);
 
                     // apply the filter
-                    rndDS = this->_skimCut.applyCut(rndDS);
+                    if (this->_useSystAwareFourJet && !isData)
+                        rndDS = this->_applySystAwareFourJet(rndDS);
+                    if (this->_useSystAwareFourJet && !isData && this->_skipNominalFourJetSteps)
+                    {
+                        rndDS = this->_skimCut.applyCutSkippingSteps(rndDS, this->_skimSystSkipSteps);
+                        std::map<std::string, std::string> skimExprReplacements{
+                            {"Jet_pt_JEC", "Jet_pt_JEC_skimJMEUpEnvelope"}
+                        };
+                        if (this->_systAwareRequireJVMEnvelope)
+                            skimExprReplacements["JVMweight"] = "JVMweight_skimEnvelope";
+                        rndDS = this->_skimCut.applySuffixedCutSubset(
+                            rndDS,
+                            this->_skimSystSkipSteps,
+                            "_skimJMEUpEnvelope",
+                            skimExprReplacements);
+                    }
+                    else
+                        rndDS = this->_skimCut.applyCut(rndDS);
 
                     // keep the branches in the config only and dump into files
                     auto branchArray = this->_getBranchArray(rndDS, isPreSkim);

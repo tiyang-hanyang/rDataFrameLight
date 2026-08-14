@@ -6,10 +6,10 @@
 #include <algorithm>
 
 // combining passJetVetoMap
-std::shared_ptr<const correction::CorrectionSet> JVM_cset;
-std::shared_ptr<const correction::Correction> JVM_corr;
+std::shared_ptr<const correction::CorrectionSet> JVM_eMu_cset;
+std::shared_ptr<const correction::Correction> JVM_eMu_corr;
 
-void JVM_init(const std::string& era)
+void JVM_eMu_init(const std::string& era)
 {
     std::map<std::string, std::string> JVMFiles = {
         {"RunIII2024Summer24NanoAODv15", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/JME/Run3-24CDEReprocessingFGHIPrompt-Summer24-NanoAODv15/jetvetomaps.json"},
@@ -35,7 +35,7 @@ void JVM_init(const std::string& era)
         {"Run2022F", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/JME/Run3-22EFGSep23-Summer22EE-NanoAODv12/jetvetomaps.json"},
         {"Run2022G", "/home/tiyang/public/rDataFrameLight_git/correction/POGCorr/POG/JME/Run3-22EFGSep23-Summer22EE-NanoAODv12/jetvetomaps.json"},
     };
-    JVM_cset = correction::CorrectionSet::from_file(JVMFiles[era]);
+    JVM_eMu_cset = correction::CorrectionSet::from_file(JVMFiles[era]);
 
     std::map<std::string, std::string> JVMTab = {
         {"RunIII2024Summer24NanoAODv15", "Summer24Prompt24_RunBCDEFGHI_V1"},
@@ -46,12 +46,11 @@ void JVM_init(const std::string& era)
         {"Run2024G", "Summer24Prompt24_RunBCDEFGHI_V1"},
         {"Run2024H", "Summer24Prompt24_RunBCDEFGHI_V1"},
         {"Run2024I", "Summer24Prompt24_RunBCDEFGHI_V1"},
-    
+
         {"Run3Summer23NanoAODv12", "Summer23Prompt23_RunC_V1"},
         {"Run3Summer23BPixNanoAODv12", "Summer23BPixPrompt23_RunD_V1"},
         {"Run2023C", "Summer23Prompt23_RunC_V1"},
         {"Run2023D", "Summer23BPixPrompt23_RunD_V1"},
-
 
         {"Run3Summer22NanoAODv12", "Summer22_23Sep2023_RunCD_V1"},
         {"Run2022C", "Summer22_23Sep2023_RunCD_V1"},
@@ -66,49 +65,47 @@ void JVM_init(const std::string& era)
     if (it == JVMTab.end()) {
         throw std::runtime_error("Unknown era: " + era);
     }
-    JVM_corr = JVM_cset->at(it->second);
+    JVM_eMu_corr = JVM_eMu_cset->at(it->second);
 }
 
-ROOT::VecOps::RVec<int> passJetVetoFunc(const ROOT::VecOps::RVec<float>& eta, const ROOT::VecOps::RVec<float>& phi) 
+ROOT::VecOps::RVec<int> passJetVetoFunc_eMu(const ROOT::VecOps::RVec<float>& eta, const ROOT::VecOps::RVec<float>& phi)
 {
     ROOT::VecOps::RVec<int> pass_flags(eta.size());
     for (size_t i = 0; i < eta.size(); ++i) {
         float safe_eta = std::clamp(eta[i], -5.191f, 5.191f);
         float safe_phi = std::clamp(phi[i], -3.1415f, 3.1415f);
-        pass_flags[i] = (JVM_corr->evaluate(std::vector<correction::Variable::Type>{"jetvetomap", safe_eta, safe_phi}) == 0);
+        pass_flags[i] = (JVM_eMu_corr->evaluate(std::vector<correction::Variable::Type>{"jetvetomap", safe_eta, safe_phi}) == 0);
     }
     return pass_flags;
 }
 
-ROOT::VecOps::RVec<float> minDistanceFromMuon(
+ROOT::VecOps::RVec<float> minDistanceFromEMu(
     const ROOT::VecOps::RVec<int>& isGoodJet,
     const ROOT::VecOps::RVec<float>& eta,
     const ROOT::VecOps::RVec<float>& phi,
-    const ROOT::VecOps::RVec<int>& goodMuonIdx,
+    const int& leadingMuonIdx,
+    const int& leadingElectronIdx,
     const ROOT::VecOps::RVec<float>& Muon_eta,
-    const ROOT::VecOps::RVec<float>& Muon_phi)
+    const ROOT::VecOps::RVec<float>& Muon_phi,
+    const ROOT::VecOps::RVec<float>& Electron_eta,
+    const ROOT::VecOps::RVec<float>& Electron_phi)
 {
     auto jetSize = isGoodJet.size();
     ROOT::VecOps::RVec<float> minDR(jetSize);
-    for (auto i=0; i < jetSize; i++)
+    auto leadingMuonEta = Muon_eta[leadingMuonIdx];
+    auto leadingMuonPhi = Muon_phi[leadingMuonIdx];
+    auto leadingElectronEta = Electron_eta[leadingElectronIdx];
+    auto leadingElectronPhi = Electron_phi[leadingElectronIdx];
+    for (auto i = 0; i < jetSize; i++)
     {
-        // only need to compute for the goodjet
-        if (!isGoodJet[i]) 
+        if (!isGoodJet[i])
         {
-            minDR[i]=0.0;
+            minDR[i] = 0.0;
             continue;
         }
-        float bestDR = 999.0;
-        for (const auto& muIdx : goodMuonIdx) {
-            if (muIdx < 0 || muIdx >= static_cast<int>(Muon_eta.size())) {
-                continue;
-            }
-            const float dR = ROOT::VecOps::DeltaR(Muon_eta[muIdx], eta[i], Muon_phi[muIdx], phi[i]);
-            if (dR < bestDR) {
-                bestDR = dR;
-            }
-        }
-        minDR[i] = bestDR;
+        const auto drMuon = ROOT::VecOps::DeltaR(leadingMuonEta, eta[i], leadingMuonPhi, phi[i]);
+        const auto drElectron = ROOT::VecOps::DeltaR(leadingElectronEta, eta[i], leadingElectronPhi, phi[i]);
+        minDR[i] = std::min(drMuon, drElectron);
     }
     return minDR;
 }

@@ -6,6 +6,8 @@
 #include <vector>
 #include <tuple>
 #include <string>
+#include <set>
+#include <map>
 #include <functional>
 #include <optional>
 
@@ -27,6 +29,7 @@ class CutControl
         // 3-tuples of (operation, name, expression)
         // example
         // ["define", "leadingPt", "GoodMuon_pt[0]"], define a ordinary float
+        // ["redefine", "Jet_pt_JEC", "Jet_pt_JEC*(1+CMS_scale_j_FlavorQCD)"], redefine an existing column before downstream cuts/defines
         // ["cut", "dimuon", "(nGoodMuon==2)"], make the cut of requiring exactly 2 muons, the name is only for debugging
         // ["TLVdefine", "leadingP4", "leadingPt,leadingEta,leadingPhi,leadingM"], define TLorentzVector for further usage, splitting the steps for reducing pre-defined lambda Define, e.g. find diMuon properties
         std::vector<cut_string> _steps; 
@@ -57,11 +60,26 @@ class CutControl
         // core function, if _applyLambda not initialized, it will be initialized according to _steps
         // will warn if _step is empty
         ROOT::RDF::RNode applyCut(ROOT::RDF::RNode origRDF);
+        ROOT::RDF::RNode applyCutSkippingSteps(ROOT::RDF::RNode origRDF, const std::set<std::string> &skipStepNames);
+        ROOT::RDF::RNode applySuffixedCutSubset(
+            ROOT::RDF::RNode origRDF,
+            const std::set<std::string> &cutStepNamesToApply,
+            const std::string &suffix,
+            const std::map<std::string, std::string> &baseReplacements);
+        ROOT::RDF::RNode applySuffixedCutTags(
+            ROOT::RDF::RNode origRDF,
+            const std::string &suffix,
+            const std::map<std::string, std::string> &baseReplacements,
+            const std::string &finalPassName = "");
         // apply define-only steps (skip "cut") with optional filtering/hook
         ROOT::RDF::RNode applyDefineOnly(
             ROOT::RDF::RNode origRDF,
             const std::function<bool(const std::string&)> &shouldDefine,
             const std::function<void(const std::string&)> &onDefined);
+        std::string resolveSuffixedColumnName(
+            const std::string &baseName,
+            const std::string &suffix,
+            const std::map<std::string, std::string> &baseReplacements) const;
 
         // for parsing captured variables for TLorentzVector components
         std::vector<std::string> extractTLVComp(const std::string& TLVComp) const;

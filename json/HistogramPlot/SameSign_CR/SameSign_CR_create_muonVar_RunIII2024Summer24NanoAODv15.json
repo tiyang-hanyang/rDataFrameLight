@@ -11,9 +11,13 @@
         "leadingMuon_pt",
         "leadingMuon_eta",
         "leadingMuon_phi",
+        "leadingMuon_jetRelIso",
+        "leadingMuon_jetDF",
         "subleadingMuon_pt",
         "subleadingMuon_eta",
         "subleadingMuon_phi",
+        "subleadingMuon_jetRelIso",
+        "subleadingMuon_jetDF",
         "diMuon_mass",
         "diMuon_deltaEta",
         "diMuon_dphi",
@@ -95,9 +99,12 @@
             "QCD_1000_mu"
         ],
         "VV": [
-            "WW", 
-            "WZ",
-            "ZZ"
+            "WW2L2Nu", 
+            "WZ2L2Q",
+            "ZZ2L2Nu",
+            "ZZ2L2Q",
+            "WZ3l",
+            "ZZ4l" 
         ],
         "TTZ": [
             "TTZ_high",

@@ -58,18 +58,14 @@ def _define_jvm_weight_variation(rdf, branchArray, suffix, jet_pt_expr):
     return rdf, branchArray
 
 
-# according to the tutorial https://gitlab.cern.ch/cms-analysis/jme/jerc-application-tutorial/-/blob/master/ApplyOnNanoAOD/
-# 2024 data only has the L2 & L3 JES correction
-# 2024 MC has L2 correction and JER correction
 def processing(rdf, recordedModules, branchArray, era, ds=""):
-    if "JetVetoMap.C" not in recordedModules:
-        ROOT.gInterpreter.ProcessLine('#include "JetVetoMap.C"')
-        recordedModules.append("JetVetoMap.C")
-    ROOT.gInterpreter.ProcessLine('JVM_init("'+era+'")')
+    if "JetVetoMap_oneMuon.C" not in recordedModules:
+        ROOT.gInterpreter.ProcessLine('#include "JetVetoMap_oneMuon.C"')
+        recordedModules.append("JetVetoMap_oneMuon.C")
+    ROOT.gInterpreter.ProcessLine('JVM_oneMuon_init("' + era + '")')
 
-    # then this PassJetVeto branch is not really needed by this, but instead a sign already taken the JVM corrections
     if "PassJetVeto" not in branchArray:
-        rdf = rdf.Define("PassJetVeto", "passJetVetoFunc(Jet_eta, Jet_phi)")
+        rdf = rdf.Define("PassJetVeto", "passJetVetoFunc_oneMuon(Jet_eta, Jet_phi)")
         _append_once(branchArray, "PassJetVeto")
     if "Jet_passJetIdTight" not in branchArray:
         if _uses_v15_jetid(era):
@@ -104,7 +100,6 @@ def processing(rdf, recordedModules, branchArray, era, ds=""):
     if "JetIdTight" not in branchArray:
         rdf = rdf.Define("JetIdTight", "Jet_passJetIdTightLepVeto")
         _append_once(branchArray, "JetIdTight")
-        # loose jets is used for testing the JVM pass or fail
     if "looseJetCond" not in branchArray:
         rdf = rdf.Define("looseJetCond", "(Jet_pt_JEC > 15.0) && JetIdTight && (Jet_neEmEF + Jet_chEmEF < 0.9)")
         _append_once(branchArray, "looseJetCond")
@@ -114,8 +109,6 @@ def processing(rdf, recordedModules, branchArray, era, ds=""):
     if "JVMweight" not in branchArray:
         rdf = rdf.Define("JVMweight", "float(Nonzero(isLooseJetFailJVM).size()==0)")
         _append_once(branchArray, "JVMweight")
-        # Keep the muon-overlap distance independent of the nominal jet pT cut so
-        # later JES/JER shifted Jet_pt_JEC values can redefine GoodJetCond.
     if "Jet_tightNoPt" not in branchArray:
         rdf = rdf.Define("Jet_tightNoPt", "(abs(Jet_eta) < 2.5) && (Jet_rawFactor<0.9) && JetIdTight")
         _append_once(branchArray, "Jet_tightNoPt")
@@ -123,18 +116,12 @@ def processing(rdf, recordedModules, branchArray, era, ds=""):
         rdf = rdf.Define("Jet_mediumPtTight", "(Jet_pt_JEC > 30.0) && Jet_tightNoPt")
         _append_once(branchArray, "Jet_mediumPtTight")
     if "Jet_drFromMuon" not in branchArray:
-        rdf = rdf.Define(
-            "Jet_drFromMuon",
-            "minDistanceFromMuon(Jet_tightNoPt, Jet_eta, Jet_phi, Nonzero(isGoodMuon_mva), Muon_eta, Muon_phi)",
-        )
+        rdf = rdf.Define("Jet_drFromMuon", "minDistanceFromSingleMuon(Jet_tightNoPt, Jet_eta, Jet_phi, leadingMuonIdx, Muon_eta, Muon_phi)")
         _append_once(branchArray, "Jet_drFromMuon")
     if "GoodJetCond" not in branchArray:
         rdf = rdf.Define("GoodJetCond", "(Jet_pt_JEC > 30.0) && Jet_tightNoPt && (Jet_drFromMuon>0.4)")
         _append_once(branchArray, "GoodJetCond")
 
-    # JVM veto itself also has jet-pT dependence through the loose 15 GeV jet
-    # threshold. Store per-source variations so they can be used as weight
-    # systematics without assuming the JES and JER variation formulas are the same.
     for jes_source in JES_SOURCES:
         if jes_source not in branchArray:
             continue

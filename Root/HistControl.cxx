@@ -7,6 +7,42 @@
 #include <cmath>
 #include <queue>
 #include <iostream>
+#include <sstream>
+#include <filesystem>
+#include <memory>
+
+namespace
+{
+std::vector<int> getBinsFullyInsideRange(const TH1D *hist, double newMin, double newMax)
+{
+    std::vector<int> bins;
+    if (hist == nullptr)
+        return bins;
+
+    const int nBins = hist->GetNbinsX();
+    for (int i = 1; i <= nBins; ++i)
+    {
+        const double lowEdge = hist->GetXaxis()->GetBinLowEdge(i);
+        const double upEdge = hist->GetXaxis()->GetBinUpEdge(i);
+        if (lowEdge >= newMin && upEdge <= newMax)
+            bins.push_back(i);
+    }
+    return bins;
+}
+
+std::vector<double> getTemplateBinEdgesFromBins(const TH1D *hist, const std::vector<int> &bins)
+{
+    std::vector<double> edges;
+    if (hist == nullptr || bins.empty())
+        return edges;
+
+    edges.reserve(bins.size() + 1);
+    for (const int bin : bins)
+        edges.push_back(hist->GetXaxis()->GetBinLowEdge(bin));
+    edges.push_back(hist->GetXaxis()->GetBinUpEdge(bins.back()));
+    return edges;
+}
+}
 
 // providing a template to initialize, then the bin setup for filling would not be needed later
 HistControl::HistControl(const std::string &varName, TH1D *templateHist)
@@ -29,6 +65,11 @@ HistControl::~HistControl()
             delete hist;
     }
     _histograms.clear();
+}
+
+std::string HistControl::buildHistogramKey(const std::string &datasetName, const std::string &weightName) const
+{
+    return datasetName + "_" + this->_varName + "_" + weightName;
 }
 
 /// @brief The function for giving the minimum and maximum from the DataFrame itself
@@ -153,6 +194,21 @@ void HistControl::generateTemplateFromBinning(int nBins, double min, double max)
     rdfWS_utility::messageINFO("HistControl", "Template histogram dynamically created from binning: bins = " + std::to_string(nBins) + ", range = [" + std::to_string(min) + ", " + std::to_string(max) + "].");
 }
 
+void HistControl::generateTemplateFromBinning(const std::vector<double> &binEdges)
+{
+    if (_templateHist)
+    {
+        throw std::runtime_error("Template histogram already exists.");
+    }
+    if (binEdges.size() < 2)
+    {
+        throw std::runtime_error("Invalid variable binning specified.");
+    }
+
+    this->_templateHist = new TH1D("templateHist", "Template Histogram", static_cast<int>(binEdges.size()) - 1, binEdges.data());
+    rdfWS_utility::messageINFO("HistControl", "Template histogram dynamically created from variable binning.");
+}
+
 /// @brief Internal function to compute the ratio of two histograms. In principle, all histograms should be processed through the hist controller and the TH1D* easily causing leakage, so that this function is not public. May change upon to the need
 /// @param numerator
 /// @param denominator
@@ -223,7 +279,6 @@ TH1D *HistControl::calculateRatio(TH1D *numerator, TH1D *denominator, const std:
 /// @return histogram extracted
 TH1D *HistControl::createHistogram(ROOT::RDF::RNode &rnode, const std::string &datasetName, const HistBinning *binning, const std::string &varName, const std::string &weightName, const std::string &outDir, bool ifSave)
 {
-    // make sure the variables are correct, one HistControl object should only deal with one variable
     if (this->_varName.empty())
     {
         if (varName.empty())
@@ -233,56 +288,67 @@ TH1D *HistControl::createHistogram(ROOT::RDF::RNode &rnode, const std::string &d
     else if (!varName.empty() && this->_varName != varName)
         rdfWS_utility::messageERROR("HistControl", "Variable name mismatch. Expected: " + this->_varName + ", but got: " + varName);
 
-    // avoid double creating
-    if (this->_histograms.find(datasetName) != this->_histograms.end())
-        rdfWS_utility::messageERROR("HistControl", "Histogram for dataset " + datasetName + " already exists.");
+    bool tempBinning = false;
+    if (binning == nullptr)
+    {
+        binning = new HistBinning();
+        tempBinning = true;
+    }
 
-    // Need to generate _templateHist, if there is no one. Using provided HistBinning or auto binning
     if (!this->_templateHist)
     {
-        int tempBinning = 0;
-        if (binning == nullptr)
+        if (!binning->varBins.empty())
         {
-            rdfWS_utility::messageINFO("HistControl", "No template hist exists, no HistBinning provided, will get minimum and maximum from dataset");
-            binning = new HistBinning;
-            tempBinning = 1;
+            if (binning->nBins != -1 && static_cast<int>(binning->varBins.size()) != binning->nBins + 1)
+            {
+                throw std::runtime_error("Variable binning size does not match nBins + 1.");
+            }
+            generateTemplateFromBinning(binning->varBins);
         }
-
-        double min = binning->min;
-        double max = binning->max;
-        int bins = binning->nBins;
-        // bins should only be -1 with default value of HistBinning
-        if (bins == -1)
+        else
         {
-            std::tie(min, max) = this->getMinMax(rnode, this->_varName, binning->stripeLow, binning->stripeHigh);
-            bins = binning->defaultNBins;
+            double min = binning->min;
+            double max = binning->max;
+            int bins = binning->nBins;
+            if (bins == -1)
+            {
+                std::tie(min, max) = this->getMinMax(rnode, this->_varName, binning->stripeLow, binning->stripeHigh);
+                bins = binning->defaultNBins;
+            }
+            generateTemplateFromBinning(bins, min, max);
         }
-        if (tempBinning)
-        {
-            delete binning;
-            binning = nullptr;
-        }
-
-        generateTemplateFromBinning(bins, min, max);
     }
 
-    // template hist always with priority !
-    int nBins = this->_templateHist->GetNbinsX();
-    double min = this->_templateHist->GetXaxis()->GetXmin();
-    double max = this->_templateHist->GetXaxis()->GetXmax();
+    if (tempBinning)
+    {
+        delete binning;
+        binning = nullptr;
+    }
 
-    // extract histogram from rdataframe
     if (!rnode.HasColumn("one"))
     {
-        rnode.Define("one", "1.0");
+        rnode = rnode.Define("one", "1.0");
     }
-    auto hist = rnode.Histo1D(ROOT::RDF::TH1DModel(datasetName.c_str(), datasetName.c_str(), nBins, min, max), this->_varName, weightName);
+
+    ROOT::RDF::TH1DModel histModel("templateHistModel", datasetName.c_str(), this->_templateHist->GetNbinsX(), this->_templateHist->GetXaxis()->GetXmin(), this->_templateHist->GetXaxis()->GetXmax());
+    if (this->_templateHist->GetXaxis()->GetXbins()->GetSize() > 0)
+    {
+        histModel = ROOT::RDF::TH1DModel("templateHistModel", datasetName.c_str(), this->_templateHist->GetNbinsX(), this->_templateHist->GetXaxis()->GetXbins()->GetArray());
+    }
+
+    auto hist = rnode.Histo1D(histModel, this->_varName, weightName);
     std::string histName = datasetName + "_" + this->_varName + "_" + weightName;
     TH1D *histClone = (TH1D *)hist.GetPtr()->Clone(histName.c_str());
     histClone->SetDirectory(0);
-    // store in the internal histogram map, save a copy to the disk, and return this hist if need to use
-    this->_histograms.emplace(datasetName, histClone);
-    if (ifSave) saveHistogram(histClone, histName, outDir);
+    const std::string histKey = buildHistogramKey(datasetName, weightName);
+    auto [it, inserted] = this->_histograms.emplace(histKey, histClone);
+    if (!inserted)
+    {
+        delete histClone;
+        throw std::runtime_error("Histogram with key " + histKey + " already exists.");
+    }
+    if (ifSave)
+        saveHistogram(histClone, histName, outDir);
     return histClone;
 }
 
@@ -293,10 +359,8 @@ TH1D *HistControl::createHistogram(ROOT::RDF::RNode &rnode, const std::string &d
 /// @param varName: can omit if already initialized
 /// @param additionalName: can omit, just to avoid hist name collisiton
 /// @return
-TH1D *HistControl::loadHistogram(const std::string &fileName, const std::string &histName, const std::string &histKey, float scaling, const std::string &varName, const std::string &additionalName)
+void HistControl::loadHistogram(const std::string &fileName, const std::string &histName, const std::string &histKey, float scaling, const std::string &varName, const std::string &additionalName)
 {
-    // make sure the variables are correct, one HistControl object should only deal with one variable
-    // plottng multiple histograms together would later need the other expantions
     if (_varName.empty())
     {
         if (varName.empty())
@@ -310,9 +374,15 @@ TH1D *HistControl::loadHistogram(const std::string &fileName, const std::string 
         throw std::runtime_error("Variable name mismatch. Expected: " + _varName + ", but got: " + varName);
     }
 
+    if (!std::filesystem::exists(std::filesystem::path(fileName)))
+    {
+        throw std::runtime_error("Failed to open hist TFile: " + fileName);
+    }
+
     TFile *f1 = TFile::Open(fileName.c_str(), "READ");
     if (!f1 || f1->IsZombie())
     {
+        delete f1;
         throw std::runtime_error("Failed to open hist TFile: " + fileName);
     }
 
@@ -320,21 +390,29 @@ TH1D *HistControl::loadHistogram(const std::string &fileName, const std::string 
     if (!hist)
     {
         f1->Close();
+        delete f1;
         throw std::runtime_error("Histogram " + histName + " not found in file " + fileName);
     }
     hist->SetDirectory(0);
+    f1->Close();
+    delete f1;
     hist->Scale(scaling);
 
-    // absorbing the overflow
-    // later should add as an additional function here
-    int containOverflow=1;
-    if (containOverflow)
-    {
-        int maxBin = hist->GetNbinsX();
-        hist->SetBinContent(maxBin, hist->GetBinContent(maxBin)+ hist->GetBinContent(maxBin+1));
-    }
+    const int maxBin = hist->GetNbinsX();
+    const double underflowContent = hist->GetBinContent(0);
+    const double firstContent = hist->GetBinContent(1);
+    const double underflowError = hist->GetBinError(0);
+    const double firstError = hist->GetBinError(1);
+    hist->SetBinContent(1, firstContent + underflowContent);
+    hist->SetBinError(1, std::hypot(firstError, underflowError));
 
-    // compare to template to make sure the same binning
+    const double overflowContent = hist->GetBinContent(maxBin + 1);
+    const double lastContent = hist->GetBinContent(maxBin);
+    const double overflowError = hist->GetBinError(maxBin + 1);
+    const double lastError = hist->GetBinError(maxBin);
+    hist->SetBinContent(maxBin, lastContent + overflowContent);
+    hist->SetBinError(maxBin, std::hypot(lastError, overflowError));
+
     if (this->_templateHist == nullptr)
     {
         this->_templateHist = (TH1D *)hist->Clone(("template_" + this->_varName + additionalName).c_str());
@@ -343,27 +421,96 @@ TH1D *HistControl::loadHistogram(const std::string &fileName, const std::string 
     }
     else
     {
-        if (this->_templateHist->GetNbinsX() != hist->GetNbinsX() ||
-            this->_templateHist->GetXaxis()->GetXmin() != hist->GetXaxis()->GetXmin() ||
-            this->_templateHist->GetXaxis()->GetXmax() != hist->GetXaxis()->GetXmax())
+        bool sameBinning = this->_templateHist->GetNbinsX() == hist->GetNbinsX();
+        if (sameBinning)
         {
+            for (int i = 1; i <= hist->GetNbinsX() + 1; ++i)
+            {
+                if (std::abs(this->_templateHist->GetXaxis()->GetBinLowEdge(i) - hist->GetXaxis()->GetBinLowEdge(i)) > 1e-9)
+                {
+                    sameBinning = false;
+                    break;
+                }
+            }
+        }
+        if (!sameBinning)
+        {
+            delete hist;
             throw std::runtime_error("Binning of histogram " + histName + " does not match the template histogram.");
         }
     }
 
-    hist->SetDirectory(0);
     std::string histFullName = hist->GetName();
     histFullName += additionalName;
-    auto histClone = (TH1D *)hist->Clone(histFullName.c_str());
-    histClone->SetDirectory(0);
-    f1->Close();
-    delete hist;
-    if (_histograms.find(histName) != _histograms.end())
+    hist->SetName(histFullName.c_str());
+    if (_histograms.find(histKey) != _histograms.end())
     {
-        throw std::runtime_error("Histogram with name " + histName + " already exists.");
+        delete hist;
+        throw std::runtime_error("Histogram with key " + histKey + " already exists.");
+    }
+    this->_histograms.emplace(histKey, hist);
+    return;
+}
+
+void HistControl::addHistogram(const TH1D *hist, const std::string &histKey, const std::string &varName, const std::string &additionalName)
+{
+    if (!hist)
+    {
+        throw std::runtime_error("Cannot add a null histogram.");
+    }
+
+    if (_varName.empty())
+    {
+        if (varName.empty())
+        {
+            throw std::runtime_error("Variable name for histograms must be explicitly provided as no internal variable name is set.");
+        }
+        _varName = varName;
+    }
+    else if (!varName.empty() && _varName != varName)
+    {
+        throw std::runtime_error("Variable name mismatch. Expected: " + _varName + ", but got: " + varName);
+    }
+
+    TH1D *histClone = static_cast<TH1D *>(hist->Clone());
+    histClone->SetDirectory(0);
+
+    if (this->_templateHist == nullptr)
+    {
+        this->_templateHist = static_cast<TH1D *>(histClone->Clone(("template_" + this->_varName + additionalName).c_str()));
+        this->_templateHist->SetDirectory(0);
+        this->_templateHist->Reset();
+    }
+    else
+    {
+        bool sameBinning = this->_templateHist->GetNbinsX() == histClone->GetNbinsX();
+        if (sameBinning)
+        {
+            for (int i = 1; i <= histClone->GetNbinsX() + 1; ++i)
+            {
+                if (std::abs(this->_templateHist->GetXaxis()->GetBinLowEdge(i) - histClone->GetXaxis()->GetBinLowEdge(i)) > 1e-9)
+                {
+                    sameBinning = false;
+                    break;
+                }
+            }
+        }
+        if (!sameBinning)
+        {
+            delete histClone;
+            throw std::runtime_error("Binning of histogram " + std::string(hist->GetName()) + " does not match the template histogram.");
+        }
+    }
+
+    std::string histFullName = histClone->GetName();
+    histFullName += additionalName;
+    histClone->SetName(histFullName.c_str());
+    if (_histograms.find(histKey) != _histograms.end())
+    {
+        delete histClone;
+        throw std::runtime_error("Histogram with key " + histKey + " already exists.");
     }
     this->_histograms.emplace(histKey, histClone);
-    return histClone;
 }
 
 /// @brief Save histograms when created from histograms, maybe should move to internal
@@ -377,9 +524,34 @@ void HistControl::saveHistogram(const TH1D *hist, const std::string &fileName, c
         rdfWS_utility::creatingFolder("HistControl", outDir);
         outFilePath = outDir + "/" + fileName + ".root";
     }
-    auto saveFile = new TFile(outFilePath.c_str(), "RECREATE");
+    TFile *saveFile = TFile::Open(outFilePath.c_str(), "RECREATE");
+    if (!saveFile || saveFile->IsZombie())
+    {
+        delete saveFile;
+        throw std::runtime_error("Failed to create output ROOT file: " + outFilePath);
+    }
     hist->Write();
     saveFile->Close();
+    delete saveFile;
+}
+
+void HistControl::removeHistogram(const std::string &datasetName, const std::string &weightName)
+{
+    const std::string histKey = buildHistogramKey(datasetName, weightName);
+    auto it = this->_histograms.find(histKey);
+    if (it == this->_histograms.end())
+        return;
+    delete it->second;
+    this->_histograms.erase(it);
+}
+
+void HistControl::clearHistograms()
+{
+    for (auto &[key, hist] : this->_histograms)
+    {
+        delete hist;
+    }
+    this->_histograms.clear();
 }
 
 // take some modification to restrict extraction range
@@ -390,14 +562,21 @@ std::map<std::string, TH1D *> HistControl::getHists(std::vector<std::string> his
     {
         throw std::runtime_error("No histograms prepared");
     }
+    std::map<std::string, TH1D *> extractedHist;
     // no given keys means extract everything
     if (histKeys.size() == 0)
-        return this->_histograms;
+    {
+        for (const auto &[key, hist] : this->_histograms)
+        {
+            extractedHist.emplace(key, (TH1D *)hist->Clone((key + "_out").c_str()));
+            extractedHist[key]->SetDirectory(0);
+        }
+        return extractedHist;
+    }
     // with given keys
-    std::map<std::string, TH1D *> extractedHist;
     for (auto key : histKeys)
     {
-        extractedHist.emplace(key, (TH1D *)this->_histograms[key]->Clone((key + "_copy").c_str()));
+        extractedHist.emplace(key, (TH1D *)this->_histograms[key]->Clone((key + "_out").c_str()));
         extractedHist[key]->SetDirectory(0);
     }
     return extractedHist;
@@ -424,16 +603,18 @@ HistControl HistControl::cropHistograms(double newMin, double newMax)
                                  "] exceeds original range [" + std::to_string(origMin) + ", " + std::to_string(origMax) + "].");
     }
 
-    // get a new object with the same varName but cropped histograms
-    int newFirstBin = this->_templateHist->FindBin(newMin);
-    int newLastBin = std::min(this->_templateHist->FindBin(newMax), this->_templateHist->GetNbinsX());
-    int nNewBins = newLastBin - newFirstBin + 1;
+    const std::vector<int> selectedBins = getBinsFullyInsideRange(this->_templateHist, newMin, newMax);
+    if (selectedBins.empty())
+    {
+        throw std::runtime_error("Requested crop range [" + std::to_string(newMin) + ", " + std::to_string(newMax) +
+                                 "] does not fully contain any histogram bin.");
+    }
 
-    double croppedMin = this->_templateHist->GetXaxis()->GetBinLowEdge(newFirstBin);
-    double croppedMax = this->_templateHist->GetXaxis()->GetBinUpEdge(newLastBin);
+    const std::vector<double> croppedEdges = getTemplateBinEdgesFromBins(this->_templateHist, selectedBins);
+    const int nNewBins = static_cast<int>(selectedBins.size());
 
     TH1D *newTemplate = new TH1D("croppedTemplate", "Cropped Template Histogram",
-                                 nNewBins, croppedMin, croppedMax);
+                                 nNewBins, croppedEdges.data());
     newTemplate->SetDirectory(0);
     HistControl croppedControl(this->_varName, newTemplate);
 
@@ -442,15 +623,16 @@ HistControl HistControl::cropHistograms(double newMin, double newMax)
         std::string newName = std::string(hist->GetName()) + "_cropped_" + std::to_string(newMin) + "_" + std::to_string(newMax);
 
         TH1D *croppedHist = new TH1D(newName.c_str(), hist->GetTitle(),
-                                     nNewBins, croppedMin, croppedMax);
+                                     nNewBins, croppedEdges.data());
         croppedHist->SetDirectory(0);
 
-        for (int i = newFirstBin; i <= newLastBin; ++i)
+        for (int outputBin = 1; outputBin <= nNewBins; ++outputBin)
         {
-            double content = hist->GetBinContent(i);
-            double error = hist->GetBinError(i);
-            croppedHist->SetBinContent(i - newFirstBin + 1, content);
-            croppedHist->SetBinError(i - newFirstBin + 1, error);
+            const int inputBin = selectedBins[outputBin - 1];
+            const double content = hist->GetBinContent(inputBin);
+            const double error = hist->GetBinError(inputBin);
+            croppedHist->SetBinContent(outputBin, content);
+            croppedHist->SetBinError(outputBin, error);
         }
 
         croppedControl._histograms[key] = croppedHist;
@@ -558,29 +740,36 @@ std::map<std::string, TH1D *> HistControl::getRatios(const std::vector<std::stri
 /// @return
 HistControl HistControl::addHistograms(const HistControl &toAdd)
 {
-    // if the initial histogram is empty, would just copy the toAdd one
     if (this->_histograms.size() == 0)
     {
         HistControl result = toAdd;
         return result;
     }
 
-    // Check addbility
-    // varName must match
     if (this->_varName != toAdd._varName)
     {
         throw std::runtime_error("Variable name mismatch between the two HistControl objects.");
     }
 
-    // Create a new HistControl for the result
+    auto sameBinning = [](const TH1D *lhs, const TH1D *rhs)
+    {
+        if (lhs == nullptr || rhs == nullptr)
+            return lhs == rhs;
+        if (lhs->GetNbinsX() != rhs->GetNbinsX())
+            return false;
+        for (int i = 1; i <= lhs->GetNbinsX() + 1; ++i)
+        {
+            if (std::abs(lhs->GetXaxis()->GetBinLowEdge(i) - rhs->GetXaxis()->GetBinLowEdge(i)) > 1e-9)
+                return false;
+        }
+        return true;
+    };
+
     HistControl result(this->_varName);
 
-    // Check to make sure template binning match
     if (this->_templateHist && toAdd._templateHist)
     {
-        if (this->_templateHist->GetNbinsX() != toAdd._templateHist->GetNbinsX() ||
-            this->_templateHist->GetXaxis()->GetXmin() != toAdd._templateHist->GetXaxis()->GetXmin() ||
-            this->_templateHist->GetXaxis()->GetXmax() != toAdd._templateHist->GetXaxis()->GetXmax())
+        if (!sameBinning(this->_templateHist, toAdd._templateHist))
         {
             throw std::runtime_error("Template histogram binning mismatch between the two HistControl objects.");
         }
@@ -596,26 +785,20 @@ HistControl HistControl::addHistograms(const HistControl &toAdd)
     }
     else if (toAdd._templateHist)
     {
-        std::string templateName = this->_templateHist->GetName();
+        std::string templateName = toAdd._templateHist->GetName();
         result._templateHist = (TH1D *)toAdd._templateHist->Clone((templateName + "_sum").c_str());
         result._templateHist->SetDirectory(0);
     }
 
-    // Add histograms with matching keys
     for (const auto &[key, hist] : this->_histograms)
     {
         auto it = toAdd._histograms.find(key);
         if (it != toAdd._histograms.end())
         {
-            // Ensure binning matches
-            if (hist->GetNbinsX() != it->second->GetNbinsX() ||
-                hist->GetXaxis()->GetXmin() != it->second->GetXaxis()->GetXmin() ||
-                hist->GetXaxis()->GetXmax() != it->second->GetXaxis()->GetXmax())
+            if (!sameBinning(hist, it->second))
             {
                 throw std::runtime_error("Binning mismatch for histogram key: " + key);
             }
-
-            // Create a new histogram for the sum
             std::string sumName = hist->GetName();
             TH1D *sumHist = (TH1D *)hist->Clone((sumName + "_sum").c_str());
             sumHist->SetDirectory(0);
@@ -624,7 +807,6 @@ HistControl HistControl::addHistograms(const HistControl &toAdd)
         }
         else
         {
-            // If the key does not exist in the toAdd HistControl, clone the original histogram
             std::string clonedName = hist->GetName();
             TH1D *clonedHist = (TH1D *)hist->Clone((clonedName + "_cloned").c_str());
             clonedHist->SetDirectory(0);
@@ -632,7 +814,6 @@ HistControl HistControl::addHistograms(const HistControl &toAdd)
         }
     }
 
-    // Add histograms that are only in the toAdd HistControl
     for (const auto &[key, hist] : toAdd._histograms)
     {
         if (this->_histograms.find(key) == this->_histograms.end())
@@ -647,7 +828,72 @@ HistControl HistControl::addHistograms(const HistControl &toAdd)
     return result;
 }
 
-// fix copy
+
+void HistControl::absorbHistograms(const HistControl &toAdd)
+{
+    if (toAdd._histograms.empty())
+        return;
+
+    if (this->_histograms.empty())
+    {
+        *this = toAdd;
+        return;
+    }
+
+    if (this->_varName != toAdd._varName)
+    {
+        throw std::runtime_error("Variable name mismatch between the two HistControl objects.");
+    }
+
+    auto sameBinning = [](const TH1D *lhs, const TH1D *rhs)
+    {
+        if (lhs == nullptr || rhs == nullptr)
+            return lhs == rhs;
+        if (lhs->GetNbinsX() != rhs->GetNbinsX())
+            return false;
+        for (int i = 1; i <= lhs->GetNbinsX() + 1; ++i)
+        {
+            if (std::abs(lhs->GetXaxis()->GetBinLowEdge(i) - rhs->GetXaxis()->GetBinLowEdge(i)) > 1e-9)
+                return false;
+        }
+        return true;
+    };
+
+    if (this->_templateHist && toAdd._templateHist)
+    {
+        if (!sameBinning(this->_templateHist, toAdd._templateHist))
+        {
+            throw std::runtime_error("Template histogram binning mismatch between the two HistControl objects.");
+        }
+    }
+    else if (!this->_templateHist && toAdd._templateHist)
+    {
+        std::string templateName = toAdd._templateHist->GetName();
+        this->_templateHist = (TH1D *)toAdd._templateHist->Clone((templateName + "_cloned").c_str());
+        this->_templateHist->SetDirectory(0);
+    }
+
+    for (const auto &[key, hist] : toAdd._histograms)
+    {
+        auto it = this->_histograms.find(key);
+        if (it != this->_histograms.end())
+        {
+            if (!sameBinning(it->second, hist))
+            {
+                throw std::runtime_error("Binning mismatch for histogram key: " + key);
+            }
+            it->second->Add(hist);
+        }
+        else
+        {
+            std::string clonedName = hist->GetName();
+            TH1D *clonedHist = (TH1D *)hist->Clone((clonedName + "_cloned").c_str());
+            clonedHist->SetDirectory(0);
+            this->_histograms[key] = clonedHist;
+        }
+    }
+}
+
 HistControl::HistControl(const HistControl &other)
 {
     _varName = other._varName;
@@ -669,15 +915,14 @@ HistControl &HistControl::operator=(const HistControl &other)
 {
     if (this != &other)
     {
-        // Clean up existing resources
         delete _templateHist;
+        _templateHist = nullptr;
         for (auto &[key, hist] : _histograms)
         {
             delete hist;
         }
         _histograms.clear();
 
-        // Copy resources
         _varName = other._varName;
         if (other._templateHist)
         {
@@ -695,9 +940,43 @@ HistControl &HistControl::operator=(const HistControl &other)
     return *this;
 }
 
+HistControl::HistControl(HistControl &&other) noexcept
+{
+    _varName = std::move(other._varName);
+    _histograms = std::move(other._histograms);
+    _templateHist = other._templateHist;
+    other._templateHist = nullptr;
+    other._histograms.clear();
+}
+
+HistControl &HistControl::operator=(HistControl &&other) noexcept
+{
+    if (this != &other)
+    {
+        delete _templateHist;
+        for (auto &[key, hist] : _histograms)
+        {
+            delete hist;
+        }
+        _histograms.clear();
+
+        _varName = std::move(other._varName);
+        _histograms = std::move(other._histograms);
+        _templateHist = other._templateHist;
+        other._templateHist = nullptr;
+        other._histograms.clear();
+    }
+    return *this;
+}
+
 
 std::map<std::string, TH1D*> HistControl::getHistInstance()
 {
     std::cout << "You are directly accessing the histogram!" << std::endl;
     return this->_histograms;
 }
+
+
+
+
+

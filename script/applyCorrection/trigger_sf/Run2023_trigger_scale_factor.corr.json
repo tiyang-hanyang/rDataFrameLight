@@ -1,0 +1,231 @@
+{
+    "schema_version": 2,
+    "description": "Run2023 trigger SF MET120",
+    "corrections": [
+        {
+            "name": "leading_muon_trigger_sf",
+            "description": "Leading-muon trigger scale factor versus pT.",
+            "version": 1,
+            "inputs": [
+                {
+                    "name": "leading_pt",
+                    "type": "real",
+                    "description": "Leading muon pT"
+                },
+                {
+                    "name": "subleading_pt",
+                    "type": "real",
+                    "description": "Subleading muon pT"
+                },
+                {
+                    "name": "variation",
+                    "type": "string",
+                    "description": "Systematic variation label"
+                }
+            ],
+            "output": {
+                "name": "weight",
+                "type": "real",
+                "description": "Trigger scale factor"
+            },
+            "data": {
+                "nodetype": "category",
+                "input": "variation",
+                "content": [
+                    {
+                        "key": "nominal",
+                        "value": {
+                            "nodetype": "binning",
+                            "input": "leading_pt",
+                            "edges": [
+                                20.0,
+                                50.0,
+                                80.0,
+                                200.0
+                            ],
+                            "content": [
+                                {
+                                    "nodetype": "binning",
+                                    "input": "subleading_pt",
+                                    "edges": [
+                                        10.0,
+                                        30.0,
+                                        50.0,
+                                        200.0
+                                    ],
+                                    "content": [
+                                        0.96665110832001,
+                                        0.9920448507325115,
+                                        0.0
+                                    ],
+                                    "flow": "clamp"
+                                },
+                                {
+                                    "nodetype": "binning",
+                                    "input": "subleading_pt",
+                                    "edges": [
+                                        10.0,
+                                        30.0,
+                                        50.0,
+                                        200.0
+                                    ],
+                                    "content": [
+                                        0.970830036690962,
+                                        0.9950333201177544,
+                                        0.9990212468283892
+                                    ],
+                                    "flow": "clamp"
+                                },
+                                {
+                                    "nodetype": "binning",
+                                    "input": "subleading_pt",
+                                    "edges": [
+                                        10.0,
+                                        30.0,
+                                        50.0,
+                                        200.0
+                                    ],
+                                    "content": [
+                                        0.9602983952307194,
+                                        0.9901558143902223,
+                                        0.9900985316818675
+                                    ],
+                                    "flow": "clamp"
+                                }
+                            ],
+                            "flow": "clamp"
+                        }
+                    },
+                    {
+                        "key": "up",
+                        "value": {
+                            "nodetype": "binning",
+                            "input": "leading_pt",
+                            "edges": [
+                                20.0,
+                                50.0,
+                                80.0,
+                                200.0
+                            ],
+                            "content": [
+                                {
+                                    "nodetype": "binning",
+                                    "input": "subleading_pt",
+                                    "edges": [
+                                        10.0,
+                                        30.0,
+                                        50.0,
+                                        200.0
+                                    ],
+                                    "content": [
+                                        1.0111884138325664,
+                                        1.0578586006724104,
+                                        0.0
+                                    ],
+                                    "flow": "clamp"
+                                },
+                                {
+                                    "nodetype": "binning",
+                                    "input": "subleading_pt",
+                                    "edges": [
+                                        10.0,
+                                        30.0,
+                                        50.0,
+                                        200.0
+                                    ],
+                                    "content": [
+                                        1.0249140621845612,
+                                        1.0419833231068758,
+                                        1.0646641225648341
+                                    ],
+                                    "flow": "clamp"
+                                },
+                                {
+                                    "nodetype": "binning",
+                                    "input": "subleading_pt",
+                                    "edges": [
+                                        10.0,
+                                        30.0,
+                                        50.0,
+                                        200.0
+                                    ],
+                                    "content": [
+                                        1.0152957913742389,
+                                        1.034589685428506,
+                                        1.0216385142932312
+                                    ],
+                                    "flow": "clamp"
+                                }
+                            ],
+                            "flow": "clamp"
+                        }
+                    },
+                    {
+                        "key": "down",
+                        "value": {
+                            "nodetype": "binning",
+                            "input": "leading_pt",
+                            "edges": [
+                                20.0,
+                                50.0,
+                                80.0,
+                                200.0
+                            ],
+                            "content": [
+                                {
+                                    "nodetype": "binning",
+                                    "input": "subleading_pt",
+                                    "edges": [
+                                        10.0,
+                                        30.0,
+                                        50.0,
+                                        200.0
+                                    ],
+                                    "content": [
+                                        0.9221138028074537,
+                                        0.9262311007926125,
+                                        0.0
+                                    ],
+                                    "flow": "clamp"
+                                },
+                                {
+                                    "nodetype": "binning",
+                                    "input": "subleading_pt",
+                                    "edges": [
+                                        10.0,
+                                        30.0,
+                                        50.0,
+                                        200.0
+                                    ],
+                                    "content": [
+                                        0.9167460111973629,
+                                        0.9480833171286329,
+                                        0.9333783710919443
+                                    ],
+                                    "flow": "clamp"
+                                },
+                                {
+                                    "nodetype": "binning",
+                                    "input": "subleading_pt",
+                                    "edges": [
+                                        10.0,
+                                        30.0,
+                                        50.0,
+                                        200.0
+                                    ],
+                                    "content": [
+                                        0.9053009990871999,
+                                        0.9457219433519386,
+                                        0.9585585490705038
+                                    ],
+                                    "flow": "clamp"
+                                }
+                            ],
+                            "flow": "clamp"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

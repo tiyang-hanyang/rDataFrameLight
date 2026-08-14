@@ -172,17 +172,22 @@ int main(int argc, char *argv[])
     if (std::filesystem::exists(outputFile))
     {
         TFile fcheck(outputFile.c_str(), "READ");
-        if (fcheck.IsZombie())
+        if (fcheck.IsZombie() || !fcheck.Get("genWeightSum"))
         {
-            rdfWS_utility::messageWARN("skimSamples_oneFile", "Output is zombie, removing: " + outputFile);
+            const bool isZombie = fcheck.IsZombie();
             fcheck.Close();
-            std::filesystem::remove(outputFile);
-        }
-        else if (!fcheck.Get("genWeightSum"))
-        {
-            rdfWS_utility::messageWARN("skimSamples_oneFile", "Output missing genWeightSum, removing: " + outputFile);
-            fcheck.Close();
-            std::filesystem::remove(outputFile);
+            auto baseBackup = outputFile + ".bad";
+            std::string backupPath = baseBackup;
+            int suffix = 0;
+            while (std::filesystem::exists(backupPath))
+            {
+                ++suffix;
+                backupPath = baseBackup + "." + std::to_string(suffix);
+            }
+            rdfWS_utility::messageWARN("skimSamples_oneFile",
+                                       std::string("Output ") + (isZombie ? "is zombie" : "missing genWeightSum") +
+                                           ", backing up to: " + backupPath);
+            std::filesystem::rename(outputFile, backupPath);
         }
         else
         {
@@ -240,7 +245,6 @@ int main(int argc, char *argv[])
         h_sumw->GetYaxis()->SetTitle("sum(genWeight)");
         h_sumw->Write("");
         fRC.Close();
-        delete h_sumw;
     }
 
     return 0;
