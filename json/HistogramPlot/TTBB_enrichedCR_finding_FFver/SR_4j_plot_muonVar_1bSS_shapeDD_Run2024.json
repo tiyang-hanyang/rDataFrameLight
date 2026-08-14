@@ -1,0 +1,113 @@
+{
+    "jobType": "plot",
+    "comments": "S2 full 2024 dimuon corretion",
+    "inDir": "SR_4j_muonVar_1bSS_prompt",
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+    "outDir": "SR_4j_muonVar_1bSS_prompt_plot",
+    "name": "SR_4j_muonVar_1bSS_prompt_withDD_shapeTF_DataMC_plot",
+
+    "era": [
+        "Run2024C", "Run2024D", "Run2024E", "Run2024F", "Run2024G", "Run2024H", "Run2024I"
+    ],
+    "mc_era": [
+        "RunIII2024Summer24NanoAODv15"
+    ],
+    "dd_era": [
+        "RunIII2024Summer24NanoAODv15"
+    ],
+
+    "varNames": [
+        "leadingMuon_pt",
+        "subleadingMuon_pt"
+    ],
+    "varNames": [
+        "leadingMuon_eta",
+        "subleadingMuon_eta"
+    ],
+    "needCrop": [
+    ],
+    "cropedRange": {
+    },
+
+    "histXSize": 700,
+    "histYSize": 800,
+
+    "datasets": [
+        "Muon",
+        "nonprompt_shapeTF_final",
+	"ttbar",
+	"TTBB",
+        "TV",
+        "TTH",
+        "VV",
+        "VVV",
+        "TTW",
+        "TTZ",
+        "TTTT",
+	"TTVV"
+    ],
+
+    "colorMapping": {
+        "nonprompt_shapeTF_final": 602
+    },
+    "datasetLabel": {
+        "nonprompt_shapeTF_final": "nonprompt DD"
+    },
+
+    "needMerge": {
+    },
+    "isData": [
+        "Muon"
+    ],
+    "isDD": [
+        "nonprompt_shapeTF_final"
+    ],
+    "isSignal": [
+        "TTHH"
+    ],
+
+    "doLogPlot": 0,
+    "doRatioPlot": 1,
+    "doNormPlot": 0,
+    
+    "numerator": [
+        "Muon"
+    ],
+    "stackOrder": [
+        "nonprompt_shapeTF_final",
+        "ttbar",
+        "TTBB",
+        "TV",
+        "TTH",
+        "VV",
+        "VVV",
+        "TTW",
+        "TTZ",
+        "TTTT",
+        "TTVV"
+    ],
+    "reOrder": 1,
+
+    "header": [
+        "Preliminary",
+        "%1.0f fb^{-1} (13.6 TeV)"
+    ],
+    "texts": [
+        "SS2#mu, #geq 4j, 1b",
+        "MC only prompt",
+        "DD using shape TF from 2-3j",
+        "2024",
+        "PU JME MUO BTV corr."
+    ],
+
+    "DDWeight": "DDTotalWeight",
+
+    "DDweightSyst": {
+        "TF": ["TF_antiIso_muon_shape"]
+    },
+
+    "varConfig": "json/variables/variables.json",
+    "lumiConfig": "json/Lumi/Run3.json",
+    "systConfig": "json/syst/Run3_XSonly.json"
+}

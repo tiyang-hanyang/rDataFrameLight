@@ -1,0 +1,30 @@
+{
+    "jobType": "collectingHists",
+    "comments": "CR relax miniIso",
+    "era": "Run2024H",
+    "outDir": "AR_singleAnti_2j_nJets",
+    "isData": 1,
+    "sampleConfig": "json/samples/special_relax_miniisolation/Run2024H_special_relax_miniIso_twoJets_muonCorr_Aug8.json",
+    "varNames": [
+        "nGoodJet"
+    ],
+    "varConfig": "json/variables/variables.json",
+    "cutConfig": [
+        "json/cuts/HistPlot/signalRegionVariables/jets_multiplicity.json",
+        "json/cuts/TTBB_enrichedCR/singleMuon_pass_fullTight.json",
+        "json/cuts/SignalRegion/SameSign.json"
+    ],
+    "datasets": [
+        "Muon"
+    ],
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+    "MCweight": [
+        "genWeight"
+    ],
+    "lumiConfig": "json/Lumi/Run3.json"
+}

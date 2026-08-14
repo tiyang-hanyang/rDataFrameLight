@@ -1,0 +1,57 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S2 prompt parts",
+
+    "era": "RunIII2024Summer24NanoAODv15",
+    "outDir": "SR_4j_muonVar_2bSS_prompt",
+
+    "sampleConfig": "json/samples/special_relax_miniisolation/RunIII2024Summer24NanoAODv15_special_relax_miniIso_twoJets_muonCorr_1bfid_aovidMuon_btagCorr_Aug7.json",
+
+    "varNames": [
+        "leadingMuon_pt",
+        "subleadingMuon_pt"
+    ],
+    "varConfig": "json/variables/variables.json",
+
+    "cutConfig": [
+        "json/cuts/SignalRegion/fourJets.json",
+        "json/cuts/SignalRegion/twoBjet_2024.json",
+	"json/cuts/TTBB_enrichedCR/singleMuon_pass_fullTight.json",
+        "json/cuts/SignalRegion/SameSign.json",
+        "json/cuts/HistPlot/signalRegionVariables/muons_kinematics_syst.json",
+	"json/cuts/TTBB_enrichedCR/nonPrompt_singleAnti_2j_2b_shape_TF.json"
+    ],
+
+    "datasets": [
+        "nonprompt_shapeTF_subtract"
+    ],
+    "needMerge": {
+        "nonprompt_shapeTF_subtract": [
+            "TTHBB",
+            "TTHnonBB",
+	    "THQ",
+	    "THW",
+	    "TTWH",
+            "TWm2L",
+            "TbarWp2L",
+            "TZQB",
+	    "TTW",
+	    "TTTT",
+            "TTZ_high",
+            "TTZ_low",
+	    "TTWW",
+	    "TTWZ",
+	    "TTZZ"
+        ]
+    },
+
+    "MCweight": [
+        "genWeight", "PUWeight", "JVMweight", "MuonScale", "TriggerScale", "btag_weight", "TF_antiIso_muon_shape"
+    ],
+
+    "weightSyst": {
+        "TF": "TF_antiIso_muon_shape"
+    },
+
+    "lumiConfig": "json/Lumi/Run3.json"
+}

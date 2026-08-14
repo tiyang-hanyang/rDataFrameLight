@@ -1,0 +1,85 @@
+{
+    "jobType": "plot",
+    "comments": "CR relax miniIso",
+    "inDir": "SR_bothPrompt_4j_muonVar_2bSS_prompt",
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+    "outDir": "SR_bothPrompt_4j_muonVar_2bSS_prompt_withDD_plot",
+    "name": "SR_bothPrompt_4j_muonVar_2bSS_prompt_withDD_containTT_DataMC_plot",
+    "era": [
+        "Run2024C",
+        "Run2024D",
+        "Run2024E",
+        "Run2024F",
+        "Run2024G",
+        "Run2024H",
+        "Run2024I"
+    ],
+    "mc_era": [
+        "RunIII2024Summer24NanoAODv15"
+    ],
+    "varNames": [
+        "subleadingMuon_pt",
+        "leadingMuon_pt"
+    ],
+    "needCrop": [],
+    "cropedRange": {},
+    "histXSize": 700,
+    "histYSize": 800,
+    "datasets": [
+        "Muon",
+        "ttbar",
+        "TTBB",
+        "TTH",
+        "TTW",
+        "TTZ",
+        "TTTT",
+        "TV",
+        "VV",
+        "VVV",
+        "TTVV",
+        "nonprompt_3AR_containTT"
+    ],
+    "colorMapping": {"nonprompt_3AR_containTT":602},
+    "needMerge": {},
+    "isData": [
+        "Muon"
+    ],
+    "isSignal": [
+        "TTHH"
+    ],
+    "doLogPlot": 0,
+    "doRatioPlot": 1,
+    "doNormPlot": 0,
+    "numerator": [
+        "Muon"
+    ],
+    "stackOrder": [
+        "ttbar",
+        "TTBB",
+        "TTH",
+        "TTW",
+        "TTZ",
+        "TTTT",
+        "TV",
+        "VV",
+        "VVV",
+        "TTVV",
+        "nonprompt_3AR_containTT"
+    ],
+    "reOrder": 1,
+    "header": [
+        "Preliminary",
+        "%1.0f fb^{-1} (13.6 TeV)"
+    ],
+    "texts": [
+        "SS2#mu, 4j, 2b",
+        "data-driven",
+        "MC only prompt",
+        "2024",
+        "PU JME MUO BTV corr."
+    ],
+    "varConfig": "json/variables/variables.json",
+    "lumiConfig": "json/Lumi/Run3.json",
+    "globalSystConfig": "json/syst/Run3_XSonly.json"
+}

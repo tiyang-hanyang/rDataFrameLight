@@ -1,0 +1,32 @@
+{
+    "jobType": "collectingHists",
+    "comments": "CR relax miniIso",
+    "era": "Run2024E",
+    "outDir": "AA_3j_nJets",
+    "isData": 1,
+    "sampleConfig": "json/samples/special_relax_miniisolation/Run2024E_special_relax_miniIso_fourJets_muonCorr_June18.json",
+    "varNames": [
+        "nBJet"
+    ],
+    "varConfig": "json/variables/variables.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/threeJets.json",
+        "json/cuts/TTBB_enrichedCR/leading_fail_iso.json",
+        "json/cuts/TTBB_enrichedCR/subleading_fail_iso.json",
+        "json/cuts/SignalRegion/SameSign.json",
+        "json/cuts/HistPlot/signalRegionVariables/bjets_multiplicity_2024_3j.json"
+    ],
+    "datasets": [
+        "Muon"
+    ],
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+    "MCweight": [
+        "genWeight"
+    ],
+    "lumiConfig": "json/Lumi/Run3.json"
+}

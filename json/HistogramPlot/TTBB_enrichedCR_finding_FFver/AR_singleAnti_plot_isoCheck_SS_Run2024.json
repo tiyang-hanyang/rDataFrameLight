@@ -1,0 +1,86 @@
+{
+    "jobType": "plot",
+    "comments": "CR relax miniIso",
+    "inDir": "AR_singleAnti_2j_Iso",
+    "dataWeight": "one",
+    "MCWeight": "MCTotalWeight",
+    "outDir": "AR_singleAnti_2j_Iso_plot",
+    "name": "AR_singleAnti_2j_Iso_DataMC_plot",
+    "era": [
+        "Run2024C",
+        "Run2024D",
+        "Run2024E",
+        "Run2024F",
+        "Run2024G",
+        "Run2024H",
+        "Run2024I"
+    ],
+    "mc_era": [
+        "RunIII2024Summer24NanoAODv15"
+    ],
+    "varNames": [
+        "antiIsoMuon_miniIso"
+    ],
+    "needCrop": ["nGoodJet"],
+    "cropedRange": {"nGoodJet":[2,10]},
+    "histXSize": 700,
+    "histYSize": 800,
+    "datasets": [
+        "Muon",
+        "DY",
+        "WJets",
+        "ttbar",
+        "TTBB",
+        "TTH",
+        "TTW",
+        "TTZ",
+        "TTTT",
+        "QCD",
+        "TV",
+        "VV",
+        "VVV",
+        "TTVV"
+    ],
+    "needMerge": {},
+    "isData": [
+        "Muon"
+    ],
+    "isSignal": [
+        "TTHH"
+    ],
+    "doLogPlot": 0,
+    "doRatioPlot": 1,
+    "doNormPlot": 0,
+    "numerator": [
+        "Muon"
+    ],
+    "stackOrder": [
+        "DY",
+        "WJets",
+        "ttbar",
+        "TTBB",
+        "TTH",
+        "TTW",
+        "TTZ",
+        "TTTT",
+        "QCD",
+        "TV",
+        "VV",
+        "VVV",
+        "TTVV"
+    ],
+    "reOrder": 1,
+    "header": [
+        "Preliminary",
+        "%1.0f fb^{-1} (13.6 TeV)"
+    ],
+    "texts": [
+        "CR: SS2#mu, #geq 2 jets ",
+        "One #mu anti-iso",
+        "2024",
+        "PU JME MUO BTV corr."
+    ],
+    "varConfig": "json/variables/variables.json",
+    "lumiConfig": "json/Lumi/Run3.json",
+    "globalSystConfig": "json/syst/Run3_XSonly.json"
+}

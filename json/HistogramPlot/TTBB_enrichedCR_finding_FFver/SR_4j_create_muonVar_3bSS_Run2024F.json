@@ -1,0 +1,35 @@
+{
+    "jobType": "collectingHists",
+    "comments": "CR relax miniIso",
+    "isData": 1,
+    "era": "Run2024F",
+    "outDir": "SR_4j_muonVar_3bSS",
+    "sampleConfig": "json/samples/special_relax_miniisolation/Run2024F_special_relax_miniIso_fourJets_muonCorr_June18.json",
+    "varNames": [
+        "subleadingMuon_pt"
+    ],
+    "varConfig": "json/variables/variables.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/threeBjet_2024.json",
+        "json/cuts/TTBB_enrichedCR/leading_pass_iso.json",
+        "json/cuts/TTBB_enrichedCR/leading_pass_fullTight.json",
+        "json/cuts/TTBB_enrichedCR/subleading_pass_iso.json",
+        "json/cuts/TTBB_enrichedCR/subleading_pass_fullTight.json",
+        "json/cuts/SignalRegion/exact_fourJets.json",
+        "json/cuts/SignalRegion/SameSign.json",
+        "json/cuts/HistPlot/signalRegionVariables/muons_kinematics_syst.json"
+    ],
+    "datasets": [
+        "Muon"
+    ],
+    "needMerge": {
+        "Muon": [
+            "Muon0",
+            "Muon1"
+        ]
+    },
+    "MCweight": [
+        "genWeight"
+    ],
+    "lumiConfig": "json/Lumi/Run3.json"
+}
