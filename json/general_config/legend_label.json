@@ -1,0 +1,19 @@
+{
+    "Muon": "data",
+    "TTHH": "t#bar{t}HH",
+    "DY": "DY",
+    "WJets": "W",
+    "QCD": "QCD",
+    "ttbar": "t#bar{t}",
+    "TTBB": "t#bar{t}b#bar{b}",
+    "VV": "VV",
+    "VV2l": "VV2l",
+    "WZ3l": "WZ3l",
+    "ZZ4l": "ZZ4l",
+    "VVV": "VVV",
+    "TV": "t/#bar{t}+V",
+    "TTH": "t#bar{t}+H",
+    "TTZ": "t#bar{t}+Z",
+    "TTW": "t#bar{t}+W",
+    "TTTT": "4t"
+}

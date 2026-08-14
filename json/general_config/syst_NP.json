@@ -1,0 +1,103 @@
+{
+    "JES_NP_common": [
+        "CMS_scale_j_FlavorQCD",
+        "CMS_scale_j_RelativeBal",
+        "CMS_scale_j_HF",
+        "CMS_scale_j_BBEC1",
+        "CMS_scale_j_EC2",
+        "CMS_scale_j_Absolute"
+    ],
+    "JES_NP_fullRun": [
+        "CMS_scale_j_FlavorQCD",
+        "CMS_scale_j_RelativeBal",
+        "CMS_scale_j_HF",
+        "CMS_scale_j_BBEC1",
+        "CMS_scale_j_EC2",
+        "CMS_scale_j_Absolute",
+        "CMS_scale_j_Absolute_2022",
+        "CMS_scale_j_HF_2022",
+        "CMS_scale_j_EC2_2022",
+        "CMS_scale_j_RelativeSample_2022",
+        "CMS_scale_j_BBEC1_2022",
+        "CMS_scale_j_Absolute_2022EE",
+        "CMS_scale_j_HF_2022EE",
+        "CMS_scale_j_EC2_2022EE",
+        "CMS_scale_j_RelativeSample_2022EE",
+        "CMS_scale_j_BBEC1_2022EE",
+        "CMS_scale_j_Absolute_2023",
+        "CMS_scale_j_HF_2023",
+        "CMS_scale_j_EC2_2023",
+        "CMS_scale_j_RelativeSample_2023",
+        "CMS_scale_j_BBEC1_2023",
+        "CMS_scale_j_Absolute_2023BPix",
+        "CMS_scale_j_HF_2023BPix",
+        "CMS_scale_j_EC2_2023BPix",
+        "CMS_scale_j_RelativeSample_2023BPix",
+        "CMS_scale_j_BBEC1_2023BPix",
+        "CMS_scale_j_Absolute_2024",
+        "CMS_scale_j_HF_2024",
+        "CMS_scale_j_EC2_2024",
+        "CMS_scale_j_RelativeSample_2024",
+        "CMS_scale_j_BBEC1_2024"
+    ],
+    "JES_NP_2022": [
+        "CMS_scale_j_Absolute_2022",
+        "CMS_scale_j_HF_2022",
+        "CMS_scale_j_EC2_2022",
+        "CMS_scale_j_RelativeSample_2022",
+        "CMS_scale_j_BBEC1_2022"
+    ],
+    "JES_NP_2022EE": [
+        "CMS_scale_j_Absolute_2022EE",
+        "CMS_scale_j_HF_2022EE",
+        "CMS_scale_j_EC2_2022EE",
+        "CMS_scale_j_RelativeSample_2022EE",
+        "CMS_scale_j_BBEC1_2022EE"
+    ],
+    "JES_NP_2023": [
+        "CMS_scale_j_Absolute_2023",
+        "CMS_scale_j_HF_2023",
+        "CMS_scale_j_EC2_2023",
+        "CMS_scale_j_RelativeSample_2023",
+        "CMS_scale_j_BBEC1_2023"
+    ],
+    "JES_NP_2023BPix": [
+        "CMS_scale_j_Absolute_2023BPix",
+        "CMS_scale_j_HF_2023BPix",
+        "CMS_scale_j_EC2_2023BPix",
+        "CMS_scale_j_RelativeSample_2023BPix",
+        "CMS_scale_j_BBEC1_2023BPix"
+    ],
+    "JES_NP_2024": [
+        "CMS_scale_j_Absolute_2024",
+        "CMS_scale_j_HF_2024",
+        "CMS_scale_j_EC2_2024",
+        "CMS_scale_j_RelativeSample_2024",
+        "CMS_scale_j_BBEC1_2024"
+    ],
+    "BTV_UParT_WP_NP": [
+        "btag_bfragmentation",
+        "btag_fsrdef",
+        "btag_hdamp",
+        "btag_isrdef",
+        "btag_jer",
+        "btag_jes",
+        "btag_muf",
+        "btag_mur",
+        "btag_pdfas",
+        "btag_pileup",
+        "btag_statistic",
+        "btag_topmass",
+        "btag_type3"
+    ],
+    "BTV_PNet_WP_NP": [
+        "btag_lf",
+        "btag_lfstats1",
+        "btag_lfstats2",
+        "btag_hf",
+        "btag_hfstats1",
+        "btag_hfstats2",
+        "btag_cferr1",
+        "btag_cferr2"
+    ]
+}
