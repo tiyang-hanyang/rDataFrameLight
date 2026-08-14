@@ -488,6 +488,7 @@ def extract_file(
     jet_pt_shift_branch=None,
     jet_pt_shift_direction="up",
     jer_direction=None,
+    muon_pt_branch=None,
     jet_pt_threshold=30.0,
     btag_threshold=None,
     scale_jet_mass_with_pt=False,
