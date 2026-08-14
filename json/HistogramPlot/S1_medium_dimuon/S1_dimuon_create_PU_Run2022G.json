@@ -1,0 +1,25 @@
+{
+    "jobType": "collectingHists",
+    "comments": "S1 Run2022G data jet variables creation",
+    "era": "Run2022G",
+    "outDir": "S1_dimuon",
+    "sampleConfig": "json/samples/Dimuon_NanoAOD/PUJECcorrected/Run2022G_JEC_corrected.json",
+    "varNames": [
+        "PV_npvsGood"
+    ],
+    "varConfig": "json/variables/variables.json",
+    "cutConfig": [
+        "json/cuts/SignalRegion/MET_filter.json"
+    ],
+    "datasets": [
+        "Muon"
+    ],
+    "isData": {
+        "Muon": 1
+    },
+    "needMerge": {},
+    "MCweight": [
+        "genWeight"
+    ],
+    "lumiConfig": "json/Lumi/Run3.json"
+}
